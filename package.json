@@ -1,0 +1,23 @@
+{
+  "name": "competition-codingame-unleash-the-geek",
+  "version": "1.0.0",
+  "description": "Codingame 10 days Unleash yje Geek competition",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielDCelery/competition-codingame-unleash-the-geek.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabrielDCelery/competition-codingame-unleash-the-geek/issues"
+  },
+  "homepage": "https://github.com/GabrielDCelery/competition-codingame-unleash-the-geek#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3"
+  }
+}
