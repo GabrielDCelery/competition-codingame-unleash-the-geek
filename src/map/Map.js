@@ -7,22 +7,21 @@ const {
   READLINE_ENTITY_TRAP
 } = require('../constants')
 
-/*
-const MAP_WIDTH = 30;
-const MAP_HEIGHT = 15;
-const ZONE_SIZE = 5;
-*/
 const Cells = require('./Cells');
 const Zones = require('./Zones')
 
 class Map {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.cells = new Cells({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
-    this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY })
     this.setCellHasHole = this.setCellHasHole.bind(this);
     this.setCellOreAmount = this.setCellOreAmount.bind(this)
     this.addEntity = this.addEntity.bind(this)
     this.resetEntities = this.resetEntities.bind(this)
+    this._init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY })
+  }
+
+  _init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
+    this.cells = new Cells({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
+    this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
   }
 
   resetEntities() {
@@ -56,7 +55,6 @@ class Map {
 
     return this;
   }
-
 
   addEntity({ x, y, type }) {
     switch (type) {

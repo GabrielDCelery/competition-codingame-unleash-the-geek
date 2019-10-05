@@ -1,6 +1,5 @@
 class Cells {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.data = null;
     this.getZoneCoordinates = this.getZoneCoordinates.bind(this)
     this.hasHole = this.hasHole.bind(this)
     this.setHasHole = this.setHasHole.bind(this)

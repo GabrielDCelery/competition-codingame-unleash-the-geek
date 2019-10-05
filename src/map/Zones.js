@@ -1,6 +1,5 @@
 class Zones {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.data = null;
     this.getHoleAmount = this.getHoleAmount.bind(this)
     this.addHole = this.addHole.bind(this)
     this.getOreAmount = this.getOreAmount.bind(this)
