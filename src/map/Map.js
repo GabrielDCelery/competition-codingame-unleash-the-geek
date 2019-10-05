@@ -21,7 +21,13 @@ class Map {
     this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY })
     this.setCellHasHole = this.setCellHasHole.bind(this);
     this.setCellOreAmount = this.setCellOreAmount.bind(this)
-    this.setEntity = this.setEntity.bind(this)
+    this.addEntity = this.addEntity.bind(this)
+    this.resetEntities = this.resetEntities.bind(this)
+  }
+
+  resetEntities() {
+    this.cells.resetEntities();
+    this.zones.resetEntities();
   }
 
   setCellHasHole({ x, y, hole }) {
@@ -52,18 +58,26 @@ class Map {
   }
 
 
-  setEntity({ x, y, type }) {
+  addEntity({ x, y, type }) {
     switch (type) {
       case READLINE_ENTITY_ALLIED_ROBOT: {
+        this.cells.addAlliedRobot({ x, y });
+        this.zones.addAlliedRobot(this.cells.getZoneCoordinates({ x, y }));
         return this;
       }
       case READLINE_ENTITY_ENEMY_ROBOT: {
+        this.cells.addEnemyRobot({ x, y });
+        this.zones.addEnemyRobot(this.cells.getZoneCoordinates({ x, y }));
         return this;
       }
       case READLINE_ENTITY_RADAR: {
+        this.cells.setHasRadar({ x, y })
+        this.zones.addRadar(this.cells.getZoneCoordinates({ x, y }));
         return this;
       }
       case READLINE_ENTITY_TRAP: {
+        this.cells.setHasMine({ x, y })
+        this.zones.addMine(this.cells.getZoneCoordinates({ x, y }));
         return this;
       }
       default:

@@ -6,6 +6,11 @@ class Cells {
     this.setHasHole = this.setHasHole.bind(this)
     this.getOreAmount = this.getOreAmount.bind(this)
     this.setOreAmount = this.setOreAmount.bind(this)
+    this.resetEntities = this.resetEntities.bind(this)
+    this.addAlliedRobot = this.addAlliedRobot.bind(this)
+    this.addEnemyRobot = this.addEnemyRobot.bind(this)
+    this.setHasRadar = this.setHasRadar.bind(this)
+    this.setHasMine = this.setHasMine.bind(this)
     this._init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
   }
 
@@ -19,6 +24,14 @@ class Cells {
       HAS_MINE: 5,
       ZONE_COORDINATES: 6
     }
+  }
+
+  _resetEntitiesOnCell({ x, y }) {
+    const cell = this.data[x][y];
+    cell[Cells.DATA.ALLIED_ROBOT_AMOUNT] = 0;
+    cell[Cells.DATA.ENEMY_ROBOT_AMOUNT] = 0;
+    cell[Cells.DATA.HAS_RADAR] = false;
+    cell[Cells.DATA.HAS_MINE] = false;
   }
 
   _initCell({ x, y, zoneSizeX, zoneSizeY }) {
@@ -56,6 +69,14 @@ class Cells {
     }
   }
 
+  resetEntities() {
+    for (let x = 0, xMax = this.width; x < xMax; x++) {
+      for (let y = 0, yMax = this.height; y < yMax; y++) {
+        this._resetEntitiesOnCell({ x, y });
+      }
+    }
+  }
+
   getZoneCoordinates({ x, y }) {
     const [zoneX, zoneY] = this.data[x][y][Cells.DATA.ZONE_COORDINATES];
 
@@ -79,6 +100,22 @@ class Cells {
 
   setOreAmount({ x, y, amount }) {
     return this.data[x][y][Cells.DATA.ORE_AMOUNT] = amount;
+  }
+
+  addAlliedRobot({ x, y }) {
+    return this.data[x][y][Cells.DATA.ALLIED_ROBOT_AMOUNT]++;
+  }
+
+  addEnemyRobot({ x, y }) {
+    return this.data[x][y][Cells.DATA.ENEMY_ROBOT_AMOUNT]++;
+  }
+
+  setHasRadar({ x, y }) {
+    return this.data[x][y][Cells.DATA.HAS_RADAR] = true;
+  }
+
+  setHasMine({ x, y }) {
+    return this.data[x][y][Cells.DATA.HAS_MINE] = true;
   }
 }
 

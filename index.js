@@ -2,8 +2,9 @@
  * Deliver more ore to hq (left side of the map) than your opponent. Use radars to find ore but beware of traps!
  **/
 
+const configs = require('./src/configs')
 const { Map } = require('./src/map')
-const map = new Map()
+const map = new Map(configs.map)
 const { COMMAND_WAIT } = require('./src/constants')
 
 var inputs = readline().split(' ');
@@ -21,7 +22,15 @@ while (true) {
       const ore = inputs[2 * j];// amount of ore or "?" if unknown
       const hole = parseInt(inputs[2 * j + 1]);// 1 if cell has a hole
 
-      map.setCellHasHole(j, i, hole).setCellOreAmount(j, i, ore);
+      map.setCellHasHole({
+        x: j,
+        y: i,
+        hole: hole
+      }).setCellOreAmount({
+        x: j,
+        y: i,
+        amount: ore
+      });
     }
   }
   var inputs = readline().split(' ');
@@ -30,7 +39,7 @@ while (true) {
   const trapCooldown = parseInt(inputs[2]); // turns left until a new trap can be requested
 
 
-  map.resetRobotPositions();
+  map.resetEntities();
 
   for (let i = 0; i < entityCount; i++) {
     var inputs = readline().split(' ');
@@ -39,8 +48,8 @@ while (true) {
     const x = parseInt(inputs[2]);
     const y = parseInt(inputs[3]); // position of the entity
     const item = parseInt(inputs[4]); // if this entity is a robot, the item it is carrying (-1 for NONE, 2 for RADAR, 3 for TRAP, 4 for ORE)
-    
-    map.setEntity(x, y, type);
+
+    map.addEntity({ x, y, type });
   }
   for (let i = 0; i < 5; i++) {
 
