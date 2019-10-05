@@ -6,7 +6,7 @@ const CELL_DATA_HAS_HOLE = 0;
 const CELL_DATA_ORE_AMOUNT = 1;
 const CELL_DATA_ZONE_COORDINATES = 2;
 
-const ZONE_DATA_NUM_OF_HOLES = 0
+const ZONE_DATA_HOLE_AMOUNT = 0
 const ZONE_DATA_ORE_AMOUNT = 1;
 const ZONE_DATA_NUM_OF_ENEMY_ROBOTS = 2;
 
@@ -49,11 +49,11 @@ class Map {
 
   _initZone(zoneX, zoneY) {
     const zone = new Array([
-      ZONE_DATA_NUM_OF_HOLES,
+      ZONE_DATA_HOLE_AMOUNT,
       ZONE_DATA_ORE_AMOUNT,
       ZONE_DATA_NUM_OF_ENEMY_ROBOTS
     ].length).fill(null);
-    zone[ZONE_DATA_NUM_OF_HOLES] = 0
+    zone[ZONE_DATA_HOLE_AMOUNT] = 0
     zone[ZONE_DATA_ORE_AMOUNT] = 0
     zone[ZONE_DATA_NUM_OF_ENEMY_ROBOTS] = 0
 
@@ -107,7 +107,7 @@ class Map {
     const zone = this.zones[zoneX][zoneY]
 
     cell[CELL_DATA_HAS_HOLE] = true;
-    zone[ZONE_DATA_NUM_OF_HOLES]++;
+    zone[ZONE_DATA_HOLE_AMOUNT]++;
 
     return this;
   }

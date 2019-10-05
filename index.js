@@ -2,7 +2,7 @@
  * Deliver more ore to hq (left side of the map) than your opponent. Use radars to find ore but beware of traps!
  **/
 
-const { Map } = require('./src/game')
+const { Map } = require('./src/map')
 const map = new Map()
 const { COMMAND_WAIT } = require('./src/constants')
 
