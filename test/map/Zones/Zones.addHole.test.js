@@ -9,9 +9,9 @@ describe('Zones.addHole()', () => {
 
     // When
     instance.addHole({ x: 0, y: 1 })
-    
+
     // Then
-    expect(instance.coordinates).to.deep.equal([
+    expect(instance.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [1, 0, 0, 0, 0, 0]
@@ -35,7 +35,7 @@ describe('Zones.addHole()', () => {
     instance.addHole({ x: 0, y: 1 })
 
     // Then
-    expect(instance.coordinates).to.deep.equal([
+    expect(instance.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [3, 0, 0, 0, 0, 0]

@@ -1,6 +1,6 @@
 class Zones {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.coordinates = null;
+    this.data = null;
     this.getHoleAmount = this.getHoleAmount.bind(this)
     this.addHole = this.addHole.bind(this)
     this.getOreAmount = this.getOreAmount.bind(this)
@@ -35,7 +35,7 @@ class Zones {
     zone[Zones.DATA.RADAR_AMOUNT] = 0
     zone[Zones.DATA.MINE_AMOUNT] = 0
 
-    this.coordinates[x][y] = zone;
+    this.data[x][y] = zone;
 
     return zone;
   }
@@ -43,7 +43,7 @@ class Zones {
   _init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
     this.width = mapWidth / zoneSizeX;
     this.height = mapHeight / zoneSizeY;
-    this.coordinates = new Array(this.width)
+    this.data = new Array(this.width)
       .fill(null)
       .map(() => new Array(this.height).fill(null));
 
@@ -55,19 +55,19 @@ class Zones {
   }
 
   getHoleAmount({x, y}) {
-    return this.coordinates[x][y][Zones.DATA.HOLE_AMOUNT];
+    return this.data[x][y][Zones.DATA.HOLE_AMOUNT];
   }
 
   addHole({ x, y }) {
-    this.coordinates[x][y][Zones.DATA.HOLE_AMOUNT]++;
+    this.data[x][y][Zones.DATA.HOLE_AMOUNT]++;
   }
 
   getOreAmount({ x, y }) {
-    return this.coordinates[x][y][Zones.DATA.ORE_AMOUNT];
+    return this.data[x][y][Zones.DATA.ORE_AMOUNT];
   }
 
   setOreAmount({ x, y, amount }) {
-    return this.coordinates[x][y][Zones.DATA.ORE_AMOUNT] = amount;
+    return this.data[x][y][Zones.DATA.ORE_AMOUNT] = amount;
   }
 }
 

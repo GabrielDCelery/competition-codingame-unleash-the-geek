@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
 describe('Cells.getZoneCoordinates()', () => {
-  it('returns the zone coordinates for a cell', async () => {
+  it('returns the zone data for a cell', async () => {
     // Given
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
     const Cells = require('../../../src/map/Cells');

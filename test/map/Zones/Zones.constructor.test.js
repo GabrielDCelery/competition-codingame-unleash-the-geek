@@ -12,7 +12,7 @@ describe('Zones.constructor()', () => {
     // Then
     expect(result.width).to.equal(2)
     expect(result.height).to.equal(2)
-    expect(result.coordinates).to.deep.equal([
+    expect(result.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0]

@@ -11,7 +11,7 @@ describe('Cells.setOreAmount()', () => {
     instance.setOreAmount({ x: 0, y: 1, amount: 21 })
 
     // Then
-    expect(instance.coordinates).to.deep.equal([
+    expect(instance.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 21, 0, 0, false, false, [0, 0]]

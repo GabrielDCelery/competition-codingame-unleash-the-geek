@@ -6,7 +6,7 @@ describe('Cells.hasHole()', () => {
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
     const Cells = require('../../../src/map/Cells');
     const instance = new Cells(config);
-    instance.coordinates[0][1][Cells.DATA.HAS_HOLE] = true
+    instance.data[0][1][Cells.DATA.HAS_HOLE] = true
 
     // When
 

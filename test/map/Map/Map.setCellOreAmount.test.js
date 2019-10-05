@@ -11,7 +11,7 @@ describe('Map.setCellOreAmount()', () => {
     instance.setCellOreAmount({ x: 1, y: 2, amount: 21 })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -37,7 +37,7 @@ describe('Map.setCellOreAmount()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [0, 21, 0, 0, 0, 0]
@@ -60,7 +60,7 @@ describe('Map.setCellOreAmount()', () => {
     instance.setCellOreAmount({ x: 1, y: 2, amount: 30 })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -86,7 +86,7 @@ describe('Map.setCellOreAmount()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [0, 30, 0, 0, 0, 0]
@@ -112,7 +112,7 @@ describe('Map.setCellOreAmount()', () => {
     instance.setCellOreAmount({ x: 0, y: 2, amount: 15 })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -138,7 +138,7 @@ describe('Map.setCellOreAmount()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [0, 50, 0, 0, 0, 0]
@@ -161,7 +161,7 @@ describe('Map.setCellOreAmount()', () => {
     instance.setCellOreAmount({ x: 1, y: 2, amount: READLINE_ORE_AMOUNT_UNKNOWN })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -187,7 +187,7 @@ describe('Map.setCellOreAmount()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0]

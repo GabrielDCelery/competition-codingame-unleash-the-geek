@@ -6,7 +6,7 @@ describe('Zones.getHoleAmount()', () => {
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
     const Zones = require('../../../src/map/Zones');
     const instance = new Zones(config);
-    instance.coordinates[0][1][Zones.DATA.HOLE_AMOUNT] = 3
+    instance.data[0][1][Zones.DATA.HOLE_AMOUNT] = 3
 
     // When
 

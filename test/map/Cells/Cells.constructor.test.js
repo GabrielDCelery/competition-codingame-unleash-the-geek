@@ -10,7 +10,7 @@ describe('Cells.constructor()', () => {
     const result = new Cells(config);
 
     // Then
-    expect(result.coordinates).to.deep.equal([
+    expect(result.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],

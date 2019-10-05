@@ -11,7 +11,7 @@ describe('Cells.setHasHole()', () => {
     instance.setHasHole({ x: 0, y: 1 })
 
     // Then
-    expect(instance.coordinates).to.deep.equal([
+    expect(instance.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [true, 0, 0, 0, false, false, [0, 0]]

@@ -12,7 +12,7 @@ describe('Map.setCellHasHole()', () => {
     instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -38,7 +38,7 @@ describe('Map.setCellHasHole()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [1, 0, 0, 0, 0, 0]
@@ -64,7 +64,7 @@ describe('Map.setCellHasHole()', () => {
     instance.setCellHasHole({ x: 0, y: 2, hole: READLINE_CELL_HAS_HOLE })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -90,7 +90,7 @@ describe('Map.setCellHasHole()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [3, 0, 0, 0, 0, 0]
@@ -116,7 +116,7 @@ describe('Map.setCellHasHole()', () => {
     instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -142,7 +142,7 @@ describe('Map.setCellHasHole()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [1, 0, 0, 0, 0, 0]
@@ -164,7 +164,7 @@ describe('Map.setCellHasHole()', () => {
     instance.setCellHasHole({ x: 1, y: 2, hole: 'foo' })
 
     // Then
-    expect(instance.cells.coordinates).to.deep.equal([
+    expect(instance.cells.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],
         [false, 0, 0, 0, false, false, [0, 0]],
@@ -190,7 +190,7 @@ describe('Map.setCellHasHole()', () => {
         [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
-    expect(instance.zones.coordinates).to.deep.equal([
+    expect(instance.zones.data).to.deep.equal([
       [
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0]

@@ -1,6 +1,6 @@
 class Cells {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.coordinates = null;
+    this.data = null;
     this.getZoneCoordinates = this.getZoneCoordinates.bind(this)
     this.hasHole = this.hasHole.bind(this)
     this.setHasHole = this.setHasHole.bind(this)
@@ -39,11 +39,11 @@ class Cells {
     cell[Cells.DATA.HAS_MINE] = false;
     cell[Cells.DATA.ZONE_COORDINATES] = [Math.floor(x / zoneSizeX), Math.floor(y / zoneSizeY)];
 
-    this.coordinates[x][y] = cell;
+    this.data[x][y] = cell;
   }
 
   _init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.coordinates = new Array(mapWidth)
+    this.data = new Array(mapWidth)
       .fill(null)
       .map(() => new Array(mapHeight).fill(null))
 
@@ -55,7 +55,7 @@ class Cells {
   }
 
   getZoneCoordinates({ x, y }) {
-    const [zoneX, zoneY] = this.coordinates[x][y][Cells.DATA.ZONE_COORDINATES];
+    const [zoneX, zoneY] = this.data[x][y][Cells.DATA.ZONE_COORDINATES];
 
     return {
       x: zoneX,
@@ -64,19 +64,19 @@ class Cells {
   }
 
   hasHole({ x, y }) {
-    return this.coordinates[x][y][Cells.DATA.HAS_HOLE];
+    return this.data[x][y][Cells.DATA.HAS_HOLE];
   }
 
   setHasHole({ x, y }) {
-    return this.coordinates[x][y][Cells.DATA.HAS_HOLE] = true;
+    return this.data[x][y][Cells.DATA.HAS_HOLE] = true;
   }
 
   getOreAmount({ x, y }) {
-    return this.coordinates[x][y][Cells.DATA.ORE_AMOUNT];
+    return this.data[x][y][Cells.DATA.ORE_AMOUNT];
   }
 
   setOreAmount({ x, y, amount }) {
-    return this.coordinates[x][y][Cells.DATA.ORE_AMOUNT] = amount;
+    return this.data[x][y][Cells.DATA.ORE_AMOUNT] = amount;
   }
 }
 
