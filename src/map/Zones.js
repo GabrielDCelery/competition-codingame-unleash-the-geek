@@ -12,7 +12,10 @@ class Zones {
     return {
       HOLE_AMOUNT: 0,
       ORE_AMOUNT: 1,
-      NUM_OF_ENEMY_ROBOTS: 2
+      ALLIED_ROBOT_AMOUNT: 2,
+      ENEMY_ROBOT_AMOUNT: 3,
+      RADAR_AMOUNT: 4,
+      MINE_AMOUNT: 5
     }
   }
 
@@ -20,11 +23,17 @@ class Zones {
     const zone = new Array([
       Zones.DATA.HOLE_AMOUNT,
       Zones.DATA.ORE_AMOUNT,
-      Zones.DATA.NUM_OF_ENEMY_ROBOTS
+      Zones.DATA.ALLIED_ROBOT_AMOUNT,
+      Zones.DATA.ENEMY_ROBOT_AMOUNT,
+      Zones.DATA.RADAR_AMOUNT,
+      Zones.DATA.MINE_AMOUNT
     ].length).fill(null);
     zone[Zones.DATA.HOLE_AMOUNT] = 0
     zone[Zones.DATA.ORE_AMOUNT] = 0
-    zone[Zones.DATA.NUM_OF_ENEMY_ROBOTS] = 0
+    zone[Zones.DATA.ALLIED_ROBOT_AMOUNT] = 0
+    zone[Zones.DATA.ENEMY_ROBOT_AMOUNT] = 0
+    zone[Zones.DATA.RADAR_AMOUNT] = 0
+    zone[Zones.DATA.MINE_AMOUNT] = 0
 
     this.coordinates[x][y] = zone;
 

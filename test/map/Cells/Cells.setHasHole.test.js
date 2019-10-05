@@ -13,12 +13,12 @@ describe('Cells.setHasHole()', () => {
     // Then
     expect(instance.coordinates).to.deep.equal([
       [
-        [false, 0, [0, 0]],
-        [true, 0, [0, 0]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [true, 0, 0, 0, false, false, [0, 0]]
       ],
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]]
       ]
     ]);
   });

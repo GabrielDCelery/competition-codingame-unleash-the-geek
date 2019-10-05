@@ -12,28 +12,28 @@ describe('Cells.constructor()', () => {
     // Then
     expect(result.coordinates).to.deep.equal([
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [false, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [false, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
   });

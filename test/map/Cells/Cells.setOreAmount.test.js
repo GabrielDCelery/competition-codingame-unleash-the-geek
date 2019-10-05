@@ -13,12 +13,12 @@ describe('Cells.setOreAmount()', () => {
     // Then
     expect(instance.coordinates).to.deep.equal([
       [
-        [false, 0, [0, 0]],
-        [false, 21, [0, 0]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 21, 0, 0, false, false, [0, 0]]
       ],
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]]
       ]
     ]);
   });

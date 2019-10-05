@@ -14,38 +14,38 @@ describe('Map.setCellHasHole()', () => {
     // Then
     expect(instance.cells.coordinates).to.deep.equal([
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [false, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [true, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [true, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
     expect(instance.zones.coordinates).to.deep.equal([
       [
-        [0, 0, 0],
-        [1, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0]
       ],
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ]
     ])
   });
@@ -66,38 +66,38 @@ describe('Map.setCellHasHole()', () => {
     // Then
     expect(instance.cells.coordinates).to.deep.equal([
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [true, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [true, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [true, 0, [0, 1]],
-        [true, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [true, 0, 0, 0, false, false, [0, 1]],
+        [true, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
     expect(instance.zones.coordinates).to.deep.equal([
       [
-        [0, 0, 0],
-        [3, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [3, 0, 0, 0, 0, 0]
       ],
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ]
     ])
   });
@@ -118,38 +118,38 @@ describe('Map.setCellHasHole()', () => {
     // Then
     expect(instance.cells.coordinates).to.deep.equal([
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [false, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [true, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [true, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
     expect(instance.zones.coordinates).to.deep.equal([
       [
-        [0, 0, 0],
-        [1, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0]
       ],
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ]
     ])
   });
@@ -166,38 +166,38 @@ describe('Map.setCellHasHole()', () => {
     // Then
     expect(instance.cells.coordinates).to.deep.equal([
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [false, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [0, 0]],
-        [false, 0, [0, 0]],
-        [false, 0, [0, 1]],
-        [false, 0, [0, 1]]
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 0]],
+        [false, 0, 0, 0, false, false, [0, 1]],
+        [false, 0, 0, 0, false, false, [0, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ],
       [
-        [false, 0, [1, 0]],
-        [false, 0, [1, 0]],
-        [false, 0, [1, 1]],
-        [false, 0, [1, 1]]
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 0]],
+        [false, 0, 0, 0, false, false, [1, 1]],
+        [false, 0, 0, 0, false, false, [1, 1]]
       ]
     ]);
     expect(instance.zones.coordinates).to.deep.equal([
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ],
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ]
     ])
   });

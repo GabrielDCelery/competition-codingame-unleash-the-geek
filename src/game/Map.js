@@ -8,7 +8,7 @@ const CELL_DATA_ZONE_COORDINATES = 2;
 
 const ZONE_DATA_HOLE_AMOUNT = 0
 const ZONE_DATA_ORE_AMOUNT = 1;
-const ZONE_DATA_NUM_OF_ENEMY_ROBOTS = 2;
+const ZONE_DATA_ENEMY_ROBOT_AMOUNT = 2;
 
 const {
   READLINE_CELL_HAS_HOLE,
@@ -51,11 +51,11 @@ class Map {
     const zone = new Array([
       ZONE_DATA_HOLE_AMOUNT,
       ZONE_DATA_ORE_AMOUNT,
-      ZONE_DATA_NUM_OF_ENEMY_ROBOTS
+      ZONE_DATA_ENEMY_ROBOT_AMOUNT
     ].length).fill(null);
     zone[ZONE_DATA_HOLE_AMOUNT] = 0
     zone[ZONE_DATA_ORE_AMOUNT] = 0
-    zone[ZONE_DATA_NUM_OF_ENEMY_ROBOTS] = 0
+    zone[ZONE_DATA_ENEMY_ROBOT_AMOUNT] = 0
 
     this.zones[zoneX][zoneY] = zone;
 
@@ -85,7 +85,7 @@ class Map {
     for (let x = 0, xMax = (MAP_WIDTH / ZONE_SIZE); x < xMax; x++) {
       for (let y = 0, yMax = (MAP_HEIGHT / ZONE_SIZE); y < yMax; y++) {
         const zone = this.zones[x][y];
-        zone[ZONE_DATA_NUM_OF_ENEMY_ROBOTS] = 0;
+        zone[ZONE_DATA_ENEMY_ROBOT_AMOUNT] = 0;
       }
     }
 
@@ -134,7 +134,7 @@ class Map {
       }
       case READLINE_ENTITY_ENEMY_ROBOT: {
         const [zoneX, zoneY] = this.cells[x][y][CELL_DATA_ZONE_COORDINATES];
-        this.zones[zoneX][zoneY][ZONE_DATA_NUM_OF_ENEMY_ROBOTS];
+        this.zones[zoneX][zoneY][ZONE_DATA_ENEMY_ROBOT_AMOUNT];
         return this;
       }
       case READLINE_ENTITY_RADAR: {

@@ -14,12 +14,12 @@ describe('Zones.constructor()', () => {
     expect(result.height).to.equal(2)
     expect(result.coordinates).to.deep.equal([
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ],
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ]
     ]);
   });

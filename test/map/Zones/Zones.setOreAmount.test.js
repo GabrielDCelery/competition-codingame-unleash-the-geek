@@ -13,12 +13,12 @@ describe('Zones.setOreAmount()', () => {
     // Then
     expect(instance.coordinates).to.deep.equal([
       [
-        [0, 0, 0],
-        [0, 21, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 21, 0, 0, 0, 0]
       ],
       [
-        [0, 0, 0],
-        [0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
       ]
     ]);
   });

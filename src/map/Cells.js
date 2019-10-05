@@ -13,7 +13,11 @@ class Cells {
     return {
       HAS_HOLE: 0,
       ORE_AMOUNT: 1,
-      ZONE_COORDINATES: 2
+      ALLIED_ROBOT_AMOUNT: 2,
+      ENEMY_ROBOT_AMOUNT: 3,
+      HAS_RADAR: 4,
+      HAS_MINE: 5,
+      ZONE_COORDINATES: 6
     }
   }
 
@@ -21,10 +25,18 @@ class Cells {
     const cell = new Array([
       Cells.DATA.HAS_HOLE,
       Cells.DATA.ORE_AMOUNT,
+      Cells.DATA.ALLIED_ROBOT_AMOUNT,
+      Cells.DATA.ENEMY_ROBOT_AMOUNT,
+      Cells.DATA.HAS_RADAR,
+      Cells.DATA.HAS_MINE,
       Cells.DATA.ZONE_COORDINATES
     ].length).fill(null);
     cell[Cells.DATA.HAS_HOLE] = false;
     cell[Cells.DATA.ORE_AMOUNT] = 0;
+    cell[Cells.DATA.ALLIED_ROBOT_AMOUNT] = 0;
+    cell[Cells.DATA.ENEMY_ROBOT_AMOUNT] = 0;
+    cell[Cells.DATA.HAS_RADAR] = false;
+    cell[Cells.DATA.HAS_MINE] = false;
     cell[Cells.DATA.ZONE_COORDINATES] = [Math.floor(x / zoneSizeX), Math.floor(y / zoneSizeY)];
 
     this.coordinates[x][y] = cell;
