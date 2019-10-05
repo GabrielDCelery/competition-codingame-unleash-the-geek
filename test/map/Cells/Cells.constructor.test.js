@@ -10,6 +10,8 @@ describe('Cells.constructor()', () => {
     const result = new Cells(config);
 
     // Then
+    expect(result.width).to.equal(4)
+    expect(result.height).to.equal(4)
     expect(result.data).to.deep.equal([
       [
         [false, 0, 0, 0, false, false, [0, 0]],

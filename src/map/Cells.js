@@ -43,12 +43,14 @@ class Cells {
   }
 
   _init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.data = new Array(mapWidth)
+    this.width = mapWidth;
+    this.height = mapHeight;
+    this.data = new Array(this.width)
       .fill(null)
-      .map(() => new Array(mapHeight).fill(null))
+      .map(() => new Array(this.height).fill(null))
 
-    for (let x = 0, xMax = mapWidth; x < xMax; x++) {
-      for (let y = 0, yMax = mapHeight; y < yMax; y++) {
+    for (let x = 0, xMax = this.width; x < xMax; x++) {
+      for (let y = 0, yMax = this.height; y < yMax; y++) {
         this._initCell({ x, y, zoneSizeX, zoneSizeY })
       }
     }
