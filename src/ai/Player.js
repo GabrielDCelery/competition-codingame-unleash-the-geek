@@ -1,8 +1,7 @@
 const {
-  READLINE_ENTITY_ALLIED_ROBOT,
-  READLINE_ITEM_NONE,
-  READLINE_ITEM_ORE
+  READLINE_ENTITY_ALLIED_ROBOT
 } = require('../constants')
+const Robot = require('./Robot')
 const RobotAI = require('./RobotAI')
 
 class Player {
@@ -36,11 +35,11 @@ class Player {
   }
 
   doesCargoHaveOre(robotId) {
-    return this.robots[robotId]['item'] === READLINE_ITEM_ORE;
+    return this.robots[robotId].doesCargoHaveOre();
   }
 
   isCargoEmpty(robotId) {
-    return this.robots[robotId]['item'] === READLINE_ITEM_NONE;
+    return this.robots[robotId].isCargoEmpty();
   }
 
   isRadarAvailable() {
@@ -61,7 +60,7 @@ class Player {
 
   processEntityInput({ x, y, type, id, item }) {
     if (type === READLINE_ENTITY_ALLIED_ROBOT) {
-      this.robots[id] = { x, y, item };
+      this.robots[id] = new Robot({ x, y, item , map: this.map});
     }
   }
 
