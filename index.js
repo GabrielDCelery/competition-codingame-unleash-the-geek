@@ -51,6 +51,9 @@ while (true) {
 
     map.processEntityInput({ x, y, type });
   }
+
+  map.reCaclulateHeatMap();
+  
   for (let i = 0; i < 5; i++) {
 
     // Write an action using console.log()

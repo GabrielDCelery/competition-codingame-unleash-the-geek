@@ -150,6 +150,10 @@ class Map {
     this.cells.resetEntities();
     this.zones.resetEntities();
   }
+
+  reCaclulateHeatMap() {
+    this.dataHeatMap.reCaclulateHeatMap();
+  }
 }
 
 module.exports = Map;
