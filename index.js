@@ -22,11 +22,11 @@ while (true) {
       const ore = inputs[2 * j];// amount of ore or "?" if unknown
       const hole = parseInt(inputs[2 * j + 1]);// 1 if cell has a hole
 
-      map.setCellHasHole({
+      map.processHoleInput({
         x: j,
         y: i,
         hole: hole
-      }).setCellOreAmount({
+      }).processOreInput({
         x: j,
         y: i,
         amount: ore
@@ -49,7 +49,7 @@ while (true) {
     const y = parseInt(inputs[3]); // position of the entity
     const item = parseInt(inputs[4]); // if this entity is a robot, the item it is carrying (-1 for NONE, 2 for RADAR, 3 for TRAP, 4 for ORE)
 
-    map.addEntity({ x, y, type });
+    map.processEntityInput({ x, y, type });
   }
   for (let i = 0; i < 5; i++) {
 

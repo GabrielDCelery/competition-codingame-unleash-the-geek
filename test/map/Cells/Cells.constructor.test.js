@@ -13,30 +13,68 @@ describe('Cells.constructor()', () => {
     expect(result.width).to.equal(4)
     expect(result.height).to.equal(4)
     expect(result.data).to.deep.equal([
-      [
-        [false, 0, 0, 0, false, false, [0, 0]],
-        [false, 0, 0, 0, false, false, [0, 0]],
-        [false, 0, 0, 0, false, false, [0, 1]],
-        [false, 0, 0, 0, false, false, [0, 1]]
-      ],
-      [
-        [false, 0, 0, 0, false, false, [0, 0]],
-        [false, 0, 0, 0, false, false, [0, 0]],
-        [false, 0, 0, 0, false, false, [0, 1]],
-        [false, 0, 0, 0, false, false, [0, 1]]
-      ],
-      [
-        [false, 0, 0, 0, false, false, [1, 0]],
-        [false, 0, 0, 0, false, false, [1, 0]],
-        [false, 0, 0, 0, false, false, [1, 1]],
-        [false, 0, 0, 0, false, false, [1, 1]]
-      ],
-      [
-        [false, 0, 0, 0, false, false, [1, 0]],
-        [false, 0, 0, 0, false, false, [1, 0]],
-        [false, 0, 0, 0, false, false, [1, 1]],
-        [false, 0, 0, 0, false, false, [1, 1]]
-      ]
+      [{
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }],
+      [{
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }],
+      [{
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }],
+      [{
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }, {
+        "values": [0, 0, 0, 0, 0, 0]
+      }]
     ]);
+    expect(result.zones).to.deep.equal([
+      [
+        [0, 0],
+        [0, 0],
+        [0, 1],
+        [0, 1]
+      ],
+      [
+        [0, 0],
+        [0, 0],
+        [0, 1],
+        [0, 1]
+      ],
+      [
+        [1, 0],
+        [1, 0],
+        [1, 1],
+        [1, 1]
+      ],
+      [
+        [1, 0],
+        [1, 0],
+        [1, 1],
+        [1, 1]
+      ]
+    ])
   });
 });

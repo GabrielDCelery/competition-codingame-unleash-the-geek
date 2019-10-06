@@ -4,83 +4,149 @@ const {
   READLINE_ENTITY_ALLIED_ROBOT,
   READLINE_ENTITY_ENEMY_ROBOT,
   READLINE_ENTITY_RADAR,
-  READLINE_ENTITY_TRAP
+  READLINE_ENTITY_MINE
 } = require('../constants')
 
+const Data = require('./Data')
 const Cells = require('./Cells');
 const Zones = require('./Zones')
 
 class Map {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.setCellHasHole = this.setCellHasHole.bind(this);
-    this.setCellOreAmount = this.setCellOreAmount.bind(this)
-    this.addEntity = this.addEntity.bind(this)
-    this.resetEntities = this.resetEntities.bind(this)
-    this._init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY })
-  }
-
-  _init({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
+    this.total = new Data();
     this.cells = new Cells({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
     this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
   }
 
-  resetEntities() {
-    this.cells.resetEntities();
-    this.zones.resetEntities();
-  }
-
-  setCellHasHole({ x, y, hole }) {
-    if (hole !== READLINE_CELL_HAS_HOLE || this.cells.hasHole({ x, y })) {
+  processHoleInput({ x, y, hole }) {
+    if (
+      hole !== READLINE_CELL_HAS_HOLE ||
+      this.cells.has({ x, y, what: Data.AMOUNTS.HOLE })
+    ) {
       return this;
     }
 
-    this.cells.setHasHole({ x, y });
-    this.zones.addHole(this.cells.getZoneCoordinates({ x, y }));
+    this.cells.set({ x, y, what: Data.AMOUNTS.HOLE, amount: 1 });
+    this.zones.add({
+      ...this.cells.getZoneCoordinates({ x, y }),
+      what: Data.AMOUNTS.HOLE,
+      amount: 1
+    });
+    this.total.add({ what: Data.AMOUNTS.HOLE, amount: 1 })
 
     return this;
   }
 
-  setCellOreAmount({ x, y, amount }) {
+  processOreInput({ x, y, amount }) {
     if (amount === READLINE_ORE_AMOUNT_UNKNOWN) {
       return this;
     }
 
-    this.zones.setOreAmount({
+    const currentZoneAmount = this.zones.get({
       ...this.cells.getZoneCoordinates({ x, y }),
-      amount: this.zones.getOreAmount(this.cells.getZoneCoordinates({ x, y })) -
-        this.cells.getOreAmount({ x, y }) + amount
+      what: Data.AMOUNTS.ORE
+    });
+    const currentCellAmount = this.cells.get({ x, y, what: Data.AMOUNTS.ORE });
+    const currentTotalAmount = this.total.get({ what: Data.AMOUNTS.ORE })
+
+    this.zones.set({
+      ...this.cells.getZoneCoordinates({ x, y }),
+      what: Data.AMOUNTS.ORE,
+      amount: currentZoneAmount - currentCellAmount + amount
+    })
+    this.total.set({
+      what: Data.AMOUNTS.ORE,
+      amount: currentTotalAmount - currentCellAmount + amount
     })
 
-    this.cells.setOreAmount({ x, y, amount })
+    this.cells.set({ x, y, what: Data.AMOUNTS.ORE, amount })
 
     return this;
   }
 
-  addEntity({ x, y, type }) {
+  processEntityInput({ x, y, type }) {
     switch (type) {
       case READLINE_ENTITY_ALLIED_ROBOT: {
-        this.cells.addAlliedRobot({ x, y });
-        this.zones.addAlliedRobot(this.cells.getZoneCoordinates({ x, y }));
+        this.cells.add({
+          x,
+          y,
+          what: Data.AMOUNTS.ALLIED_ROBOT,
+          amount: 1
+        });
+        this.zones.add({
+          ...this.cells.getZoneCoordinates({ x, y }),
+          what: Data.AMOUNTS.ALLIED_ROBOT,
+          amount: 1
+        });
+        this.total.add({
+          what: Data.AMOUNTS.ALLIED_ROBOT,
+          amount: 1
+        })
         return this;
       }
       case READLINE_ENTITY_ENEMY_ROBOT: {
-        this.cells.addEnemyRobot({ x, y });
-        this.zones.addEnemyRobot(this.cells.getZoneCoordinates({ x, y }));
+        this.cells.add({
+          x,
+          y,
+          what: Data.AMOUNTS.ENEMY_ROBOT,
+          amount: 1
+        });
+        this.zones.add({
+          ...this.cells.getZoneCoordinates({ x, y }),
+          what: Data.AMOUNTS.ENEMY_ROBOT,
+          amount: 1
+        });
+        this.total.add({
+          what: Data.AMOUNTS.ENEMY_ROBOT,
+          amount: 1
+        })
         return this;
       }
       case READLINE_ENTITY_RADAR: {
-        this.cells.setHasRadar({ x, y })
-        this.zones.addRadar(this.cells.getZoneCoordinates({ x, y }));
+        this.cells.set({
+          x,
+          y,
+          what: Data.AMOUNTS.RADAR,
+          amount: 1
+        })
+        this.zones.add({
+          ...this.cells.getZoneCoordinates({ x, y }),
+          what: Data.AMOUNTS.RADAR,
+          amount: 1
+        });
+        this.total.add({
+          what: Data.AMOUNTS.RADAR,
+          amount: 1
+        })
         return this;
       }
-      case READLINE_ENTITY_TRAP: {
-        this.cells.setHasMine({ x, y })
-        this.zones.addMine(this.cells.getZoneCoordinates({ x, y }));
+      case READLINE_ENTITY_MINE: {
+        this.cells.set({
+          x,
+          y,
+          what: Data.AMOUNTS.MINE,
+          amount: 1
+        })
+        this.zones.add({
+          ...this.cells.getZoneCoordinates({ x, y }),
+          what: Data.AMOUNTS.MINE,
+          amount: 1
+        });
+        this.total.add({
+          what: Data.AMOUNTS.MINE,
+          amount: 1
+        })
         return this;
       }
       default:
         console.error(`Missing entity type! -> ${type}`);
     }
+  }
+
+  resetEntities() {
+    this.total.resetEntities();
+    this.cells.resetEntities();
+    this.zones.resetEntities();
   }
 }
 

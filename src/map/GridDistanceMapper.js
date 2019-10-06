@@ -41,7 +41,7 @@ class GridDistanceMapper {
   }
 
   mapDistances({ maxDistance } = { maxDistance: Infinity }) {
-    const ditanceToUse = Math.min(maxDistance + 1, Math.max(this.width, this.height))
+    const ditanceToUse = Math.min(maxDistance, Math.max(this.width, this.height))
     this.data = new Array(this.width)
       .fill(null)
       .map(() => {
