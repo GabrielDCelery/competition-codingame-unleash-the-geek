@@ -21,12 +21,12 @@ class RobotAI {
         stateToPriorityConverter: result => (1 - result) * 100
       }]
     }, {
-      action: 'collectOreInZone',
+      action: 'collectNearbyOre',
       scorers: [{
         stateGetter: 'isCargoEmpty',
         stateToPriorityConverter: result => result ? 100 : -100
       }, {
-        stateGetter: 'hasOreInZone',
+        stateGetter: 'hasOreNearby',
         stateToPriorityConverter: result => result ? 100 : -Infinity
       }]
     }, {

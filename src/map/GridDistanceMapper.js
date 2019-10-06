@@ -51,7 +51,7 @@ class GridDistanceMapper {
           })
       })
 
-    for (let distance = 0, distanceMax = this.maxDistance; distance < distanceMax; distance++) {
+    for (let distance = 0, distanceMax = this.maxDistance; distance <= distanceMax; distance++) {
       for (let x = 0, xMax = this.width; x < xMax; x++) {
         for (let y = 0, yMax = this.height; y < yMax; y++) {
           const cellsAtDistance = this._getCellsAtSpecificDistance({ x, y, distance });

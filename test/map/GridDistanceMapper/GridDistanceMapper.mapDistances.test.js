@@ -20,6 +20,9 @@ describe('GridDistanceMapper.mapDistances()', () => {
           [
             [0, 1],
             [1, 0]
+          ],
+          [
+            [1, 1]
           ]
         ],
         [
@@ -29,6 +32,9 @@ describe('GridDistanceMapper.mapDistances()', () => {
           [
             [0, 0],
             [1, 1]
+          ],
+          [
+            [1, 0]
           ]
         ]
       ],
@@ -40,6 +46,9 @@ describe('GridDistanceMapper.mapDistances()', () => {
           [
             [0, 0],
             [1, 1]
+          ],
+          [
+            [0, 1]
           ]
         ],
         [
@@ -49,6 +58,9 @@ describe('GridDistanceMapper.mapDistances()', () => {
           [
             [0, 1],
             [1, 0]
+          ],
+          [
+            [0, 0]
           ]
         ]
       ]

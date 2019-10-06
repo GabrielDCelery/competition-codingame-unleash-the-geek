@@ -69,7 +69,7 @@ class Player {
     const robotIds = Object.keys(this.robots);
 
     for (let i = 0, iMax = robotIds.length; i < iMax; i++) {
-      const action = this.robotAI.getAction(robotIds[i]);
+      //const action = this.robotAI.getAction(robotIds[i]);
       console.log('MOVE 8 4')
     }
   }
