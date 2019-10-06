@@ -1,6 +1,7 @@
 const {
   READLINE_ENTITY_ALLIED_ROBOT,
-  READLINE_ITEM_NONE
+  READLINE_ITEM_NONE,
+  READLINE_ITEM_ORE
 } = require('../constants')
 const RobotAI = require('./RobotAI')
 
@@ -32,6 +33,10 @@ class Player {
 
   setTrapCooldown(trapCooldown) {
     this.trapCooldown = trapCooldown;
+  }
+
+  doesCargoHaveOre(robotId) {
+    return this.robots[robotId]['item'] === READLINE_ITEM_ORE;
   }
 
   isCargoEmpty(robotId) {

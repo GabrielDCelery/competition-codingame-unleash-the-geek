@@ -3,14 +3,14 @@ const { expect } = require('chai');
 describe('Map.reCaclulateHeatMap()', () => {
   it('generates a new heatmap', async () => {
     // Given
-    // const { READLINE_CELL_HAS_HOLE } = require('../../../src/constants')
+    // const { READLINE_ITEM_HOLE } = require('../../../src/constants')
     const configs = require('../../../src/configs')
     const Map = require('../../../src/map/Map');
     const instance = new Map(configs.map);
 
     // When
 
-    //instance.processHoleInput({ x: 0, y: 0, hole: READLINE_CELL_HAS_HOLE });
+    //instance.processHoleInput({ x: 0, y: 0, hole: READLINE_ITEM_HOLE });
     instance.processOreInput({ x: 0, y: 0, amount: 100 });
     instance.reCaclulateHeatMap();
     // Then
@@ -91,7 +91,7 @@ describe('Map.reCaclulateHeatMap()', () => {
   it('updates heatmap less than 10ms', async () =>{
     // Given
     const {
-      READLINE_CELL_HAS_HOLE,
+      READLINE_ITEM_HOLE,
       READLINE_ENTITY_ALLIED_ROBOT,
       READLINE_ENTITY_ENEMY_ROBOT,
       READLINE_ENTITY_RADAR,
@@ -106,7 +106,7 @@ describe('Map.reCaclulateHeatMap()', () => {
     for (let x = 0, xMax = instance.cells.width; x < xMax; x++) {
       for (let y = 0, yMax = instance.cells.height; y < yMax; y++) {
         instance.processOreInput({ x, y, amount: 10 });
-        instance.processHoleInput({ x, y, hole: READLINE_CELL_HAS_HOLE });
+        instance.processHoleInput({ x, y, hole: READLINE_ITEM_HOLE });
         instance.processEntityInput({ x, y, type: READLINE_ENTITY_ALLIED_ROBOT })
         instance.processEntityInput({ x, y, type: READLINE_ENTITY_ENEMY_ROBOT })
         instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR })
@@ -119,7 +119,7 @@ describe('Map.reCaclulateHeatMap()', () => {
     for (let x = 0, xMax = instance.cells.width; x < xMax; x++) {
       for (let y = 0, yMax = instance.cells.height; y < yMax; y++) {
         instance.processOreInput({ x, y, amount: 10 });
-        instance.processHoleInput({ x, y, hole: READLINE_CELL_HAS_HOLE });
+        instance.processHoleInput({ x, y, hole: READLINE_ITEM_HOLE });
         instance.processEntityInput({ x, y, type: READLINE_ENTITY_ALLIED_ROBOT })
         instance.processEntityInput({ x, y, type: READLINE_ENTITY_ENEMY_ROBOT })
         instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR })

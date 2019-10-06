@@ -3,13 +3,13 @@ const { expect } = require('chai');
 describe('Map.setCellHasHole()', () => {
   it('sets a cell and the cell\'s zone to have a hole', async () => {
     // Given
-    const { READLINE_CELL_HAS_HOLE } = require('../../../src/constants')
+    const { READLINE_ITEM_HOLE } = require('../../../src/constants')
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
     const Map = require('../../../src/map/Map');
     const instance = new Map(config);
 
     // When
-    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
+    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_ITEM_HOLE })
 
     // Then
     expect(instance.cells.data).to.deep.equal([
@@ -52,16 +52,16 @@ describe('Map.setCellHasHole()', () => {
 
   it('sets the zone to have the appropriate number of holes', async () => {
     // Given
-    const { READLINE_CELL_HAS_HOLE } = require('../../../src/constants')
+    const { READLINE_ITEM_HOLE } = require('../../../src/constants')
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
     const Map = require('../../../src/map/Map');
     const instance = new Map(config);
 
     // When
-    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
-    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
-    instance.setCellHasHole({ x: 1, y: 3, hole: READLINE_CELL_HAS_HOLE })
-    instance.setCellHasHole({ x: 0, y: 2, hole: READLINE_CELL_HAS_HOLE })
+    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_ITEM_HOLE })
+    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_ITEM_HOLE })
+    instance.setCellHasHole({ x: 1, y: 3, hole: READLINE_ITEM_HOLE })
+    instance.setCellHasHole({ x: 0, y: 2, hole: READLINE_ITEM_HOLE })
 
     // Then
     expect(instance.cells.data).to.deep.equal([
@@ -104,16 +104,16 @@ describe('Map.setCellHasHole()', () => {
 
   it('only sets a cell once even if it is called multiple times', async () => {
     // Given
-    const { READLINE_CELL_HAS_HOLE } = require('../../../src/constants')
+    const { READLINE_ITEM_HOLE } = require('../../../src/constants')
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
     const Map = require('../../../src/map/Map');
     const instance = new Map(config);
 
     // When
-    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
-    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
-    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
-    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_CELL_HAS_HOLE })
+    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_ITEM_HOLE })
+    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_ITEM_HOLE })
+    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_ITEM_HOLE })
+    instance.setCellHasHole({ x: 1, y: 2, hole: READLINE_ITEM_HOLE })
 
     // Then
     expect(instance.cells.data).to.deep.equal([

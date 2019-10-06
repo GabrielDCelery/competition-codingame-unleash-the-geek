@@ -4,64 +4,35 @@ class RobotAI {
     this.stateGetters = stateGetters;
     this.actionConfigs = [{
       action: 'deliverOreToHome',
-      scorers: [
-        RobotAI.URGES.DOES_CARGO_HAVE_ORE
-      ]
+      scorers: [{
+        stateGetter: 'doesCargoHaveOre',
+        stateToPriorityConverter: result => result ? Infinity : -Infinity
+      }]
     }, {
       action: 'pickupRadar',
-      scorers: [
-        RobotAI.URGES.IS_CARGO_EMPTY,
-        RobotAI.URGES.IS_RADAR_AVAILABLE,
-        RobotAI.URGES.DISTANCE_FROM_HQ_FOR_RETRIEVAL
-      ]
+      scorers: [{
+        stateGetter: 'isCargoEmpty',
+        stateToPriorityConverter: result => result ? 100 : -100
+      }, {
+        stateGetter: 'isRadarAvailable',
+        stateToPriorityConverter: result => result === true ? 100 : -100
+      }, {
+        stateGetter: 'normalizedDistanceFromHQ',
+        stateToPriorityConverter: result => (1 - result) * 100
+      }]
     }, {
       action: 'collectOreInZone',
-      scorers: [
-        RobotAI.URGES.IS_CARGO_EMPTY,
-        RobotAI.URGES.HAS_ORE_IN_ZONE
-      ]
-    }]
-  }
-
-  static get URGES() {
-    return {
-      DOES_CARGO_HAVE_ORE: {
-        stateGetter: 'doesCargoHaveOre',
-        stateToUrgeConverter: result => {
-          return result === true ? 100 : -100;
-        }
-      },
-      IS_CARGO_EMPTY: {
+      scorers: [{
         stateGetter: 'isCargoEmpty',
-        stateToUrgeConverter: result => {
-          return result === true ? 100 : -100;
-        }
-      },
-      IS_RADAR_AVAILABLE: {
-        stateGetter: 'isRadarAvailable',
-        stateToUrgeConverter: (result) => {
-          return result === true ? 100 : -100;
-        }
-      },
-      NORMALIZED_DISTANCE_FROM_HQ_FOR_PICKUP: {
-        stateGetter: 'normalizedDistanceFromHQ',
-        stateToUrgeConverter: (result) => {
-          return (1 - result) * 100;
-        }
-      },
-      HAS_ORE_IN_ZONE: {
+        stateToPriorityConverter: result => result ? 100 : -100
+      }, {
         stateGetter: 'hasOreInZone',
-        stateToUrgeConverter: (result) => {
-          return result === true ? 100 : -10000
-        }
-      },
-      HAS_ORE_IN_ADJACENT_ZONE: {
-        stateGetter: 'hasOreInAdjacentZone',
-        stateToUrgeConverter: (result) => {
-          return result === true ? 50 : -10000
-        }
-      }
-    }
+        stateToPriorityConverter: result => result ? 100 : -Infinity
+      }]
+    }, {
+      action: 'moveToBetterPosition',
+      scorers: []
+    }]
   }
 
   selectHighestWeighedActionConfig(weighedActionConfigs) {
@@ -91,17 +62,17 @@ class RobotAI {
   getAction(robotId) {
     const weighedActionConfigs = this.actionConfigs.map(actionConfig => {
       const { action, scorers } = actionConfig;
-      const urges = scorers.map(scorer => {
+      const priorities = scorers.map(scorer => {
         const result = this.stateGetters[scorer['stateGetter']](robotId);
 
-        return scorer['stateToUrgeConverter'](result);
+        return scorer['stateToPriorityConverter'](result);
       });
 
-      const totalUrge = this.sumArrayValues(urges);
+      const totalPriority = this.sumArrayValues(priorities);
 
       return {
         action,
-        urge: totalUrge
+        priority: totalPriority
       }
     });
     /*

@@ -1,5 +1,5 @@
 const {
-  READLINE_CELL_HAS_HOLE,
+  READLINE_ITEM_HOLE,
   READLINE_ORE_AMOUNT_UNKNOWN,
   READLINE_ENTITY_ALLIED_ROBOT,
   READLINE_ENTITY_ENEMY_ROBOT,
@@ -22,7 +22,7 @@ class Map {
 
   processHoleInput({ x, y, hole }) {
     if (
-      hole !== READLINE_CELL_HAS_HOLE ||
+      hole !== READLINE_ITEM_HOLE ||
       this.cells.has({ x, y, what: Data.AMOUNTS.HOLE })
     ) {
       return this;
