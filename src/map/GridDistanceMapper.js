@@ -41,17 +41,17 @@ class GridDistanceMapper {
   }
 
   mapDistances({ maxDistance } = { maxDistance: Infinity }) {
-    const ditanceToUse = Math.min(maxDistance, Math.max(this.width, this.height))
+    this.maxDistance = Math.min(maxDistance, Math.max(this.width, this.height))
     this.data = new Array(this.width)
       .fill(null)
       .map(() => {
         return new Array(this.height)
           .fill(null).map(() => {
-            return new Array(ditanceToUse).fill(null);
+            return new Array(this.maxDistance).fill(null);
           })
       })
 
-    for (let distance = 0, distanceMax = ditanceToUse; distance < distanceMax; distance++) {
+    for (let distance = 0, distanceMax = this.maxDistance; distance < distanceMax; distance++) {
       for (let x = 0, xMax = this.width; x < xMax; x++) {
         for (let y = 0, yMax = this.height; y < yMax; y++) {
           const cellsAtDistance = this._getCellsAtSpecificDistance({ x, y, distance });
@@ -62,6 +62,14 @@ class GridDistanceMapper {
     }
 
     return this.data;
+  }
+
+  getMaxDistance() {
+    return this.maxDistance;
+  }
+
+  getCoordinatesAtDistance({ x, y, distance }) {
+    return this.data[x][y][distance];
   }
 }
 

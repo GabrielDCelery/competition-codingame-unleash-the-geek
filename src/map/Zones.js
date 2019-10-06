@@ -23,6 +23,10 @@ class Zones {
     return this.data[x][y].get({ what })
   }
 
+  getAll({ x, y }) {
+    return this.data[x][y].getAll()
+  }
+
   add({ x, y, what, amount }) {
     return this.data[x][y].add({ what, amount })
   }

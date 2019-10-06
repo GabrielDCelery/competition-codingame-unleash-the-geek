@@ -28,7 +28,7 @@ describe('Map.processOreInput()', () => {
         "values": [0, 21, 0, 0, 0, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 21, 0, 0, 0, 0]
     })
   });
@@ -61,7 +61,7 @@ describe('Map.processOreInput()', () => {
         "values": [0, 30, 0, 0, 0, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 30, 0, 0, 0, 0]
     })
   });
@@ -96,7 +96,7 @@ describe('Map.processOreInput()', () => {
         "values": [0, 50, 0, 0, 0, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 50, 0, 0, 0, 0]
     })
   });
@@ -129,7 +129,7 @@ describe('Map.processOreInput()', () => {
         "values": [0, 0, 0, 0, 0, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 0, 0, 0, 0, 0]
     })
   });

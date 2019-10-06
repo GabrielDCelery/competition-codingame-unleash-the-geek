@@ -8,10 +8,10 @@ describe('GridDistanceMapper.mapDistances()', () => {
     const instance = new GridDistanceMapper(config);
 
     // When
-    const result = instance.mapDistances()
+    instance.mapDistances()
 
     // Then
-    expect(result).to.deep.equal([
+    expect(instance.data).to.deep.equal([
       [
         [
           [

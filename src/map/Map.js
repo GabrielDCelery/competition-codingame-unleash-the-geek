@@ -9,13 +9,15 @@ const {
 
 const Data = require('./Data')
 const Cells = require('./Cells');
-const Zones = require('./Zones')
+const Zones = require('./Zones');
+const DataHeatMap = require('./DataHeatMap')
 
 class Map {
-  constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
-    this.total = new Data();
+  constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY, heatMapDropRate }) {
+    this.totals = new Data();
     this.cells = new Cells({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
     this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
+    this.dataHeatMap = new DataHeatMap({ totals: this.totals, zones: this.zones, heatMapDropRate });
   }
 
   processHoleInput({ x, y, hole }) {
@@ -32,7 +34,7 @@ class Map {
       what: Data.AMOUNTS.HOLE,
       amount: 1
     });
-    this.total.add({ what: Data.AMOUNTS.HOLE, amount: 1 })
+    this.totals.add({ what: Data.AMOUNTS.HOLE, amount: 1 })
 
     return this;
   }
@@ -47,14 +49,14 @@ class Map {
       what: Data.AMOUNTS.ORE
     });
     const currentCellAmount = this.cells.get({ x, y, what: Data.AMOUNTS.ORE });
-    const currentTotalAmount = this.total.get({ what: Data.AMOUNTS.ORE })
+    const currentTotalAmount = this.totals.get({ what: Data.AMOUNTS.ORE })
 
     this.zones.set({
       ...this.cells.getZoneCoordinates({ x, y }),
       what: Data.AMOUNTS.ORE,
       amount: currentZoneAmount - currentCellAmount + amount
     })
-    this.total.set({
+    this.totals.set({
       what: Data.AMOUNTS.ORE,
       amount: currentTotalAmount - currentCellAmount + amount
     })
@@ -78,7 +80,7 @@ class Map {
           what: Data.AMOUNTS.ALLIED_ROBOT,
           amount: 1
         });
-        this.total.add({
+        this.totals.add({
           what: Data.AMOUNTS.ALLIED_ROBOT,
           amount: 1
         })
@@ -96,7 +98,7 @@ class Map {
           what: Data.AMOUNTS.ENEMY_ROBOT,
           amount: 1
         });
-        this.total.add({
+        this.totals.add({
           what: Data.AMOUNTS.ENEMY_ROBOT,
           amount: 1
         })
@@ -114,7 +116,7 @@ class Map {
           what: Data.AMOUNTS.RADAR,
           amount: 1
         });
-        this.total.add({
+        this.totals.add({
           what: Data.AMOUNTS.RADAR,
           amount: 1
         })
@@ -132,7 +134,7 @@ class Map {
           what: Data.AMOUNTS.MINE,
           amount: 1
         });
-        this.total.add({
+        this.totals.add({
           what: Data.AMOUNTS.MINE,
           amount: 1
         })
@@ -144,7 +146,7 @@ class Map {
   }
 
   resetEntities() {
-    this.total.resetEntities();
+    this.totals.resetEntities();
     this.cells.resetEntities();
     this.zones.resetEntities();
   }

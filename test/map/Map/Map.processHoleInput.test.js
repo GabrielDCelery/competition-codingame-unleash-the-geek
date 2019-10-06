@@ -29,7 +29,7 @@ describe('Map.processHoleInput()', () => {
         "values": [1, 0, 0, 0, 0, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [1, 0, 0, 0, 0, 0]
     })
   });

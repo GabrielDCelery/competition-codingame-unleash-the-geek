@@ -31,7 +31,7 @@ describe('Map.processEntityInput()', () => {
         "values": [0, 0, 3, 0, 0, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 0, 3, 0, 0, 0]
     })
   });
@@ -66,7 +66,7 @@ describe('Map.processEntityInput()', () => {
         "values": [0, 0, 0, 3, 0, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 0, 0, 3, 0, 0]
     })
   });
@@ -100,7 +100,7 @@ describe('Map.processEntityInput()', () => {
         "values": [0, 0, 0, 0, 2, 0]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 0, 0, 0, 2, 0]
     })
   });
@@ -134,7 +134,7 @@ describe('Map.processEntityInput()', () => {
         "values": [0, 0, 0, 0, 0, 2]
       }]
     ])
-    expect(instance.total).to.deep.equal({
+    expect(instance.totals).to.deep.equal({
       "values": [0, 0, 0, 0, 0, 2]
     })
   });
