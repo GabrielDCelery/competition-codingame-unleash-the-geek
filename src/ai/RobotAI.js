@@ -1,38 +1,51 @@
-
 class RobotAI {
   constructor({ stateGetters }) {
     this.stateGetters = stateGetters;
-    this.actionConfigs = [{
-      action: 'deliverOreToHome',
-      scorers: [{
-        stateGetter: 'doesCargoHaveOre',
-        stateToPriorityConverter: result => result ? Infinity : -Infinity
-      }]
-    }, {
-      action: 'pickupRadar',
-      scorers: [{
-        stateGetter: 'isCargoEmpty',
-        stateToPriorityConverter: result => result ? 100 : -100
-      }, {
-        stateGetter: 'isRadarAvailable',
-        stateToPriorityConverter: result => result === true ? 100 : -100
-      }, {
-        stateGetter: 'normalizedDistanceFromHQ',
-        stateToPriorityConverter: result => (1 - result) * 100
-      }]
-    }, {
-      action: 'collectNearbyOre',
-      scorers: [{
-        stateGetter: 'isCargoEmpty',
-        stateToPriorityConverter: result => result ? 100 : -100
-      }, {
-        stateGetter: 'hasOreNearby',
-        stateToPriorityConverter: result => result ? 100 : -Infinity
-      }]
-    }, {
-      action: 'moveToBetterPosition',
-      scorers: []
-    }]
+    this.actionConfigs = [
+      {
+        action: 'deliverOreToHome',
+        scorers: [
+          {
+            stateGetter: 'doesCargoHaveOre',
+            stateToPriorityConverter: result => (result ? Infinity : -Infinity)
+          }
+        ]
+      },
+      {
+        action: 'pickupRadar',
+        scorers: [
+          {
+            stateGetter: 'isCargoEmpty',
+            stateToPriorityConverter: result => (result ? 100 : -100)
+          },
+          {
+            stateGetter: 'isRadarAvailable',
+            stateToPriorityConverter: result => (result === true ? 100 : -100)
+          },
+          {
+            stateGetter: 'normalizedDistanceFromHQ',
+            stateToPriorityConverter: result => (1 - result) * 100
+          }
+        ]
+      },
+      {
+        action: 'collectNearbyOre',
+        scorers: [
+          {
+            stateGetter: 'isCargoEmpty',
+            stateToPriorityConverter: result => (result ? 100 : -100)
+          },
+          {
+            stateGetter: 'hasOreNearby',
+            stateToPriorityConverter: result => (result ? 100 : -Infinity)
+          }
+        ]
+      },
+      {
+        action: 'moveToBetterPosition',
+        scorers: []
+      }
+    ];
   }
 
   selectHighestWeighedActionConfig(weighedActionConfigs) {
@@ -43,7 +56,9 @@ class RobotAI {
 
     for (let i = 0, iMax = weighedActionConfigs.length; i < iMax; i++) {
       const weighedActionConfig = weighedActionConfigs[i];
-      if (highestWeighedActionConfig['utility'] < weighedActionConfig['utility']) {
+      if (
+        highestWeighedActionConfig['utility'] < weighedActionConfig['utility']
+      ) {
         highestWeighedActionConfig = weighedActionConfig;
       }
     }
@@ -51,9 +66,7 @@ class RobotAI {
     return highestWeighedActionConfig;
   }
 
-  normalizeArrayValues(arrayValues) {
-
-  }
+  normalizeArrayValues(arrayValues) {}
 
   sumArrayValues(arrayValues) {
     return arrayValues.reduce((a, b) => a + b, 0);
@@ -73,7 +86,7 @@ class RobotAI {
       return {
         action,
         priority: totalPriority
-      }
+      };
     });
     /*
     const highestWeighedActionConfig =

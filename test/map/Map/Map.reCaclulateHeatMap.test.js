@@ -4,7 +4,7 @@ describe('Map.reCaclulateHeatMap()', () => {
   it('generates a new heatmap', async () => {
     // Given
     // const { READLINE_ITEM_HOLE } = require('../../../src/constants')
-    const configs = require('../../../src/configs')
+    const configs = require('../../../src/configs');
     const Map = require('../../../src/map/Map');
     const instance = new Map(configs.map);
 
@@ -16,11 +16,7 @@ describe('Map.reCaclulateHeatMap()', () => {
 
     // Then
     expect(instance.dataHeatMap.data).to.deep.equal([
-      [
-        [0, 1, 0, 0, 0, 0],
-        [0, 0.625, 0, 0, 0, 0],
-        [0, 0.390625, 0, 0, 0, 0]
-      ],
+      [[0, 1, 0, 0, 0, 0], [0, 0.625, 0, 0, 0, 0], [0, 0.390625, 0, 0, 0, 0]],
       [
         [0, 0.625, 0, 0, 0, 0],
         [0, 0.390625, 0, 0, 0, 0],
@@ -41,15 +37,11 @@ describe('Map.reCaclulateHeatMap()', () => {
         [0, 0.09536743164, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0]
       ],
-      [
-        [0, 0.09536743164, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-      ]
+      [[0, 0.09536743164, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
     ]);
   });
 
-  it('updates heatmap less than 5ms', async () =>{
+  it('updates heatmap less than 5ms', async () => {
     // Given
     const {
       READLINE_ITEM_HOLE,
@@ -57,8 +49,8 @@ describe('Map.reCaclulateHeatMap()', () => {
       READLINE_ENTITY_ENEMY_ROBOT,
       READLINE_ENTITY_RADAR,
       READLINE_ENTITY_MINE
-    } = require('../../../src/constants')
-    const configs = require('../../../src/configs')
+    } = require('../../../src/constants');
+    const configs = require('../../../src/configs');
     const Map = require('../../../src/map/Map');
     const instance = new Map(configs.map);
 
@@ -68,26 +60,42 @@ describe('Map.reCaclulateHeatMap()', () => {
       for (let y = 0, yMax = instance.cells.height; y < yMax; y++) {
         instance.processOreInput({ x, y, amount: 10 });
         instance.processHoleInput({ x, y, hole: READLINE_ITEM_HOLE });
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_ALLIED_ROBOT })
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_ENEMY_ROBOT })
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR })
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_MINE })
+        instance.processEntityInput({
+          x,
+          y,
+          type: READLINE_ENTITY_ALLIED_ROBOT
+        });
+        instance.processEntityInput({
+          x,
+          y,
+          type: READLINE_ENTITY_ENEMY_ROBOT
+        });
+        instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR });
+        instance.processEntityInput({ x, y, type: READLINE_ENTITY_MINE });
       }
     }
 
-    instance.resetEntities()
+    instance.resetEntities();
 
     for (let x = 0, xMax = instance.cells.width; x < xMax; x++) {
       for (let y = 0, yMax = instance.cells.height; y < yMax; y++) {
         instance.processOreInput({ x, y, amount: 10 });
         instance.processHoleInput({ x, y, hole: READLINE_ITEM_HOLE });
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_ALLIED_ROBOT })
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_ENEMY_ROBOT })
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR })
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_MINE })
+        instance.processEntityInput({
+          x,
+          y,
+          type: READLINE_ENTITY_ALLIED_ROBOT
+        });
+        instance.processEntityInput({
+          x,
+          y,
+          type: READLINE_ENTITY_ENEMY_ROBOT
+        });
+        instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR });
+        instance.processEntityInput({ x, y, type: READLINE_ENTITY_MINE });
       }
     }
-    
+
     const start = new Date().getTime();
 
     instance.reCaclulateHeatMap();

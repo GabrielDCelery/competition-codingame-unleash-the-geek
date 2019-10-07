@@ -1,4 +1,4 @@
-const Map = require('./Map')
+const Map = require('./Map');
 
 module.exports = {
   Map

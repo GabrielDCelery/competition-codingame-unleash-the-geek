@@ -11,7 +11,7 @@ class Data {
       ENEMY_ROBOT: 3,
       RADAR: 4,
       MINE: 5
-    }
+    };
   }
 
   has({ what }) {
@@ -19,7 +19,7 @@ class Data {
   }
 
   get({ what }) {
-    return this.values[what]
+    return this.values[what];
   }
 
   getAll() {
@@ -27,18 +27,18 @@ class Data {
   }
 
   add({ what, amount }) {
-    return this.values[what] += amount;
+    return (this.values[what] += amount);
   }
 
   set({ what, amount }) {
-    return this.values[what] = amount;
+    return (this.values[what] = amount);
   }
 
   resetEntities() {
-    this.values[Data.AMOUNTS.ALLIED_ROBOT] = 0
-    this.values[Data.AMOUNTS.ENEMY_ROBOT] = 0
-    this.values[Data.AMOUNTS.RADAR] = 0
-    this.values[Data.AMOUNTS.MINE] = 0
+    this.values[Data.AMOUNTS.ALLIED_ROBOT] = 0;
+    this.values[Data.AMOUNTS.ENEMY_ROBOT] = 0;
+    this.values[Data.AMOUNTS.RADAR] = 0;
+    this.values[Data.AMOUNTS.MINE] = 0;
   }
 }
 

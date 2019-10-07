@@ -3,4 +3,4 @@ module.exports = {
   COMMAND_MOVE: 'MOVE',
   COMMAND_DIG: 'DIG',
   COMMAND_WAIT: 'WAIT'
-}
+};

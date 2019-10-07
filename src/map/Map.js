@@ -5,19 +5,23 @@ const {
   READLINE_ENTITY_ENEMY_ROBOT,
   READLINE_ENTITY_RADAR,
   READLINE_ENTITY_MINE
-} = require('../constants')
+} = require('../constants');
 
-const Data = require('./Data')
+const Data = require('./Data');
 const Cells = require('./Cells');
 const Zones = require('./Zones');
-const DataHeatMap = require('./DataHeatMap')
+const DataHeatMap = require('./DataHeatMap');
 
 class Map {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY, heatMapDropRate }) {
     this.totals = new Data();
     this.cells = new Cells({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
     this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
-    this.dataHeatMap = new DataHeatMap({ totals: this.totals, zones: this.zones, heatMapDropRate });
+    this.dataHeatMap = new DataHeatMap({
+      totals: this.totals,
+      zones: this.zones,
+      heatMapDropRate
+    });
   }
 
   processHoleInput({ x, y, hole }) {
@@ -34,7 +38,7 @@ class Map {
       what: Data.AMOUNTS.HOLE,
       amount: 1
     });
-    this.totals.add({ what: Data.AMOUNTS.HOLE, amount: 1 })
+    this.totals.add({ what: Data.AMOUNTS.HOLE, amount: 1 });
 
     return this;
   }
@@ -49,19 +53,19 @@ class Map {
       what: Data.AMOUNTS.ORE
     });
     const currentCellAmount = this.cells.get({ x, y, what: Data.AMOUNTS.ORE });
-    const currentTotalAmount = this.totals.get({ what: Data.AMOUNTS.ORE })
+    const currentTotalAmount = this.totals.get({ what: Data.AMOUNTS.ORE });
 
     this.zones.set({
       ...this.cells.getZoneCoordinates({ x, y }),
       what: Data.AMOUNTS.ORE,
       amount: currentZoneAmount - currentCellAmount + amount
-    })
+    });
     this.totals.set({
       what: Data.AMOUNTS.ORE,
       amount: currentTotalAmount - currentCellAmount + amount
-    })
+    });
 
-    this.cells.set({ x, y, what: Data.AMOUNTS.ORE, amount })
+    this.cells.set({ x, y, what: Data.AMOUNTS.ORE, amount });
 
     return this;
   }
@@ -83,7 +87,7 @@ class Map {
         this.totals.add({
           what: Data.AMOUNTS.ALLIED_ROBOT,
           amount: 1
-        })
+        });
         return this;
       }
       case READLINE_ENTITY_ENEMY_ROBOT: {
@@ -101,7 +105,7 @@ class Map {
         this.totals.add({
           what: Data.AMOUNTS.ENEMY_ROBOT,
           amount: 1
-        })
+        });
         return this;
       }
       case READLINE_ENTITY_RADAR: {
@@ -110,7 +114,7 @@ class Map {
           y,
           what: Data.AMOUNTS.RADAR,
           amount: 1
-        })
+        });
         this.zones.add({
           ...this.cells.getZoneCoordinates({ x, y }),
           what: Data.AMOUNTS.RADAR,
@@ -119,7 +123,7 @@ class Map {
         this.totals.add({
           what: Data.AMOUNTS.RADAR,
           amount: 1
-        })
+        });
         return this;
       }
       case READLINE_ENTITY_MINE: {
@@ -128,7 +132,7 @@ class Map {
           y,
           what: Data.AMOUNTS.MINE,
           amount: 1
-        })
+        });
         this.zones.add({
           ...this.cells.getZoneCoordinates({ x, y }),
           what: Data.AMOUNTS.MINE,
@@ -137,7 +141,7 @@ class Map {
         this.totals.add({
           what: Data.AMOUNTS.MINE,
           amount: 1
-        })
+        });
         return this;
       }
       default:

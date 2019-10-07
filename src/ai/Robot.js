@@ -1,7 +1,4 @@
-const {
-  READLINE_ITEM_NONE,
-  READLINE_ITEM_ORE
-} = require('../constants')
+const { READLINE_ITEM_NONE, READLINE_ITEM_ORE } = require('../constants');
 
 class Robot {
   constructor({ x, y, item, map }) {

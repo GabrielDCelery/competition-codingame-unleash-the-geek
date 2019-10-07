@@ -9,6 +9,6 @@ describe('Data.constructor()', () => {
     const result = new Data();
 
     // Then
-    expect(result.values).to.deep.equal([0, 0, 0, 0, 0, 0])
+    expect(result.values).to.deep.equal([0, 0, 0, 0, 0, 0]);
   });
 });

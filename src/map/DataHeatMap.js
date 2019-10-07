@@ -1,13 +1,16 @@
-const Data = require('./Data')
-const GridDistanceMapper = require('./GridDistanceMapper')
+const Data = require('./Data');
+const GridDistanceMapper = require('./GridDistanceMapper');
 
 class DataHeatMap {
   constructor({ totals, zones, heatMapDropRate }) {
     this.heatMapDropRate = heatMapDropRate || [1];
     this.totals = totals;
     this.zones = zones;
-    this.zonesDistanceMapper = new GridDistanceMapper({ width: this.zones.width, height: this.zones.height });
-    this.zonesDistanceMapper.mapDistances()
+    this.zonesDistanceMapper = new GridDistanceMapper({
+      width: this.zones.width,
+      height: this.zones.height
+    });
+    this.zonesDistanceMapper.mapDistances();
     this._resetHeatMap();
   }
 
@@ -17,7 +20,9 @@ class DataHeatMap {
       .map(() => new Array(this.zones.height).fill(null));
     for (let x = 0, xMax = this.zones.width; x < xMax; x++) {
       for (let y = 0, yMax = this.zones.height; y < yMax; y++) {
-        this.data[x][y] = JSON.parse(JSON.stringify(new Array(Object.keys(Data.AMOUNTS).length).fill(0)))
+        this.data[x][y] = JSON.parse(
+          JSON.stringify(new Array(Object.keys(Data.AMOUNTS).length).fill(0))
+        );
       }
     }
   }
@@ -27,9 +32,11 @@ class DataHeatMap {
     const total = this.totals.get({ what });
 
     for (let distance = 0; distance < distanceMax; distance++) {
-      const coordinatesAtDistance = this.zonesDistanceMapper.getCoordinatesAtDistance({ x, y, distance });
+      const coordinatesAtDistance = this.zonesDistanceMapper.getCoordinatesAtDistance(
+        { x, y, distance }
+      );
       const rate = this.heatMapDropRate[distance];
-      const incrementBy = value / total * rate;
+      const incrementBy = (value / total) * rate;
 
       for (let i = 0, iMax = coordinatesAtDistance.length; i < iMax; i++) {
         const [heatMapX, heatMapY] = coordinatesAtDistance[i];
@@ -41,7 +48,10 @@ class DataHeatMap {
   reCaclulateHeatMap() {
     this._resetHeatMap();
     const whats = Object.values(Data.AMOUNTS);
-    const distanceMax = Math.min(this.zonesDistanceMapper.getMaxDistance(), this.heatMapDropRate.length);
+    const distanceMax = Math.min(
+      this.zonesDistanceMapper.getMaxDistance(),
+      this.heatMapDropRate.length
+    );
 
     for (let x = 0, xMax = this.zones.width; x < xMax; x++) {
       for (let y = 0, yMax = this.zones.height; y < yMax; y++) {

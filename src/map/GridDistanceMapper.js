@@ -7,32 +7,43 @@ class GridDistanceMapper {
       top: 0,
       right: this.width - 1,
       bottom: this.height - 1
-    }
+    };
   }
 
   _isOffsetAtDistance({ offsetX, offsetY, distance }) {
-    return (Math.abs(offsetX) + Math.abs(offsetY)) === distance
+    return Math.abs(offsetX) + Math.abs(offsetY) === distance;
   }
 
   _areCoordinatesInsideGrid({ x, y }) {
-    return this.boundaries.left <= x &&
+    return (
+      this.boundaries.left <= x &&
       x <= this.boundaries.right &&
       this.boundaries.top <= y &&
-      y <= this.boundaries.bottom;
+      y <= this.boundaries.bottom
+    );
   }
 
   _getCellsAtSpecificDistance({ x, y, distance }) {
     const cellsAtDistance = [];
 
-    for (let offsetX = -Math.abs(distance), offsetXMax = distance; offsetX <= offsetXMax; offsetX++) {
-      for (let offsetY = -Math.abs(distance), offsetYMax = distance; offsetY <= offsetYMax; offsetY++) {
+    for (
+      let offsetX = -Math.abs(distance), offsetXMax = distance;
+      offsetX <= offsetXMax;
+      offsetX++
+    ) {
+      for (
+        let offsetY = -Math.abs(distance), offsetYMax = distance;
+        offsetY <= offsetYMax;
+        offsetY++
+      ) {
         if (
           this._isOffsetAtDistance({ offsetX, offsetY, distance }) &&
           this._areCoordinatesInsideGrid({
             x: x + offsetX,
             y: y + offsetY
-          })) {
-          cellsAtDistance.push([x + offsetX, y + offsetY])
+          })
+        ) {
+          cellsAtDistance.push([x + offsetX, y + offsetY]);
         }
       }
     }
@@ -41,20 +52,25 @@ class GridDistanceMapper {
   }
 
   mapDistances({ maxDistance } = { maxDistance: Infinity }) {
-    this.maxDistance = Math.min(maxDistance, Math.max(this.width, this.height))
-    this.data = new Array(this.width)
-      .fill(null)
-      .map(() => {
-        return new Array(this.height)
-          .fill(null).map(() => {
-            return new Array(this.maxDistance).fill(null);
-          })
-      })
+    this.maxDistance = Math.min(maxDistance, Math.max(this.width, this.height));
+    this.data = new Array(this.width).fill(null).map(() => {
+      return new Array(this.height).fill(null).map(() => {
+        return new Array(this.maxDistance).fill(null);
+      });
+    });
 
-    for (let distance = 0, distanceMax = this.maxDistance; distance <= distanceMax; distance++) {
+    for (
+      let distance = 0, distanceMax = this.maxDistance;
+      distance <= distanceMax;
+      distance++
+    ) {
       for (let x = 0, xMax = this.width; x < xMax; x++) {
         for (let y = 0, yMax = this.height; y < yMax; y++) {
-          const cellsAtDistance = this._getCellsAtSpecificDistance({ x, y, distance });
+          const cellsAtDistance = this._getCellsAtSpecificDistance({
+            x,
+            y,
+            distance
+          });
 
           this.data[x][y][distance] = cellsAtDistance;
         }

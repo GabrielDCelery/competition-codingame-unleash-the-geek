@@ -8,14 +8,14 @@ describe('GridDistanceMapper.getCoordinatesAtDistance()', () => {
     const instance = new GridDistanceMapper(config);
 
     // When
-    instance.mapDistances()
-    const result = instance.getCoordinatesAtDistance({ x: 0, y: 0, distance: 2 })
+    instance.mapDistances();
+    const result = instance.getCoordinatesAtDistance({
+      x: 0,
+      y: 0,
+      distance: 2
+    });
 
     // Then
-    expect(result).to.deep.equal([
-      [0, 2],
-      [1, 1],
-      [2, 0]
-    ]);
+    expect(result).to.deep.equal([[0, 2], [1, 1], [2, 0]]);
   });
 });

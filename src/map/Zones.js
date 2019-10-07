@@ -1,4 +1,4 @@
-const Data = require('./Data')
+const Data = require('./Data');
 
 class Zones {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
@@ -16,23 +16,23 @@ class Zones {
   }
 
   has({ x, y, what }) {
-    return this.data[x][y].has({ what })
+    return this.data[x][y].has({ what });
   }
 
   get({ x, y, what }) {
-    return this.data[x][y].get({ what })
+    return this.data[x][y].get({ what });
   }
 
   getAll({ x, y }) {
-    return this.data[x][y].getAll()
+    return this.data[x][y].getAll();
   }
 
   add({ x, y, what, amount }) {
-    return this.data[x][y].add({ what, amount })
+    return this.data[x][y].add({ what, amount });
   }
 
   set({ x, y, what, amount }) {
-    return this.data[x][y].set({ what, amount })
+    return this.data[x][y].set({ what, amount });
   }
 
   resetEntities() {

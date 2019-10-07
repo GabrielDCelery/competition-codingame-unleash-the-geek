@@ -9,4 +9,4 @@ module.exports = {
   READLINE_ITEM_RADAR: 2,
   READLINE_ITEM_MINE: 3,
   READLINE_ITEM_ORE: 4
-}
+};

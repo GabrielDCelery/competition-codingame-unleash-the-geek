@@ -1,5 +1,5 @@
-const map = require('./map')
+const map = require('./map');
 
 module.exports = {
   map
-}
+};

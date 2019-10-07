@@ -1,12 +1,10 @@
-const {
-  READLINE_ENTITY_ALLIED_ROBOT
-} = require('../constants')
-const Robot = require('./Robot')
-const RobotAI = require('./RobotAI')
+const { READLINE_ENTITY_ALLIED_ROBOT } = require('../constants');
+const Robot = require('./Robot');
+const RobotAI = require('./RobotAI');
 
 class Player {
   constructor({ map }) {
-    this.robots = {}
+    this.robots = {};
     this.map = map;
     this.radarCooldown = Infinity;
     this.trapCooldown = Infinity;
@@ -23,7 +21,7 @@ class Player {
         hasOreInZone: this.hasOreInZone,
         hasOreInAdjacentZone: this.hasOreInAdjacentZone
       }
-    })
+    });
   }
 
   setRadarCooldown(radarCooldown) {
@@ -46,21 +44,17 @@ class Player {
     return this.radarCooldown === 0;
   }
 
-  normalizedDistanceFromHQ(robotId) {
-
-  }
+  normalizedDistanceFromHQ(robotId) {}
 
   hasOreInZone(robotId) {
-    const { x, y } = this.robots[robotId]
+    const { x, y } = this.robots[robotId];
   }
 
-  hasOreInAdjacentZone() {
-
-  }
+  hasOreInAdjacentZone() {}
 
   processEntityInput({ x, y, type, id, item }) {
     if (type === READLINE_ENTITY_ALLIED_ROBOT) {
-      this.robots[id] = new Robot({ x, y, item , map: this.map});
+      this.robots[id] = new Robot({ x, y, item, map: this.map });
     }
   }
 
@@ -69,7 +63,7 @@ class Player {
 
     for (let i = 0, iMax = robotIds.length; i < iMax; i++) {
       //const action = this.robotAI.getAction(robotIds[i]);
-      console.log('MOVE 8 4')
+      console.log('MOVE 8 4');
     }
   }
 }
