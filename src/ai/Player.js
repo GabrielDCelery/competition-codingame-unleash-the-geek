@@ -1,4 +1,4 @@
-const { READLINE_ENTITY_ALLIED_ROBOT } = require('../constants');
+const { ENTITY_ALLIED_ROBOT } = require('../constants');
 const Robot = require('./Robot');
 
 class Player {
@@ -16,29 +16,35 @@ class Player {
       radarCooldown: radarCooldown,
       trapCooldown: trapCooldown,
       actionsTaken: {
-        pickupRadar: false
+        pickupRadar: false,
+        pickupOre: {}
       }
     };
   }
 
   processEntityInput({ x, y, type, id, item }) {
-    if (type === READLINE_ENTITY_ALLIED_ROBOT) {
+    if (type === ENTITY_ALLIED_ROBOT) {
       this.robots[id] = new Robot({
         x,
         y,
         item,
         map: this.map,
         gameState: this.gameState
-      });
+      }).resetShortTermMemory();
     }
   }
 
   generateCommandsForAlliedRobots() {
-    const robotIds = Object.keys(this.robots);
+    const robotIds = Object.keys(this.robots).sort();
+    const actionsToExecute = [];
 
     for (let i = 0, iMax = robotIds.length; i < iMax; i++) {
-      //const action = this.robots[robotIds[i]].getAction();
-      console.log('MOVE 8 4');
+      const action = this.robots[robotIds[i]].generateCommand();
+      actionsToExecute.push(action);
+    }
+
+    for (let i = 0, iMax = actionsToExecute.length; i < iMax; i++) {
+      console.log(actionsToExecute[i]);
     }
   }
 }

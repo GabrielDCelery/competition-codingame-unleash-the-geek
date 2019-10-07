@@ -1,18 +1,18 @@
 const { expect } = require('chai');
 
-describe('Map.reCaclulateHeatMap()', () => {
+describe('Map.getHeatMap().reCalculateHeatMap()', () => {
   it('generates a new heatmap', async () => {
     // Given
-    // const { READLINE_ITEM_HOLE } = require('../../../src/constants')
+    // const { ITEM_HOLE } = require('../../../src/constants')
     const configs = require('../../../src/configs');
     const Map = require('../../../src/map/Map');
     const instance = new Map(configs.map);
 
     // When
 
-    //instance.processHoleInput({ x: 0, y: 0, hole: READLINE_ITEM_HOLE });
+    //instance.processHoleInput({ x: 0, y: 0, hole: ITEM_HOLE });
     instance.processOreInput({ x: 0, y: 0, amount: 100 });
-    instance.reCaclulateHeatMap();
+    instance.getHeatMap().reCalculateHeatMap();
 
     // Then
     expect(instance.dataHeatMap.data).to.deep.equal([
@@ -44,11 +44,11 @@ describe('Map.reCaclulateHeatMap()', () => {
   it('updates heatmap less than 5ms', async () => {
     // Given
     const {
-      READLINE_ITEM_HOLE,
-      READLINE_ENTITY_ALLIED_ROBOT,
-      READLINE_ENTITY_ENEMY_ROBOT,
-      READLINE_ENTITY_RADAR,
-      READLINE_ENTITY_MINE
+      ITEM_HOLE,
+      ENTITY_ALLIED_ROBOT,
+      ENTITY_ENEMY_ROBOT,
+      ENTITY_RADAR,
+      ENTITY_MINE
     } = require('../../../src/constants');
     const configs = require('../../../src/configs');
     const Map = require('../../../src/map/Map');
@@ -59,19 +59,19 @@ describe('Map.reCaclulateHeatMap()', () => {
     for (let x = 0, xMax = instance.cells.width; x < xMax; x++) {
       for (let y = 0, yMax = instance.cells.height; y < yMax; y++) {
         instance.processOreInput({ x, y, amount: 10 });
-        instance.processHoleInput({ x, y, hole: READLINE_ITEM_HOLE });
+        instance.processHoleInput({ x, y, hole: ITEM_HOLE });
         instance.processEntityInput({
           x,
           y,
-          type: READLINE_ENTITY_ALLIED_ROBOT
+          type: ENTITY_ALLIED_ROBOT
         });
         instance.processEntityInput({
           x,
           y,
-          type: READLINE_ENTITY_ENEMY_ROBOT
+          type: ENTITY_ENEMY_ROBOT
         });
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR });
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_MINE });
+        instance.processEntityInput({ x, y, type: ENTITY_RADAR });
+        instance.processEntityInput({ x, y, type: ENTITY_MINE });
       }
     }
 
@@ -80,25 +80,25 @@ describe('Map.reCaclulateHeatMap()', () => {
     for (let x = 0, xMax = instance.cells.width; x < xMax; x++) {
       for (let y = 0, yMax = instance.cells.height; y < yMax; y++) {
         instance.processOreInput({ x, y, amount: 10 });
-        instance.processHoleInput({ x, y, hole: READLINE_ITEM_HOLE });
+        instance.processHoleInput({ x, y, hole: ITEM_HOLE });
         instance.processEntityInput({
           x,
           y,
-          type: READLINE_ENTITY_ALLIED_ROBOT
+          type: ENTITY_ALLIED_ROBOT
         });
         instance.processEntityInput({
           x,
           y,
-          type: READLINE_ENTITY_ENEMY_ROBOT
+          type: ENTITY_ENEMY_ROBOT
         });
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_RADAR });
-        instance.processEntityInput({ x, y, type: READLINE_ENTITY_MINE });
+        instance.processEntityInput({ x, y, type: ENTITY_RADAR });
+        instance.processEntityInput({ x, y, type: ENTITY_MINE });
       }
     }
 
     const start = new Date().getTime();
 
-    instance.reCaclulateHeatMap();
+    instance.getHeatMap().reCalculateHeatMap();
 
     const end = new Date().getTime();
 

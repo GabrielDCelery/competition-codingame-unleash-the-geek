@@ -29,6 +29,14 @@ class Cells {
     this.cellsDistanceMapper.mapDistances({ maxDistance: 3 });
   }
 
+  getWidth() {
+    return this.width;
+  }
+
+  getHeight() {
+    return this.height;
+  }
+
   getDistanceMapper() {
     return this.cellsDistanceMapper;
   }

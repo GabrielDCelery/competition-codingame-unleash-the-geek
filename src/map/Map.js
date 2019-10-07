@@ -1,10 +1,10 @@
 const {
-  READLINE_ITEM_HOLE,
-  READLINE_ORE_AMOUNT_UNKNOWN,
-  READLINE_ENTITY_ALLIED_ROBOT,
-  READLINE_ENTITY_ENEMY_ROBOT,
-  READLINE_ENTITY_RADAR,
-  READLINE_ENTITY_MINE
+  ITEM_HOLE,
+  ITEM_ORE_UNKNOWN_AMOUNT,
+  ENTITY_ALLIED_ROBOT,
+  ENTITY_ENEMY_ROBOT,
+  ENTITY_RADAR,
+  ENTITY_MINE
 } = require('../constants');
 
 const Data = require('./Data');
@@ -32,9 +32,17 @@ class Map {
     return this.cells;
   }
 
+  getZones() {
+    return this.zones;
+  }
+
+  getHeatMap() {
+    return this.dataHeatMap;
+  }
+
   processHoleInput({ x, y, hole }) {
     if (
-      hole !== READLINE_ITEM_HOLE ||
+      hole !== ITEM_HOLE ||
       this.cells.has({ x, y, what: Data.AMOUNTS.HOLE })
     ) {
       return this;
@@ -52,7 +60,7 @@ class Map {
   }
 
   processOreInput({ x, y, amount }) {
-    if (amount === READLINE_ORE_AMOUNT_UNKNOWN) {
+    if (amount === ITEM_ORE_UNKNOWN_AMOUNT) {
       return this;
     }
 
@@ -80,7 +88,7 @@ class Map {
 
   processEntityInput({ x, y, type }) {
     switch (type) {
-      case READLINE_ENTITY_ALLIED_ROBOT: {
+      case ENTITY_ALLIED_ROBOT: {
         this.cells.add({
           x,
           y,
@@ -98,7 +106,7 @@ class Map {
         });
         return this;
       }
-      case READLINE_ENTITY_ENEMY_ROBOT: {
+      case ENTITY_ENEMY_ROBOT: {
         this.cells.add({
           x,
           y,
@@ -116,7 +124,7 @@ class Map {
         });
         return this;
       }
-      case READLINE_ENTITY_RADAR: {
+      case ENTITY_RADAR: {
         this.cells.set({
           x,
           y,
@@ -134,7 +142,7 @@ class Map {
         });
         return this;
       }
-      case READLINE_ENTITY_MINE: {
+      case ENTITY_MINE: {
         this.cells.set({
           x,
           y,
@@ -161,10 +169,6 @@ class Map {
     this.totals.resetEntities();
     this.cells.resetEntities();
     this.zones.resetEntities();
-  }
-
-  reCaclulateHeatMap() {
-    this.dataHeatMap.reCaclulateHeatMap();
   }
 }
 

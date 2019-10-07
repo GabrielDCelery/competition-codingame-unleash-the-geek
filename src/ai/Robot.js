@@ -1,7 +1,11 @@
 const {
-  READLINE_ITEM_NONE,
-  READLINE_ITEM_ORE,
-  READLINE_ITEM_RADAR
+  ITEM_NONE,
+  ITEM_ORE,
+  ITEM_RADAR,
+  COMMAND_REQUEST,
+  COMMAND_MOVE,
+  COMMAND_DIG,
+  COMMAND_WAIT
 } = require('../constants');
 const RobotAI = rerquire('./RobotAI');
 
@@ -12,12 +16,13 @@ class Robot {
     this.item = item;
     this.map = map;
     this.gameState = gameState;
-    this.isCargoEmpty = this.isCargoEmpty.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
     this.doesCargoHaveRadar = this.doesCargoHaveRadar.bind(this);
+    this.doIExist = this.doIExist.bind(this);
+    this.hasOreNearby = this.hasOreNearby.bind(this);
+    this.isCargoEmpty = this.isCargoEmpty.bind(this);
     this.isRadarAvailable = this.isRadarAvailable.bind(this);
     this.normalizedDistanceFromHQ = this.normalizedDistanceFromHQ.bind(this);
-    this.hasOreNearby = this.hasOreNearby.bind(this);
 
     this.deliverOreToHome = this.deliverOreToHome.bind(this);
     this.deployRadar = this.deployRadar.bind(this);
@@ -26,16 +31,10 @@ class Robot {
     this.moveToBetterPosition = this.moveToBetterPosition.bind(this);
 
     this.robotAI = new RobotAI({
-      actions: {
-        deliverOreToHome: this.deliverOreToHome,
-        deployRadar: this.deployRadar,
-        pickupRadar: this.pickupRadar,
-        collectNearbyOre: this.collectNearbyOre,
-        moveToBetterPosition: this.moveToBetterPosition
-      },
       stateGetters: {
         doesCargoHaveRadar: this.doesCargoHaveRadar,
         doesCargoHaveOre: this.doesCargoHaveOre,
+        doIExist: this.doIExist,
         hasOreNearby: this.hasOreNearby,
         isCargoEmpty: this.isCargoEmpty,
         isRadarAvailable: this.isRadarAvailable,
@@ -44,18 +43,40 @@ class Robot {
     });
   }
 
+  resetShortTermMemory() {
+    this.memory = {
+      harvestableOre: null
+    };
+  }
+
+  _convertCoordinatesToKey({ x, y }) {
+    return `${x}_${y}`;
+  }
+
+  // ****************************** STATE GETTERS ****************************** //
+
   doesCargoHaveOre() {
-    return this.item === READLINE_ITEM_ORE;
+    return this.item === ITEM_ORE;
   }
 
   doesCargoHaveRadar() {
-    return this.item === READLINE_ITEM_RADAR;
+    return this.item === ITEM_RADAR;
+  }
+
+  doIExist() {
+    return true;
   }
 
   _hasCellHarvestableOre({ x, y }) {
     const bCellHasOre = this.map
       .getCells()
       .has({ x, y, what: this.map.getDataClass().AMOUNTS.ORE });
+    // TODO ACCOUNT FOR ENEMY AND MINES
+    const bMarkedForPickup = this.gameState.actionsTaken.pickupOre[
+      this._convertCoordinatesToKey({ x, y })
+    ];
+
+    return bCellHasOre && !bMarkedForPickup;
   }
 
   hasOreNearby() {
@@ -76,13 +97,20 @@ class Robot {
       for (let i = 0, iMax = coordinates.length; i < iMax; i++) {
         const [cellX, cellY] = coordinates[i];
         if (this._hasCellHarvestableOre({ x: cellX, y: cellY })) {
+          this.memory.harvestableOre = {
+            x: cellX,
+            y: cellY
+          };
+          return true;
         }
       }
     }
+
+    return false;
   }
 
   isCargoEmpty() {
-    return this.item === READLINE_ITEM_NONE;
+    return this.item === ITEM_NONE;
   }
 
   isRadarAvailable() {
@@ -93,21 +121,48 @@ class Robot {
   }
 
   normalizedDistanceFromHQ() {
-    return this.x / this.map.getCells().width;
+    return this.x / this.map.getCells().getWidth();
   }
 
-  deliverOreToHome() {}
+  // ****************************** COMMAND GENERATORS ****************************** //
+
+  deliverOreToHome() {
+    if (this.x === 0) {
+      return COMMAND_WAIT;
+    }
+
+    return `${COMMAND_MOVE} 0 ${this.y}`;
+  }
 
   deployRadar() {}
 
-  pickupRadar() {}
+  pickupRadar() {
+    this.gameState.actionsTaken.pickupRadar = true;
 
-  collectNearbyOre() {}
+    if (this.x === 0) {
+      return `${COMMAND_REQUEST} ${ITEM_RADAR}`;
+    }
 
-  moveToBetterPosition() {}
+    return `${COMMAND_MOVE} 0 ${this.y}`;
+  }
 
-  getAction() {
-    return this.robotAI.getAction();
+  collectNearbyOre() {
+    const { x, y } = this.memory.harvestableOre;
+    this.gameState.actionsTaken.pickupOre[
+      this._convertCoordinatesToKey({ x, y })
+    ] = true;
+
+    return `${COMMAND_DIG} ${x} ${y}`;
+  }
+
+  moveToBetterPosition() {
+    this.map.getHeatMap();
+  }
+
+  generateCommand() {
+    const action = this.robotAI.getAction();
+
+    return this[action]();
   }
 }
 

@@ -45,7 +45,7 @@ class DataHeatMap {
     }
   }
 
-  reCaclulateHeatMap() {
+  reCalculateHeatMap() {
     this._resetHeatMap();
     const whats = Object.values(Data.AMOUNTS);
     const distanceMax = Math.min(
@@ -63,6 +63,10 @@ class DataHeatMap {
         }
       }
     }
+  }
+
+  getData({ x, y }) {
+    return this.data[x][y];
   }
 }
 

@@ -8,7 +8,7 @@ describe('Map.setCellOreAmount()', () => {
     const instance = new Map(config);
 
     // When
-    instance.setCellOreAmount({ x: 1, y: 2, amount: 21 })
+    instance.setCellOreAmount({ x: 1, y: 2, amount: 21 });
 
     // Then
     expect(instance.cells.data).to.deep.equal([
@@ -38,15 +38,9 @@ describe('Map.setCellOreAmount()', () => {
       ]
     ]);
     expect(instance.zones.data).to.deep.equal([
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 21, 0, 0, 0, 0]
-      ],
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-      ]
-    ])
+      [[0, 0, 0, 0, 0, 0], [0, 21, 0, 0, 0, 0]],
+      [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+    ]);
   });
 
   it('sets the ore amount on a cell if it already has ore on it', async () => {
@@ -56,8 +50,8 @@ describe('Map.setCellOreAmount()', () => {
     const instance = new Map(config);
 
     // When
-    instance.setCellOreAmount({ x: 1, y: 2, amount: 21 })
-    instance.setCellOreAmount({ x: 1, y: 2, amount: 30 })
+    instance.setCellOreAmount({ x: 1, y: 2, amount: 21 });
+    instance.setCellOreAmount({ x: 1, y: 2, amount: 30 });
 
     // Then
     expect(instance.cells.data).to.deep.equal([
@@ -87,18 +81,11 @@ describe('Map.setCellOreAmount()', () => {
       ]
     ]);
     expect(instance.zones.data).to.deep.equal([
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 30, 0, 0, 0, 0]
-      ],
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-      ]
-    ])
+      [[0, 0, 0, 0, 0, 0], [0, 30, 0, 0, 0, 0]],
+      [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+    ]);
   });
 
-  
   it('sets the zones to have the appropriate amount of ore', async () => {
     // Given
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
@@ -106,10 +93,10 @@ describe('Map.setCellOreAmount()', () => {
     const instance = new Map(config);
 
     // When
-    instance.setCellOreAmount({ x: 1, y: 2, amount: 21 })
-    instance.setCellOreAmount({ x: 1, y: 2, amount: 30 })
-    instance.setCellOreAmount({ x: 1, y: 3, amount: 5 })
-    instance.setCellOreAmount({ x: 0, y: 2, amount: 15 })
+    instance.setCellOreAmount({ x: 1, y: 2, amount: 21 });
+    instance.setCellOreAmount({ x: 1, y: 2, amount: 30 });
+    instance.setCellOreAmount({ x: 1, y: 3, amount: 5 });
+    instance.setCellOreAmount({ x: 0, y: 2, amount: 15 });
 
     // Then
     expect(instance.cells.data).to.deep.equal([
@@ -139,26 +126,20 @@ describe('Map.setCellOreAmount()', () => {
       ]
     ]);
     expect(instance.zones.data).to.deep.equal([
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 50, 0, 0, 0, 0]
-      ],
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-      ]
-    ])
+      [[0, 0, 0, 0, 0, 0], [0, 50, 0, 0, 0, 0]],
+      [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+    ]);
   });
 
   it('does not set the ore amount on a cell if the amount is unknown', async () => {
     // Given
-    const { READLINE_ORE_AMOUNT_UNKNOWN } = require('../../../src/constants')
+    const { ITEM_ORE_UNKNOWN_AMOUNT } = require('../../../src/constants');
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
     const Map = require('../../../src/map/Map');
     const instance = new Map(config);
 
     // When
-    instance.setCellOreAmount({ x: 1, y: 2, amount: READLINE_ORE_AMOUNT_UNKNOWN })
+    instance.setCellOreAmount({ x: 1, y: 2, amount: ITEM_ORE_UNKNOWN_AMOUNT });
 
     // Then
     expect(instance.cells.data).to.deep.equal([
@@ -188,14 +169,8 @@ describe('Map.setCellOreAmount()', () => {
       ]
     ]);
     expect(instance.zones.data).to.deep.equal([
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-      ],
-      [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-      ]
-    ])
+      [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]],
+      [[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+    ]);
   });
 });

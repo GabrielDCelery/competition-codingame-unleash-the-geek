@@ -1,6 +1,5 @@
 class RobotAI {
-  constructor({ actions, stateGetters }) {
-    this.actions = actions;
+  constructor({ stateGetters }) {
     this.stateGetters = stateGetters;
     this.actionConfigs = [
       {
@@ -53,7 +52,12 @@ class RobotAI {
       },
       {
         action: 'moveToBetterPosition',
-        scorers: []
+        scorers: [
+          {
+            stateGetter: 'doIExist',
+            stateToPriorityConverter: result => (result ? 50 : 50)
+          }
+        ]
       }
     ];
   }
@@ -102,7 +106,7 @@ class RobotAI {
     );
     const actionToUse = highestWeighedActionConfig['action'];
 
-    return this.actions[actionToUse]();
+    return actionToUse;
   }
 }
 

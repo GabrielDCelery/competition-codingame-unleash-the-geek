@@ -60,6 +60,6 @@ while (true) {
     player.processEntityInput({ x, y, type, id, item });
   }
 
-  map.reCaclulateHeatMap();
+  map.getHeatMap().reCalculateHeatMap();
   player.generateCommandsForAlliedRobots();
 }

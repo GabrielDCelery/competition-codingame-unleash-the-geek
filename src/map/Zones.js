@@ -1,4 +1,5 @@
 const Data = require('./Data');
+const GridDistanceMapper = require('./GridDistanceMapper');
 
 class Zones {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
@@ -13,7 +14,26 @@ class Zones {
         this.data[x][y] = new Data();
       }
     }
+    this.zonesDistanceMapper = new GridDistanceMapper({
+      width: this.width,
+      height: this.height
+    });
+    this.zonesDistanceMapper.mapDistances();
   }
+
+  getWidth() {
+    return this.width;
+  }
+
+  getHeight() {
+    return this.height;
+  }
+
+  getDistanceMapper() {
+    return this.zonesDistanceMapper;
+  }
+
+  getCenterCell({ x, y }) {}
 
   has({ x, y, what }) {
     return this.data[x][y].has({ what });
