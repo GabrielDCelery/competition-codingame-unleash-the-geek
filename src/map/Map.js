@@ -24,6 +24,14 @@ class Map {
     });
   }
 
+  getDataClass() {
+    return Data;
+  }
+
+  getCells() {
+    return this.cells;
+  }
+
   processHoleInput({ x, y, hole }) {
     if (
       hole !== READLINE_ITEM_HOLE ||

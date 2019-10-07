@@ -29,6 +29,10 @@ class Cells {
     this.cellsDistanceMapper.mapDistances({ maxDistance: 3 });
   }
 
+  getDistanceMapper() {
+    return this.cellsDistanceMapper;
+  }
+
   has({ x, y, what }) {
     return this.data[x][y].has({ what });
   }

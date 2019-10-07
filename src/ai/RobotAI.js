@@ -1,5 +1,6 @@
 class RobotAI {
-  constructor({ stateGetters }) {
+  constructor({ actions, stateGetters }) {
+    this.actions = actions;
     this.stateGetters = stateGetters;
     this.actionConfigs = [
       {
@@ -7,6 +8,15 @@ class RobotAI {
         scorers: [
           {
             stateGetter: 'doesCargoHaveOre',
+            stateToPriorityConverter: result => (result ? Infinity : -Infinity)
+          }
+        ]
+      },
+      {
+        action: 'deployRadar',
+        scorers: [
+          {
+            stateGetter: 'doesCargoHaveRadar',
             stateToPriorityConverter: result => (result ? Infinity : -Infinity)
           }
         ]
@@ -51,13 +61,13 @@ class RobotAI {
   selectHighestWeighedActionConfig(weighedActionConfigs) {
     let highestWeighedActionConfig = {
       action: 'none',
-      utility: null
+      priority: null
     };
 
     for (let i = 0, iMax = weighedActionConfigs.length; i < iMax; i++) {
       const weighedActionConfig = weighedActionConfigs[i];
       if (
-        highestWeighedActionConfig['utility'] < weighedActionConfig['utility']
+        highestWeighedActionConfig['priority'] < weighedActionConfig['priority']
       ) {
         highestWeighedActionConfig = weighedActionConfig;
       }
@@ -66,17 +76,15 @@ class RobotAI {
     return highestWeighedActionConfig;
   }
 
-  normalizeArrayValues(arrayValues) {}
-
   sumArrayValues(arrayValues) {
     return arrayValues.reduce((a, b) => a + b, 0);
   }
 
-  getAction(robotId) {
+  getAction() {
     const weighedActionConfigs = this.actionConfigs.map(actionConfig => {
       const { action, scorers } = actionConfig;
       const priorities = scorers.map(scorer => {
-        const result = this.stateGetters[scorer['stateGetter']](robotId);
+        const result = this.stateGetters[scorer['stateGetter']]();
 
         return scorer['stateToPriorityConverter'](result);
       });
@@ -88,11 +96,13 @@ class RobotAI {
         priority: totalPriority
       };
     });
-    /*
-    const highestWeighedActionConfig =
-      this.selectHighestWeighedActionConfig(weighedActionConfigs);
-    const action = highestWeighedActionConfig['action'];
-    */
+
+    const highestWeighedActionConfig = this.selectHighestWeighedActionConfig(
+      weighedActionConfigs
+    );
+    const actionToUse = highestWeighedActionConfig['action'];
+
+    return this.actions[actionToUse]();
   }
 }
 

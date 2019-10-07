@@ -2,12 +2,12 @@
  * Deliver more ore to hq (left side of the map) than your opponent. Use radars to find ore but beware of traps!
  **/
 
-const configs = require('./src/configs')
+const configs = require('./src/configs');
 const { Player } = require('./src/ai');
-const { Map } = require('./src/map')
+const { Map } = require('./src/map');
 const map = new Map(configs.map);
-const player = new Player({ map })
-const { COMMAND_WAIT } = require('./src/constants')
+const player = new Player({ map });
+const { COMMAND_WAIT } = require('./src/constants');
 
 var inputs = readline().split(' ');
 const width = parseInt(inputs[0]);
@@ -21,18 +21,20 @@ while (true) {
   for (let i = 0; i < height; i++) {
     var inputs = readline().split(' ');
     for (let j = 0; j < width; j++) {
-      const ore = inputs[2 * j];// amount of ore or "?" if unknown
-      const hole = parseInt(inputs[2 * j + 1]);// 1 if cell has a hole
+      const ore = inputs[2 * j]; // amount of ore or "?" if unknown
+      const hole = parseInt(inputs[2 * j + 1]); // 1 if cell has a hole
 
-      map.processHoleInput({
-        x: j,
-        y: i,
-        hole: hole
-      }).processOreInput({
-        x: j,
-        y: i,
-        amount: ore
-      });
+      map
+        .processHoleInput({
+          x: j,
+          y: i,
+          hole: hole
+        })
+        .processOreInput({
+          x: j,
+          y: i,
+          amount: ore
+        });
     }
   }
   var inputs = readline().split(' ');
@@ -41,8 +43,10 @@ while (true) {
   const trapCooldown = parseInt(inputs[2]); // turns left until a new trap can be requested
 
   map.resetEntities();
-  player.setRadarCooldown(radarCooldown);
-  player.setTrapCooldown(trapCooldown);
+  player.updateGamaeStateAtTurnStart({
+    radarCooldown,
+    trapCooldown
+  });
 
   for (let i = 0; i < entityCount; i++) {
     var inputs = readline().split(' ');
