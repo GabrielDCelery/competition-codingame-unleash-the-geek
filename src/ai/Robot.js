@@ -8,6 +8,7 @@ const {
   COMMAND_WAIT
 } = require('../constants');
 const RobotAI = rerquire('./RobotAI');
+const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
 
 class Robot {
   constructor({ x, y, item, map, gameState }) {
@@ -41,6 +42,9 @@ class Robot {
         normalizedDistanceFromHQ: this.normalizedDistanceFromHQ
       }
     });
+    this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
+      map: this.map
+    });
   }
 
   resetShortTermMemory() {
@@ -70,7 +74,7 @@ class Robot {
   _hasCellHarvestableOre({ x, y }) {
     const bCellHasOre = this.map
       .getCells()
-      .has({ x, y, what: this.map.getDataClass().AMOUNTS.ORE });
+      .has({ x, y, what: this.map.getAmountKeys().ORE });
     // TODO ACCOUNT FOR ENEMY AND MINES
     const bMarkedForPickup = this.gameState.actionsTaken.pickupOre[
       this._convertCoordinatesToKey({ x, y })
@@ -156,7 +160,12 @@ class Robot {
   }
 
   moveToBetterPosition() {
-    this.map.getHeatMap();
+    this.dataHeatMapEvaluator.getRecommendedCoordinate({
+      robotCellX: this.x,
+      robotCellY: this.y,
+      maxZoneDistance: 2,
+      scorerMethod: DataHeatMapEvaluator.SCORER_METHODS.MOVE_TO_BETTER_POSITION
+    });
   }
 
   generateCommand() {

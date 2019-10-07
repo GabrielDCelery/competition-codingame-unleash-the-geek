@@ -14,6 +14,10 @@ class DataHeatMap {
     this._resetHeatMap();
   }
 
+  getAmountKeys() {
+    return { ...Data.AMOUNTS };
+  }
+
   _resetHeatMap() {
     this.data = new Array(this.zones.width)
       .fill(null)

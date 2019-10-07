@@ -35,6 +35,18 @@ class Zones {
     return this.zonesDistanceMapper;
   }
 
+  getNormalizedDistance({ startX, startY, endX, endY }) {
+    const diffX = Math.abs(startX - endX);
+    const diffY = Math.abs(startY - endY);
+    const diff = diffX + diffY;
+
+    if (diff === 0) {
+      return;
+    }
+
+    return (diffX + diffY) / (this.width + this.height - 2);
+  }
+
   getCenterCell({ x, y }) {
     const left = x * this.zoneSizeX;
     const right = (x + 1) * this.zoneSizeX;

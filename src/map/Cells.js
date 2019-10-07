@@ -41,6 +41,16 @@ class Cells {
     return this.cellsDistanceMapper;
   }
 
+  getNormalizedDistance({ startX, startY, endX, endY }) {
+    const diff = Math.abs(startX - endX) + Math.abs(startY - endY);
+
+    if (diff === 0) {
+      return;
+    }
+
+    return (diffX + diffY) / (this.width + this.height - 2);
+  }
+
   has({ x, y, what }) {
     return this.data[x][y].has({ what });
   }

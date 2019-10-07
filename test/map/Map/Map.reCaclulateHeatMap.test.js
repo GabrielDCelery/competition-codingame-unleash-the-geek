@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 
-describe('Map.getHeatMap().reCalculateHeatMap()', () => {
+describe('Map.getDataHeatMap().reCalculateHeatMap()', () => {
   it('generates a new heatmap', async () => {
     // Given
     // const { ITEM_HOLE } = require('../../../src/constants')
@@ -12,7 +12,7 @@ describe('Map.getHeatMap().reCalculateHeatMap()', () => {
 
     //instance.processHoleInput({ x: 0, y: 0, hole: ITEM_HOLE });
     instance.processOreInput({ x: 0, y: 0, amount: 100 });
-    instance.getHeatMap().reCalculateHeatMap();
+    instance.getDataHeatMap().reCalculateHeatMap();
 
     // Then
     expect(instance.dataHeatMap.data).to.deep.equal([
@@ -98,7 +98,7 @@ describe('Map.getHeatMap().reCalculateHeatMap()', () => {
 
     const start = new Date().getTime();
 
-    instance.getHeatMap().reCalculateHeatMap();
+    instance.getDataHeatMap().reCalculateHeatMap();
 
     const end = new Date().getTime();
 

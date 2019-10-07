@@ -24,8 +24,8 @@ class Map {
     });
   }
 
-  getDataClass() {
-    return Data;
+  getAmountKeys() {
+    return { ...Data.AMOUNTS };
   }
 
   getCells() {
@@ -36,7 +36,7 @@ class Map {
     return this.zones;
   }
 
-  getHeatMap() {
+  getDataHeatMap() {
     return this.dataHeatMap;
   }
 
