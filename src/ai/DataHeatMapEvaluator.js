@@ -60,7 +60,7 @@ class DataHeatMapEvaluator {
         });
 
       for (let i = 0, iMax = zoneCoordinatesToCheck.length; i < iMax; i++) {
-        const [zoneToCheckX, zoneToCheckY] = zoneCoordinateToCheck[i];
+        const [zoneToCheckX, zoneToCheckY] = zoneCoordinatesToCheck[i];
         const zoneToCheckCenterCoordinates = this.map
           .getZones()
           .getCenterCell({ x: zoneToCheckX, y: zoneToCheckY });
@@ -71,7 +71,9 @@ class DataHeatMapEvaluator {
           endY: zoneToCheckCenterCoordinates['y']
         });
 
-        const data = this.map.getDataHeatMap().getData({ x, y });
+        const data = this.map
+          .getDataHeatMap()
+          .getData({ x: zoneToCheckX, y: zoneToCheckY });
         const score = this[scorerMethod]({ data, normalizedDistance });
 
         if (suggestionScore < score) {

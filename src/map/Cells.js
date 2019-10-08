@@ -48,7 +48,7 @@ class Cells {
       return;
     }
 
-    return (diffX + diffY) / (this.width + this.height - 2);
+    return diff / (this.width + this.height - 2);
   }
 
   has({ x, y, what }) {

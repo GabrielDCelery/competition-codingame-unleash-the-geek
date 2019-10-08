@@ -36,15 +36,13 @@ class Zones {
   }
 
   getNormalizedDistance({ startX, startY, endX, endY }) {
-    const diffX = Math.abs(startX - endX);
-    const diffY = Math.abs(startY - endY);
-    const diff = diffX + diffY;
+    const diff = Math.abs(startX - endX) + Math.abs(startY - endY);
 
     if (diff === 0) {
       return;
     }
 
-    return (diffX + diffY) / (this.width + this.height - 2);
+    return diff / (this.width + this.height - 2);
   }
 
   getCenterCell({ x, y }) {
