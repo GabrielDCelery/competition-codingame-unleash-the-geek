@@ -44,16 +44,29 @@ class Player {
 
   generateCommandsForAlliedRobots() {
     const robotIds = Object.keys(this.robots).sort();
-    const actionsToExecute = [];
 
-    for (let i = 0, iMax = robotIds.length; i < iMax; i++) {
-      const action = this.robots[robotIds[i]].generateCommand();
-      actionsToExecute.push(action);
+    const sortedRobotIds = [];
+    for (let robotId in robotIds) {
+      sortedRobotIds.push([robotId, this.robots[robotId]['y']]);
     }
 
+    sortedRobotIds.sort((a, b) => a[1] - b[1]);
+
+    const actionsToExecute = new Array(5).fill(0);
+    const robotOrders = [2, 1, 3, 0, 4];
+
+    for (let i = 0, iMax = robotIds.length; i < iMax; i++) {
+      const robotOrder = robotOrders[i];
+      const robotId = sortedRobotIds[robotOrder][0];
+      actionsToExecute[robotOrder] = this.robots[robotId].generateCommand();
+    }
+
+    return actionsToExecute;
+    /*
     for (let i = 0, iMax = actionsToExecute.length; i < iMax; i++) {
       console.log(actionsToExecute[i]);
     }
+    */
   }
 }
 

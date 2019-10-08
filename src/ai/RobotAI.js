@@ -35,7 +35,8 @@ class RobotAI {
           },
           {
             stateGetter: 'isRadarAvailable',
-            stateToPriorityConverter: result => (result === true ? 100 : -100)
+            stateToPriorityConverter: result =>
+              result === true ? 100 : -Infinity
           },
           {
             stateGetter: 'normalizedDistanceFromHQ',

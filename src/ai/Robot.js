@@ -7,7 +7,7 @@ const {
   COMMAND_DIG,
   COMMAND_WAIT
 } = require('../constants');
-const RobotAI = rerquire('./RobotAI');
+const RobotAI = require('./RobotAI');
 const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
 
 class Robot {
@@ -52,6 +52,8 @@ class Robot {
     this.memory = {
       harvestableOre: null
     };
+
+    return this;
   }
 
   _convertCoordinatesToKey({ x, y }) {

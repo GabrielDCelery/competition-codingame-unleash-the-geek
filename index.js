@@ -5,9 +5,8 @@
 const configs = require('./src/configs');
 const { Player } = require('./src/ai');
 const { Map } = require('./src/map');
-const map = new Map(configs.map);
+const map = new Map(configs['map']);
 const player = new Player({ map });
-const { COMMAND_WAIT } = require('./src/constants');
 
 var inputs = readline().split(' ');
 const width = parseInt(inputs[0]);
