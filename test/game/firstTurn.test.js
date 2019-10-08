@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 
-describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
-  it('gets a recommended cell for a single robot', async () => {
+describe('firstTurn', () => {
+  it('succesfully creates commands for the first turn', async () => {
     // Given
     const {
       ENTITY_ALLIED_ROBOT,
@@ -50,9 +50,13 @@ describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
 
     const commands = player.generateCommandsForAlliedRobots();
 
-    console.log(commands);
-
     // Then
-    expect(true).to.equal(true);
+    expect(commands).to.deep.equal([
+      'MOVE 2 2',
+      'MOVE 2 2',
+      'REQUEST 2',
+      'MOVE 2 12',
+      'MOVE 2 12'
+    ]);
   });
 });
