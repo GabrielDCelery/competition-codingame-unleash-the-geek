@@ -6,7 +6,8 @@ class DataHeatMapEvaluator {
 
   static get SCORER_METHODS() {
     return {
-      MOVE_TO_BETTER_POSITION: '_moveToBetterPositionScorer'
+      MOVE_TO_BETTER_POSITION: '_moveToBetterPositionScorer',
+      DEPLOY_RADAR: '_deployRadarScorer'
     };
   }
 

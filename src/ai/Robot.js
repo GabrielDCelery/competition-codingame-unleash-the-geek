@@ -141,7 +141,16 @@ class Robot {
     return `${COMMAND_MOVE} 0 ${this.y}`;
   }
 
-  deployRadar() {}
+  deployRadar() {
+    const { x, y } = this.dataHeatMapEvaluator.getRecommendedCoordinate({
+      robotCellX: this.x,
+      robotCellY: this.y,
+      maxZoneDistance: 6,
+      scorerMethod: DataHeatMapEvaluator.SCORER_METHODS.DEPLOY_RADAR
+    });
+
+    return `${COMMAND_DIG} ${x} ${y}`;
+  }
 
   pickupRadar() {
     this.gameState.actionsTaken.pickupRadar = true;
