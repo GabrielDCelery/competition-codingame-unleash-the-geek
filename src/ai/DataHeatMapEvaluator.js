@@ -76,7 +76,7 @@ class DataHeatMapEvaluator {
           .getData({ x: zoneToCheckX, y: zoneToCheckY });
         const score = this[scorerMethod]({ data, normalizedDistance });
 
-        if (suggestionScore < score) {
+        if (suggestionScore <= score) {
           suggestionScore = score;
           suggestionCoordinates = zoneToCheckCenterCoordinates;
         }

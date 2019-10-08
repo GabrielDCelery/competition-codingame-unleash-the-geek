@@ -67,6 +67,8 @@ class DataHeatMap {
         }
       }
     }
+
+    return this;
   }
 
   getData({ x, y }) {

@@ -52,7 +52,7 @@ class GridDistanceMapper {
   }
 
   mapDistances({ maxDistance } = { maxDistance: Infinity }) {
-    this.maxDistance = Math.min(maxDistance, Math.max(this.width, this.height));
+    this.maxDistance = Math.min(maxDistance, this.width + this.height - 2);
     this.data = new Array(this.width).fill(null).map(() => {
       return new Array(this.height).fill(null).map(() => {
         return new Array(this.maxDistance).fill(null);

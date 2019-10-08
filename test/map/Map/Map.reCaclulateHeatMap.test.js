@@ -15,7 +15,7 @@ describe('Map.getDataHeatMap().reCalculateHeatMap()', () => {
     instance.getDataHeatMap().reCalculateHeatMap();
 
     // Then
-    expect(instance.dataHeatMap.data).to.deep.equal([
+    expect(instance.getDataHeatMap().data).to.deep.equal([
       [[0, 1, 0, 0, 0, 0], [0, 0.625, 0, 0, 0, 0], [0, 0.390625, 0, 0, 0, 0]],
       [
         [0, 0.625, 0, 0, 0, 0],
@@ -35,9 +35,13 @@ describe('Map.getDataHeatMap().reCalculateHeatMap()', () => {
       [
         [0, 0.15258789062, 0, 0, 0, 0],
         [0, 0.09536743164, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
+        [0, 0.05960464477, 0, 0, 0, 0]
       ],
-      [[0, 0.09536743164, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
+      [
+        [0, 0.09536743164, 0, 0, 0, 0],
+        [0, 0.05960464477, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+      ]
     ]);
   });
 
