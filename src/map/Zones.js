@@ -3,6 +3,18 @@ const GridDistanceMapper = require('./GridDistanceMapper');
 
 class Zones {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY }) {
+    this.getWidth = this.getWidth.bind(this);
+    this.getHeight = this.getHeight.bind(this);
+    this.getDistanceMapper = this.getDistanceMapper.bind(this);
+    this.getNormalizedDistance = this.getNormalizedDistance.bind(this);
+    this.getCenterCell = this.getCenterCell.bind(this);
+    this.has = this.has.bind(this);
+    this.get = this.get.bind(this);
+    this.getAll = this.getAll.bind(this);
+    this.add = this.add.bind(this);
+    this.set = this.set.bind(this);
+    this.resetEntities = this.resetEntities.bind(this);
+
     this.zoneSizeX = zoneSizeX;
     this.zoneSizeY = zoneSizeY;
     this.width = mapWidth / zoneSizeX;

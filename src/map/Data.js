@@ -1,5 +1,14 @@
 class Data {
   constructor() {
+    /*
+    this.has = this.has.bind(this);
+    this.get = this.get.bind(this);
+    this.getAll = this.getAll.bind(this);
+    this.add = this.add.bind(this);
+    this.set = this.set.bind(this);
+    this.resetEntities = this.resetEntities.bind(this);
+    */
+
     this.values = new Array(Object.keys(Data.AMOUNTS).length).fill(0);
   }
 

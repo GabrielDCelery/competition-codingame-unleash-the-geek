@@ -14,6 +14,15 @@ const DataHeatMap = require('./DataHeatMap');
 
 class Map {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY, heatMapDropRate }) {
+    this.getAmountKeys = this.getAmountKeys.bind(this);
+    this.getCells = this.getCells.bind(this);
+    this.getZones = this.getZones.bind(this);
+    this.getDataHeatMap = this.getDataHeatMap.bind(this);
+    this.processHoleInput = this.processHoleInput.bind(this);
+    this.processOreInput = this.processOreInput.bind(this);
+    this.processEntityInput = this.processEntityInput.bind(this);
+    this.resetEntities = this.resetEntities.bind(this);
+
     this.totals = new Data();
     this.cells = new Cells({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
     this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });

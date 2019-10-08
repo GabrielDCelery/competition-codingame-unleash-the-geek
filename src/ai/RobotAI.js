@@ -1,5 +1,11 @@
 class RobotAI {
   constructor({ stateGetters }) {
+    this.selectHighestWeighedActionConfig = this.selectHighestWeighedActionConfig.bind(
+      this
+    );
+    this.sumArrayValues = this.sumArrayValues.bind(this);
+    this.getAction = this.getAction.bind(this);
+
     this.stateGetters = stateGetters;
     this.actionConfigs = [
       {

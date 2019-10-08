@@ -3,6 +3,14 @@ const Robot = require('./Robot');
 
 class Player {
   constructor({ map }) {
+    this.updateGamaeStateAtTurnStart = this.updateGamaeStateAtTurnStart.bind(
+      this
+    );
+    this.processEntityInput = this.processEntityInput.bind(this);
+    this.generateCommandsForAlliedRobots = this.generateCommandsForAlliedRobots.bind(
+      this
+    );
+
     this.robots = {};
     this.map = map;
     this.updateGamaeStateAtTurnStart({

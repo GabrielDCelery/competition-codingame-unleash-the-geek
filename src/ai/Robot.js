@@ -12,11 +12,6 @@ const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
 
 class Robot {
   constructor({ x, y, item, map, gameState }) {
-    this.x = x;
-    this.y = y;
-    this.item = item;
-    this.map = map;
-    this.gameState = gameState;
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
     this.doesCargoHaveRadar = this.doesCargoHaveRadar.bind(this);
     this.doIExist = this.doIExist.bind(this);
@@ -30,6 +25,12 @@ class Robot {
     this.pickupRadar = this.pickupRadar.bind(this);
     this.collectNearbyOre = this.collectNearbyOre.bind(this);
     this.moveToBetterPosition = this.moveToBetterPosition.bind(this);
+
+    this.x = x;
+    this.y = y;
+    this.item = item;
+    this.map = map;
+    this.gameState = gameState;
 
     this.robotAI = new RobotAI({
       stateGetters: {
@@ -160,12 +161,14 @@ class Robot {
   }
 
   moveToBetterPosition() {
-    this.dataHeatMapEvaluator.getRecommendedCoordinate({
+    const { x, y } = this.dataHeatMapEvaluator.getRecommendedCoordinate({
       robotCellX: this.x,
       robotCellY: this.y,
       maxZoneDistance: 2,
       scorerMethod: DataHeatMapEvaluator.SCORER_METHODS.MOVE_TO_BETTER_POSITION
     });
+
+    return `${COMMAND_MOVE} ${x} ${y}`;
   }
 
   generateCommand() {

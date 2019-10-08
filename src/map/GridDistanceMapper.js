@@ -1,5 +1,9 @@
 class GridDistanceMapper {
   constructor({ width, height }) {
+    this.mapDistances = this.mapDistances.bind(this);
+    this.getMaxDistance = this.getMaxDistance.bind(this);
+    this.getCoordinatesAtDistance = this.getCoordinatesAtDistance.bind(this);
+
     this.width = width;
     this.height = height;
     this.boundaries = {

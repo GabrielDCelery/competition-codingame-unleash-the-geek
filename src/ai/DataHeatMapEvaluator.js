@@ -1,9 +1,7 @@
 class DataHeatMapEvaluator {
   constructor({ map }) {
     this.map = map;
-    this._moveToBetterPositionScorer = this._moveToBetterPositionScorer.bind(
-      this
-    );
+    this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
   }
 
   static get SCORER_METHODS() {

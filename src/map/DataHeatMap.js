@@ -3,6 +3,10 @@ const GridDistanceMapper = require('./GridDistanceMapper');
 
 class DataHeatMap {
   constructor({ totals, zones, heatMapDropRate }) {
+    this.getAmountKeys = this.getAmountKeys.bind(this);
+    this.reCalculateHeatMap = this.reCalculateHeatMap.bind(this);
+    this.getData = this.getData.bind(this);
+
     this.heatMapDropRate = heatMapDropRate || [1];
     this.totals = totals;
     this.zones = zones;
