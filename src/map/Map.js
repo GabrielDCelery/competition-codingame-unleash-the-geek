@@ -1,6 +1,6 @@
 const {
   ITEM_HOLE,
-  ITEM_ORE_UNKNOWN_AMOUNT,
+  ENTITY_ORE_UNKNOWN_AMOUNT,
   ENTITY_ALLIED_ROBOT,
   ENTITY_ENEMY_ROBOT,
   ENTITY_RADAR,
@@ -11,6 +11,7 @@ const Data = require('./Data');
 const Cells = require('./Cells');
 const Zones = require('./Zones');
 const DataHeatMap = require('./DataHeatMap');
+const EntityTracker = require('./EntityTracker');
 
 class Map {
   constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY, heatMapDropRate }) {
@@ -31,6 +32,7 @@ class Map {
       zones: this.zones,
       heatMapDropRate
     });
+    this.entityTracker = new EntityTracker();
   }
 
   getAmountKeys() {
@@ -73,7 +75,7 @@ class Map {
   }
 
   processOreInput({ x, y, amount }) {
-    if (amount === ITEM_ORE_UNKNOWN_AMOUNT) {
+    if (amount === ENTITY_ORE_UNKNOWN_AMOUNT) {
       return this;
     }
 
@@ -117,6 +119,12 @@ class Map {
           what: Data.AMOUNTS.ALLIED_ROBOT,
           amount: 1
         });
+        this.entityTracker.add({
+          x,
+          y,
+          what: Data.AMOUNTS.ALLIED_ROBOT,
+          amount: 1
+        });
         return this;
       }
       case ENTITY_ENEMY_ROBOT: {
@@ -132,6 +140,12 @@ class Map {
           amount: 1
         });
         this.totals.add({
+          what: Data.AMOUNTS.ENEMY_ROBOT,
+          amount: 1
+        });
+        this.entityTracker.add({
+          x,
+          y,
           what: Data.AMOUNTS.ENEMY_ROBOT,
           amount: 1
         });
@@ -153,6 +167,12 @@ class Map {
           what: Data.AMOUNTS.RADAR,
           amount: 1
         });
+        this.entityTracker.add({
+          x,
+          y,
+          what: Data.AMOUNTS.RADAR,
+          amount: 1
+        });
         return this;
       }
       case ENTITY_MINE: {
@@ -168,6 +188,12 @@ class Map {
           amount: 1
         });
         this.totals.add({
+          what: Data.AMOUNTS.MINE,
+          amount: 1
+        });
+        this.entityTracker.add({
+          x,
+          y,
           what: Data.AMOUNTS.MINE,
           amount: 1
         });

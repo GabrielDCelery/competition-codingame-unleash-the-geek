@@ -1,7 +1,11 @@
 const commands = require('./commands');
-const readlines = require('./readlines');
+const entities = require('./entities');
+const game = require('./game');
+const items = require('./items');
 
 module.exports = {
   ...commands,
-  ...readlines
+  ...entities,
+  ...game,
+  ...items
 };

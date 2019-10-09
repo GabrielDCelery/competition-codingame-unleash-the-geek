@@ -1,5 +1,6 @@
 const { ENTITY_ALLIED_ROBOT } = require('../constants');
 const Robot = require('./Robot');
+const RadarDistributorAI = require('./RadarDistributorAI');
 
 class Player {
   constructor({ map }) {
@@ -13,6 +14,7 @@ class Player {
 
     this.robots = {};
     this.map = map;
+    this.radarDistributorAI = new RadarDistributorAI({ map: this.map });
     this.updateGamaeStateAtTurnStart({
       radarCooldown: Infinity,
       trapCooldown: Infinity
@@ -38,7 +40,8 @@ class Player {
         y,
         item,
         map: this.map,
-        gameState: this.gameState
+        gameState: this.gameState,
+        radarDistributorAI: this.radarDistributorAI
       }).resetShortTermMemory();
     }
   }
@@ -63,11 +66,6 @@ class Player {
     }
 
     return actionsToExecute;
-    /*
-    for (let i = 0, iMax = actionsToExecute.length; i < iMax; i++) {
-      console.log(actionsToExecute[i]);
-    }
-    */
   }
 }
 

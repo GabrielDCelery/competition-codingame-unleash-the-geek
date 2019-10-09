@@ -5,7 +5,7 @@ describe('firstTurn', () => {
     // Given
     const {
       ENTITY_ALLIED_ROBOT,
-      ITEM_ORE_UNKNOWN_AMOUNT,
+      ENTITY_ORE_UNKNOWN_AMOUNT,
       ITEM_NONE
     } = require('../../src/constants');
     const configs = require('../../src/configs');
@@ -24,7 +24,7 @@ describe('firstTurn', () => {
       .processOreInput({
         x: 0,
         y: 0,
-        amount: ITEM_ORE_UNKNOWN_AMOUNT
+        amount: ENTITY_ORE_UNKNOWN_AMOUNT
       });
 
     map.resetEntities();

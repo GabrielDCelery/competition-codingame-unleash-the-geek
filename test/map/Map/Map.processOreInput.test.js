@@ -127,7 +127,7 @@ describe('Map.processOreInput()', () => {
 
   it('does not set the ore amount on a cell if the amount is unknown', async () => {
     // Given
-    const { ITEM_ORE_UNKNOWN_AMOUNT } = require('../../../src/constants');
+    const { ENTITY_ORE_UNKNOWN_AMOUNT } = require('../../../src/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
     const Map = require('../../../src/map/Map');
     const instance = new Map(config);
@@ -136,7 +136,7 @@ describe('Map.processOreInput()', () => {
     instance.processOreInput({
       x: 0,
       y: 1,
-      amount: ITEM_ORE_UNKNOWN_AMOUNT
+      amount: ENTITY_ORE_UNKNOWN_AMOUNT
     });
 
     // Then

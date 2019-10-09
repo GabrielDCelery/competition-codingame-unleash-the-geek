@@ -133,13 +133,17 @@ describe('Map.setCellOreAmount()', () => {
 
   it('does not set the ore amount on a cell if the amount is unknown', async () => {
     // Given
-    const { ITEM_ORE_UNKNOWN_AMOUNT } = require('../../../src/constants');
+    const { ENTITY_ORE_UNKNOWN_AMOUNT } = require('../../../src/constants');
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
     const Map = require('../../../src/map/Map');
     const instance = new Map(config);
 
     // When
-    instance.setCellOreAmount({ x: 1, y: 2, amount: ITEM_ORE_UNKNOWN_AMOUNT });
+    instance.setCellOreAmount({
+      x: 1,
+      y: 2,
+      amount: ENTITY_ORE_UNKNOWN_AMOUNT
+    });
 
     // Then
     expect(instance.cells.data).to.deep.equal([

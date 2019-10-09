@@ -11,7 +11,7 @@ const RobotAI = require('./RobotAI');
 const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
 
 class Robot {
-  constructor({ x, y, item, map, gameState }) {
+  constructor({ x, y, item, map, gameState, radarDistributorAI }) {
     this.amIOnBase = this.amIOnBase.bind(this);
     this.doIExist = this.doIExist.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
@@ -53,6 +53,7 @@ class Robot {
     this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
       map: this.map
     });
+    this.radarDistributorAI = radarDistributorAI;
   }
 
   resetShortTermMemory() {
@@ -211,12 +212,7 @@ class Robot {
   }
 
   deployRadar() {
-    const { x, y } = this.dataHeatMapEvaluator.getRecommendedCoordinate({
-      robotCellX: this.x,
-      robotCellY: this.y,
-      maxZoneDistance: 6,
-      scorerMethod: DataHeatMapEvaluator.SCORER_METHODS.DEPLOY_RADAR
-    });
+    const { x, y } = this.radarDistributorAI.getNextRadarDeployCoordinates();
 
     return `${COMMAND_DIG} ${x} ${y}`;
   }
