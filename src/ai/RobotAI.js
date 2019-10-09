@@ -1,9 +1,5 @@
 class RobotAI {
   constructor({ stateGetters }) {
-    this.selectHighestWeighedActionConfig = this.selectHighestWeighedActionConfig.bind(
-      this
-    );
-    this.sumArrayValues = this.sumArrayValues.bind(this);
     this.getAction = this.getAction.bind(this);
 
     this.stateGetters = stateGetters;
@@ -82,38 +78,16 @@ class RobotAI {
     ];
   }
 
-  selectHighestWeighedActionConfig(weighedActionConfigs) {
-    let highestWeighedActionConfig = {
-      action: 'none',
-      priority: null
-    };
-
-    for (let i = 0, iMax = weighedActionConfigs.length; i < iMax; i++) {
-      const weighedActionConfig = weighedActionConfigs[i];
-      if (
-        highestWeighedActionConfig['priority'] < weighedActionConfig['priority']
-      ) {
-        highestWeighedActionConfig = weighedActionConfig;
-      }
-    }
-
-    return highestWeighedActionConfig;
-  }
-
-  sumArrayValues(arrayValues) {
-    return arrayValues.reduce((a, b) => a + b, 0);
-  }
-
   getAction() {
     const weighedActionConfigs = this.actionConfigs.map(actionConfig => {
       const { action, scorers } = actionConfig;
       const priorities = scorers.map(scorer => {
-        const result = this.stateGetters[scorer['stateGetter']]();
+        const result = this.stateGetters[scorer.stateGetter]();
 
-        return scorer['stateToPriorityConverter'](result);
+        return scorer.stateToPriorityConverter(result);
       });
 
-      const totalPriority = this.sumArrayValues(priorities);
+      const totalPriority = RobotAI.sumArrayValues(priorities);
 
       return {
         action,
@@ -121,12 +95,32 @@ class RobotAI {
       };
     });
 
-    const highestWeighedActionConfig = this.selectHighestWeighedActionConfig(
+    const highestWeighedActionConfig = RobotAI.selectHighestWeighedActionConfig(
       weighedActionConfigs
     );
-    const actionToUse = highestWeighedActionConfig['action'];
+    const actionToUse = highestWeighedActionConfig.action;
 
     return actionToUse;
+  }
+
+  static selectHighestWeighedActionConfig(weighedActionConfigs) {
+    let highestWeighedActionConfig = {
+      action: 'none',
+      priority: null
+    };
+
+    for (let i = 0, iMax = weighedActionConfigs.length; i < iMax; i += 1) {
+      const weighedActionConfig = weighedActionConfigs[i];
+      if (highestWeighedActionConfig.priority < weighedActionConfig.priority) {
+        highestWeighedActionConfig = weighedActionConfig;
+      }
+    }
+
+    return highestWeighedActionConfig;
+  }
+
+  static sumArrayValues(arrayValues) {
+    return arrayValues.reduce((a, b) => a + b, 0);
   }
 }
 

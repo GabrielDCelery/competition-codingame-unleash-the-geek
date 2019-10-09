@@ -79,6 +79,8 @@ class Map {
       return this;
     }
 
+    const amountInt = parseInt(amount);
+
     const currentZoneAmount = this.zones.get({
       ...this.cells.getZoneCoordinates({ x, y }),
       what: Data.AMOUNTS.ORE
@@ -89,14 +91,14 @@ class Map {
     this.zones.set({
       ...this.cells.getZoneCoordinates({ x, y }),
       what: Data.AMOUNTS.ORE,
-      amount: currentZoneAmount - currentCellAmount + amount
+      amount: currentZoneAmount - currentCellAmount + amountInt
     });
     this.totals.set({
       what: Data.AMOUNTS.ORE,
-      amount: currentTotalAmount - currentCellAmount + amount
+      amount: currentTotalAmount - currentCellAmount + amountInt
     });
 
-    this.cells.set({ x, y, what: Data.AMOUNTS.ORE, amount });
+    this.cells.set({ x, y, what: Data.AMOUNTS.ORE, amount: amountInt });
 
     return this;
   }

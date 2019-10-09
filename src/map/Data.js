@@ -1,3 +1,5 @@
+//const assert = require('assert');
+
 class Data {
   constructor() {
     /*

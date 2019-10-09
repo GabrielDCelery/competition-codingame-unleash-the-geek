@@ -32,7 +32,8 @@
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {
     "auto-bind": "^2.1.1"

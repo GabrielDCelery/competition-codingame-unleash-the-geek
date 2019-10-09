@@ -60,7 +60,7 @@ class RadarDistributorAI {
     return null;
   }
 
-  getNextRadarDeployCoordinates() {
+  _getCoordinateScore({ x, y, robotX, robotY }) {
     const {
       HOLE,
       /*
@@ -71,7 +71,34 @@ class RadarDistributorAI {
       RADAR,
       MINE
     } = this.map.getAmountKeys();
+    const zoneCoordinate = this.map.getCells().getZoneCoordinates({ x, y });
+    const data = this.map.getDataHeatMap().getData(zoneCoordinate);
+    const normalizedDistanceFromHQ = this.map.getCells().getNormalizedDistance({
+      startX: x,
+      startY: y,
+      endX: 0,
+      endY: y
+    });
+    const normalizedDistanceFromDropoff = this.map
+      .getCells()
+      .getNormalizedDistance({
+        startX: x,
+        startY: y,
+        endX: robotX,
+        endY: robotY
+      });
 
+    return (
+      -0.25 * data[HOLE] +
+      -1 * data[RADAR] +
+      -0.25 * data[MINE] +
+      -0.25 *
+        normalizedDistanceFromHQ /*+
+      -0.25 * normalizedDistanceFromDropoff*/
+    );
+  }
+
+  getNextRadarDeployCoordinates({ robotX, robotY }) {
     let nextRadarDeployCoordinate = null;
     let nextRadarDeployCoordinateScore = -Infinity;
 
@@ -81,25 +108,19 @@ class RadarDistributorAI {
       i++
     ) {
       const recommendedCoordinate = this.recommendedRadarCoordinates[i];
-      const zoneCoordinate = this.map
-        .getCells()
-        .getZoneCoordinates(recommendedCoordinate);
-      const data = this.map.getDataHeatMap().getData(zoneCoordinate);
-      const normalizedDistanceFromHQ = this.map
-        .getCells()
-        .getNormalizedDistance({
-          startX: zoneCoordinate['x'],
-          startY: zoneCoordinate['y'],
-          endX: 0,
-          endY: zoneCoordinate['y']
-        });
 
-      const score =
-        -0.5 * data[HOLE] +
-        -1 * data[RADAR] +
-        -0.25 * data[MINE] +
-        -0.25 * normalizedDistanceFromHQ;
+      const score = this._getCoordinateScore({
+        x: recommendedCoordinate['x'],
+        y: recommendedCoordinate['y'],
+        robotX,
+        robotY
+      });
 
+      if (nextRadarDeployCoordinateScore < score) {
+        nextRadarDeployCoordinate = recommendedCoordinate;
+        nextRadarDeployCoordinateScore = score;
+      }
+      /*
       if (nextRadarDeployCoordinateScore < score) {
         const coordinateToDropTo = this._getCoordinateToDropTo(
           recommendedCoordinate
@@ -110,7 +131,10 @@ class RadarDistributorAI {
           nextRadarDeployCoordinateScore = score;
         }
       }
+      */
     }
+
+    console.warn(nextRadarDeployCoordinate);
 
     return nextRadarDeployCoordinate;
   }

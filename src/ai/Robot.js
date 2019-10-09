@@ -101,7 +101,7 @@ class Robot {
 
   hasOreOnMap() {
     const { ORE } = this.map.getAmountKeys();
-    return this.map.getTotals().has({ ORE });
+    return this.map.getTotals().has({ what: ORE });
   }
 
   safeToDigHoleNextToMe() {
@@ -212,7 +212,10 @@ class Robot {
   }
 
   deployRadar() {
-    const { x, y } = this.radarDistributorAI.getNextRadarDeployCoordinates();
+    const { x, y } = this.radarDistributorAI.getNextRadarDeployCoordinates({
+      robotX: this.x,
+      robotY: this.y
+    });
 
     return `${COMMAND_DIG} ${x} ${y}`;
   }
@@ -249,7 +252,7 @@ class Robot {
     const { x, y } = this.dataHeatMapEvaluator.getRecommendedCoordinate({
       robotCellX: this.x,
       robotCellY: this.y,
-      maxZoneDistance: 3,
+      maxZoneDistance: 9,
       scorerMethod: DataHeatMapEvaluator.SCORER_METHODS.MOVE_TO_BETTER_POSITION
     });
 
