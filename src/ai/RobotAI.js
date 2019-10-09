@@ -49,11 +49,24 @@ class RobotAI {
         scorers: [
           {
             stateGetter: 'isCargoEmpty',
-            stateToPriorityConverter: result => (result ? 100 : -100)
+            stateToPriorityConverter: result => (result ? 100 : -Infinity)
           },
           {
             stateGetter: 'hasOreNearby',
             stateToPriorityConverter: result => (result ? 100 : -Infinity)
+          }
+        ]
+      },
+      {
+        action: 'digHoleNextToMe',
+        scorers: [
+          {
+            stateGetter: 'hasOreOnMap',
+            stateToPriorityConverter: result => (result ? -Infinity : 0)
+          },
+          {
+            stateGetter: 'safeToDigHoleNextToMe',
+            stateToPriorityConverter: result => (result ? 70 : -Infinity)
           }
         ]
       },

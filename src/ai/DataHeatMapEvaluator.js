@@ -33,13 +33,14 @@ class DataHeatMapEvaluator {
     } = this.map.getAmountKeys();
 
     return (
-      -1 * data[HOLE] +
+      -0.5 * data[HOLE] +
       2 * data[ORE] +
       -0.5 * data[ALLIED_ROBOT] +
       -0.5 * data[ENEMY_ROBOT] +
       0.5 * data[RADAR] +
       -1 * data[MINE] +
-      -0.5 * normalizedDistances['robotTarget']
+      -0.2 * normalizedDistances['robotTarget'] +
+      0.2 * normalizedDistances['targetHQ']
     );
   }
 

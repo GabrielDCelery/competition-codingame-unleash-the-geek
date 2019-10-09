@@ -49,6 +49,10 @@ class Map {
     return this.dataHeatMap;
   }
 
+  getTotals() {
+    return this.totals;
+  }
+
   processHoleInput({ x, y, hole }) {
     if (
       hole !== ITEM_HOLE ||

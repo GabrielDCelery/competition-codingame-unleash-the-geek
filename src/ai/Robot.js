@@ -12,19 +12,23 @@ const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
 
 class Robot {
   constructor({ x, y, item, map, gameState }) {
+    this.amIOnBase = this.amIOnBase.bind(this);
+    this.doIExist = this.doIExist.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
     this.doesCargoHaveRadar = this.doesCargoHaveRadar.bind(this);
-    this.doIExist = this.doIExist.bind(this);
     this.hasOreNearby = this.hasOreNearby.bind(this);
+    this.hasOreOnMap = this.hasOreOnMap.bind(this);
     this.isCargoEmpty = this.isCargoEmpty.bind(this);
     this.isRadarAvailable = this.isRadarAvailable.bind(this);
     this.normalizedDistanceFromHQ = this.normalizedDistanceFromHQ.bind(this);
+    this.safeToDigHoleNextToMe = this.safeToDigHoleNextToMe.bind(this);
 
+    this.collectNearbyOre = this.collectNearbyOre.bind(this);
     this.deliverOreToHome = this.deliverOreToHome.bind(this);
     this.deployRadar = this.deployRadar.bind(this);
-    this.pickupRadar = this.pickupRadar.bind(this);
-    this.collectNearbyOre = this.collectNearbyOre.bind(this);
+    this.digHoleNextToMe = this.digHoleNextToMe.bind(this);
     this.moveToBetterPosition = this.moveToBetterPosition.bind(this);
+    this.pickupRadar = this.pickupRadar.bind(this);
 
     this.x = x;
     this.y = y;
@@ -34,13 +38,16 @@ class Robot {
 
     this.robotAI = new RobotAI({
       stateGetters: {
-        doesCargoHaveRadar: this.doesCargoHaveRadar,
-        doesCargoHaveOre: this.doesCargoHaveOre,
+        amIOnBase: this.amIOnBase,
         doIExist: this.doIExist,
+        doesCargoHaveOre: this.doesCargoHaveOre,
+        doesCargoHaveRadar: this.doesCargoHaveRadar,
         hasOreNearby: this.hasOreNearby,
+        hasOreOnMap: this.hasOreOnMap,
         isCargoEmpty: this.isCargoEmpty,
         isRadarAvailable: this.isRadarAvailable,
-        normalizedDistanceFromHQ: this.normalizedDistanceFromHQ
+        normalizedDistanceFromHQ: this.normalizedDistanceFromHQ,
+        safeToDigHoleNextToMe: this.safeToDigHoleNextToMe
       }
     });
     this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
@@ -50,7 +57,8 @@ class Robot {
 
   resetShortTermMemory() {
     this.memory = {
-      harvestableOre: null
+      harvestableOre: null,
+      safeCell: null
     };
 
     return this;
@@ -61,6 +69,10 @@ class Robot {
   }
 
   // ****************************** STATE GETTERS ****************************** //
+
+  amIOnBase() {
+    return this.x === 0;
+  }
 
   doesCargoHaveOre() {
     return this.item === ITEM_ORE;
@@ -86,10 +98,67 @@ class Robot {
     return bCellHasOre && !bMarkedForPickup;
   }
 
+  hasOreOnMap() {
+    const { ORE } = this.map.getAmountKeys();
+    return this.map.getTotals().has({ ORE });
+  }
+
+  safeToDigHoleNextToMe() {
+    const { HOLE, RADAR, MINE } = this.map.getAmountKeys();
+    for (
+      let distance = 0, distanceMax = 1;
+      distance <= distanceMax;
+      distance++
+    ) {
+      const coordinates = this.map
+        .getCells()
+        .getDistanceMapper()
+        .getCoordinatesAtDistance({
+          x: this.x,
+          y: this.y,
+          distance
+        });
+
+      for (let i = 0, iMax = coordinates.length; i < iMax; i++) {
+        const [cellX, cellY] = coordinates[i];
+        if (
+          cellX !== 0 &&
+          !this.gameState.actionsTaken.digHole[
+            this._convertCoordinatesToKey({ x: cellX, y: cellY })
+          ] &&
+          !this.map.getCells().has({
+            x: cellX,
+            y: cellY,
+            what: HOLE
+          }) &&
+          !this.map.getCells().has({
+            x: cellX,
+            y: cellY,
+            what: RADAR
+          }) &&
+          !this.map.getCells().has({
+            x: cellX,
+            y: cellY,
+            what: MINE
+          })
+        ) {
+          this.memory.safeCell = {
+            x: cellX,
+            y: cellY
+          };
+
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   hasOreNearby() {
     for (
-      let distance = 0, distanceMax = 3;
-      distance < distanceMax;
+      let distance = 0, distanceMax = 2;
+      distance <= distanceMax;
       distance++
     ) {
       const coordinates = this.map
@@ -148,6 +217,15 @@ class Robot {
       maxZoneDistance: 6,
       scorerMethod: DataHeatMapEvaluator.SCORER_METHODS.DEPLOY_RADAR
     });
+
+    return `${COMMAND_DIG} ${x} ${y}`;
+  }
+
+  digHoleNextToMe() {
+    const { x, y } = this.memory.safeCell;
+    this.gameState.actionsTaken.digHole[
+      this._convertCoordinatesToKey({ x, y })
+    ] = true;
 
     return `${COMMAND_DIG} ${x} ${y}`;
   }

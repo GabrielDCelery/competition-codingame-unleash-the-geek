@@ -25,7 +25,8 @@ class Player {
       trapCooldown: trapCooldown,
       actionsTaken: {
         pickupRadar: false,
-        pickupOre: {}
+        pickupOre: {},
+        digHole: {}
       }
     };
   }
