@@ -123,7 +123,7 @@ describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
     });
 
     // Then
-    expect(result).to.deep.equal({ x: 4, y: 1 });
+    expect(result).to.deep.equal({ x: 7, y: 1 });
   });
 
   it('gets a recommended cell for multiple robots', async () => {

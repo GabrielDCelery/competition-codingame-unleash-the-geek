@@ -56,7 +56,7 @@ class Cells {
     const diff = Math.abs(startX - endX) + Math.abs(startY - endY);
 
     if (diff === 0) {
-      return;
+      return 0;
     }
 
     return diff / (this.width + this.height - 2);

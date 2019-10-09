@@ -60,5 +60,9 @@ while (true) {
   }
 
   map.getDataHeatMap().reCalculateHeatMap();
-  player.generateCommandsForAlliedRobots();
+  const commands = player.generateCommandsForAlliedRobots();
+
+  for (let i = 0, iMax = commands.length; i < iMax; i++) {
+    console.log(commands[i]);
+  }
 }

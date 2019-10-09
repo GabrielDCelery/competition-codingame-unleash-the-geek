@@ -156,7 +156,7 @@ class Robot {
     this.gameState.actionsTaken.pickupRadar = true;
 
     if (this.x === 0) {
-      return `${COMMAND_REQUEST} ${ITEM_RADAR}`;
+      return `${COMMAND_REQUEST} ${'RADAR'}`;
     }
 
     return `${COMMAND_MOVE} 0 ${this.y}`;
@@ -175,7 +175,7 @@ class Robot {
     const { x, y } = this.dataHeatMapEvaluator.getRecommendedCoordinate({
       robotCellX: this.x,
       robotCellY: this.y,
-      maxZoneDistance: 2,
+      maxZoneDistance: 3,
       scorerMethod: DataHeatMapEvaluator.SCORER_METHODS.MOVE_TO_BETTER_POSITION
     });
 

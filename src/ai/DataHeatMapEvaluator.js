@@ -11,7 +11,18 @@ class DataHeatMapEvaluator {
     };
   }
 
-  _moveToBetterPositionScorer({ data, normalizedDistance }) {
+  _deployRadarScorer({ data, normalizedDistances }) {
+    const { HOLE, ORE, RADAR } = this.map.getAmountKeys();
+    return (
+      -1 * data[HOLE] +
+      -1 * data[ORE] +
+      -1 * data[RADAR] +
+      -1 * normalizedDistances['robotTarget'] +
+      0.5 * normalizedDistances['targetHQ']
+    );
+  }
+
+  _moveToBetterPositionScorer({ data, normalizedDistances }) {
     const {
       HOLE,
       ORE,
@@ -23,12 +34,12 @@ class DataHeatMapEvaluator {
 
     return (
       -1 * data[HOLE] +
-      1 * data[ORE] +
-      1 * data[ALLIED_ROBOT] +
-      -1 * data[ENEMY_ROBOT] +
-      1 * data[RADAR] +
+      2 * data[ORE] +
+      -0.5 * data[ALLIED_ROBOT] +
+      -0.5 * data[ENEMY_ROBOT] +
+      0.5 * data[RADAR] +
       -1 * data[MINE] +
-      -1 * normalizedDistance
+      -0.5 * normalizedDistances['robotTarget']
     );
   }
 
@@ -63,17 +74,42 @@ class DataHeatMapEvaluator {
         const zoneToCheckCenterCoordinates = this.map
           .getZones()
           .getCenterCell({ x: zoneToCheckX, y: zoneToCheckY });
-        const normalizedDistance = this.map.getCells().getNormalizedDistance({
-          startX: robotCellX,
-          startY: robotCellY,
-          endX: zoneToCheckCenterCoordinates['x'],
-          endY: zoneToCheckCenterCoordinates['y']
-        });
+        const normalizedRobotTargetDistance = this.map
+          .getCells()
+          .getNormalizedDistance({
+            startX: robotCellX,
+            startY: robotCellY,
+            endX: zoneToCheckCenterCoordinates['x'],
+            endY: zoneToCheckCenterCoordinates['y']
+          });
+        const normalizedRobotHqDistance = this.map
+          .getCells()
+          .getNormalizedDistance({
+            startX: robotCellX,
+            startY: robotCellY,
+            endX: 0,
+            endY: robotCellY
+          });
+        const normalizedTargetHqDistance = this.map
+          .getCells()
+          .getNormalizedDistance({
+            startX: zoneToCheckCenterCoordinates['x'],
+            startY: zoneToCheckCenterCoordinates['y'],
+            endX: 0,
+            endY: zoneToCheckCenterCoordinates['y']
+          });
 
         const data = this.map
           .getDataHeatMap()
           .getData({ x: zoneToCheckX, y: zoneToCheckY });
-        const score = this[scorerMethod]({ data, normalizedDistance });
+        const score = this[scorerMethod]({
+          data,
+          normalizedDistances: {
+            robotTarget: normalizedRobotTargetDistance,
+            robotHQ: normalizedRobotHqDistance,
+            targetHQ: normalizedTargetHqDistance
+          }
+        });
 
         if (suggestionScore <= score) {
           suggestionScore = score;

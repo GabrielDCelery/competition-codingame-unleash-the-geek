@@ -52,11 +52,11 @@ describe('firstTurn', () => {
 
     // Then
     expect(commands).to.deep.equal([
-      'MOVE 1 4',
-      'MOVE 1 4',
-      'REQUEST 2',
-      'MOVE 1 10',
-      'MOVE 1 10'
+      'MOVE 10 1',
+      'MOVE 10 4',
+      'REQUEST RADAR',
+      'MOVE 10 10',
+      'MOVE 10 13'
     ]);
   });
 });
