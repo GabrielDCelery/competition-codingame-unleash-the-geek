@@ -11,7 +11,10 @@ const RobotAI = require('./RobotAI');
 const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
 
 class Robot {
-  constructor({ x, y, item, map, gameState, radarDistributorAI }) {
+  constructor({ map, gameState, radarDistributorAI }) {
+    this.setPersonalState = this.setPersonalState.bind(this);
+    this.resetShortTermMemory = this.resetShortTermMemory.bind(this);
+
     this.amIOnBase = this.amIOnBase.bind(this);
     this.doIExist = this.doIExist.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
@@ -30,11 +33,12 @@ class Robot {
     this.moveToBetterPosition = this.moveToBetterPosition.bind(this);
     this.pickupRadar = this.pickupRadar.bind(this);
 
-    this.x = x;
-    this.y = y;
-    this.item = item;
     this.map = map;
     this.gameState = gameState;
+    this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
+      map: this.map
+    });
+    this.radarDistributorAI = radarDistributorAI;
 
     this.robotAI = new RobotAI({
       stateGetters: {
@@ -50,10 +54,14 @@ class Robot {
         safeToDigHoleNextToMe: this.safeToDigHoleNextToMe
       }
     });
-    this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
-      map: this.map
-    });
-    this.radarDistributorAI = radarDistributorAI;
+  }
+
+  setPersonalState({ x, y, item }) {
+    this.x = x;
+    this.y = y;
+    this.item = item;
+
+    return this;
   }
 
   resetShortTermMemory() {

@@ -60,7 +60,7 @@ class RadarDistributorAI {
     return null;
   }
 
-  _getCoordinateScore({ x, y, robotX, robotY }) {
+  _getCoordinateScore({ x, y }) {
     const {
       HOLE,
       /*
@@ -79,26 +79,16 @@ class RadarDistributorAI {
       endX: 0,
       endY: y
     });
-    const normalizedDistanceFromDropoff = this.map
-      .getCells()
-      .getNormalizedDistance({
-        startX: x,
-        startY: y,
-        endX: robotX,
-        endY: robotY
-      });
 
     return (
-      -0.25 * data[HOLE] +
+      -1 * data[HOLE] +
       -1 * data[RADAR] +
-      -0.25 * data[MINE] +
-      -0.25 *
-        normalizedDistanceFromHQ /*+
-      -0.25 * normalizedDistanceFromDropoff*/
+      -1 * data[MINE] +
+      -1 * normalizedDistanceFromHQ
     );
   }
 
-  getNextRadarDeployCoordinates({ robotX, robotY }) {
+  getNextRadarDeployCoordinates() {
     let nextRadarDeployCoordinate = null;
     let nextRadarDeployCoordinateScore = -Infinity;
 
@@ -111,9 +101,7 @@ class RadarDistributorAI {
 
       const score = this._getCoordinateScore({
         x: recommendedCoordinate['x'],
-        y: recommendedCoordinate['y'],
-        robotX,
-        robotY
+        y: recommendedCoordinate['y']
       });
 
       if (nextRadarDeployCoordinateScore < score) {

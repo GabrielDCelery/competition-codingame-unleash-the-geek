@@ -35,14 +35,15 @@ class Player {
 
   processEntityInput({ x, y, type, id, item }) {
     if (type === ENTITY_ALLIED_ROBOT) {
-      this.robots[id] = new Robot({
-        x,
-        y,
-        item,
-        map: this.map,
-        gameState: this.gameState,
-        radarDistributorAI: this.radarDistributorAI
-      }).resetShortTermMemory();
+      if (!this.robots[id]) {
+        this.robots[id] = new Robot({
+          map: this.map,
+          gameState: this.gameState,
+          radarDistributorAI: this.radarDistributorAI
+        });
+      }
+
+      this.robots[id].setPersonalState({ x, y, item }).resetShortTermMemory();
     }
   }
 
