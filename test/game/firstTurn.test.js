@@ -7,10 +7,10 @@ describe('firstTurn', () => {
       ENTITY_ALLIED_ROBOT,
       ENTITY_ORE_UNKNOWN_AMOUNT,
       ITEM_NONE
-    } = require('../../src/constants');
-    const configs = require('../../src/configs');
-    const { Player } = require('../../src/ai');
-    const { Map } = require('../../src/map');
+    } = require('../../src_old/constants');
+    const configs = require('../../src_old/configs');
+    const { Player } = require('../../src_old/ai');
+    const { Map } = require('../../src_old/map');
 
     const map = new Map(configs['map']);
     const player = new Player({ map });
@@ -27,7 +27,7 @@ describe('firstTurn', () => {
         amount: ENTITY_ORE_UNKNOWN_AMOUNT
       });
 
-    map.resetEntities();
+    map.reset();
     player.updateGamaeStateAtTurnStart({
       radarCooldown: 0,
       trapCooldown: 0

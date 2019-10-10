@@ -4,7 +4,7 @@ describe('Map.processOreInput()', () => {
   it('sets the total, cell and zone ore amount', async () => {
     // Given
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -44,7 +44,7 @@ describe('Map.processOreInput()', () => {
   it('sets the ore amount on a cell if it already has ore on it', async () => {
     // Given
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -85,7 +85,7 @@ describe('Map.processOreInput()', () => {
   it('sets the zones to have the appropriate amount of ore', async () => {
     // Given
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -127,9 +127,9 @@ describe('Map.processOreInput()', () => {
 
   it('does not set the ore amount on a cell if the amount is unknown', async () => {
     // Given
-    const { ENTITY_ORE_UNKNOWN_AMOUNT } = require('../../../src/constants');
+    const { ENTITY_ORE_UNKNOWN_AMOUNT } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When

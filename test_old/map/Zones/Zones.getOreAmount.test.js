@@ -4,7 +4,7 @@ describe('Zones.getOreAmount()', () => {
   it('returns the ore amount in a zone', async () => {
     // Given
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
-    const Zones = require('../../../src/map/Cells');
+    const Zones = require('../../../src_old/map/Cells');
     const instance = new Zones(config);
     instance.data[0][1][Zones.DATA.ORE_AMOUNT] = 21
 

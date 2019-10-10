@@ -3,9 +3,9 @@ const { expect } = require('chai');
 describe('Map.processEntityInput()', () => {
   it('adds allied robots', async () => {
     // Given
-    const { ENTITY_ALLIED_ROBOT } = require('../../../src/constants');
+    const { ENTITY_ALLIED_ROBOT } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -58,9 +58,9 @@ describe('Map.processEntityInput()', () => {
 
   it('adds enemy robots', async () => {
     // Given
-    const { ENTITY_ENEMY_ROBOT } = require('../../../src/constants');
+    const { ENTITY_ENEMY_ROBOT } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -113,9 +113,9 @@ describe('Map.processEntityInput()', () => {
 
   it('adds radars', async () => {
     // Given
-    const { ENTITY_RADAR } = require('../../../src/constants');
+    const { ENTITY_RADAR } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -155,9 +155,9 @@ describe('Map.processEntityInput()', () => {
 
   it('adds mines', async () => {
     // Given
-    const { ENTITY_MINE } = require('../../../src/constants');
+    const { ENTITY_MINE } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When

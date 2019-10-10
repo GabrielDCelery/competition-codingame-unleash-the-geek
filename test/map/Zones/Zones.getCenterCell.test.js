@@ -4,7 +4,7 @@ describe('Zones.getCenterCell()', () => {
   it('increments the number of holes in a zone by one', async () => {
     // Given
     const config = { mapWidth: 30, mapHeight: 15, zoneSizeX: 5, zoneSizeY: 5 };
-    const Zones = require('../../../src/map/Zones');
+    const Zones = require('../../../src_old/map/Zones');
     const instance = new Zones(config);
 
     // When

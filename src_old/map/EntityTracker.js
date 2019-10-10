@@ -7,9 +7,9 @@ class EntityTracker {
     this.destructureKeyToCoordinates = this.destructureKeyToCoordinates.bind(
       this
     );
-    this.resetEntities = this.resetEntities.bind(this);
+    this.reset = this.reset.bind(this);
     this.entities = {};
-    this.resetEntities();
+    this.reset();
   }
 
   convertCoordinatesToKey({ x, y }) {
@@ -31,7 +31,7 @@ class EntityTracker {
     this.entities[what][key] = value + amount;
   }
 
-  resetEntities() {
+  reset() {
     const amounts = Object.keys(Data.AMOUNTS);
 
     for (let amount in amounts) {

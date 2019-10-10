@@ -4,7 +4,7 @@ describe('GridDistanceMapper.getCoordinatesAtDistance()', () => {
   it('returns the coordinates of a grid at a distance', async () => {
     // Given
     const config = { width: 3, height: 3 };
-    const GridDistanceMapper = require('../../../src/map/GridDistanceMapper');
+    const GridDistanceMapper = require('../../../src_old/map/GridDistanceMapper');
     const instance = new GridDistanceMapper(config);
 
     // When

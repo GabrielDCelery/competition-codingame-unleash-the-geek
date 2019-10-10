@@ -4,7 +4,7 @@ describe('Zones.addHole()', () => {
   it('increments the number of holes in a zone by one', async () => {
     // Given
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
-    const Zones = require('../../../src/map/Zones');
+    const Zones = require('../../../src_old/map/Zones');
     const instance = new Zones(config);
 
     // When
@@ -26,7 +26,7 @@ describe('Zones.addHole()', () => {
   it('increments the number of holes in a zone if called multiple times', async () => {
     // Given
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
-    const Zones = require('../../../src/map/Zones');
+    const Zones = require('../../../src_old/map/Zones');
     const instance = new Zones(config);
 
     // When

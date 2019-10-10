@@ -3,9 +3,9 @@ const { expect } = require('chai');
 describe('Map.processHoleInput()', () => {
   it('increases the total, cell and zone hole amount by one', async () => {
     // Given
-    const { ITEM_HOLE } = require('../../../src/constants');
+    const { ITEM_HOLE } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -44,9 +44,9 @@ describe('Map.processHoleInput()', () => {
 
   it('sets the zone to have the appropriate number of holes', async () => {
     // Given
-    const { ITEM_HOLE } = require('../../../src/constants');
+    const { ITEM_HOLE } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -85,9 +85,9 @@ describe('Map.processHoleInput()', () => {
 
   it('only sets a cell once even if it is called multiple times', async () => {
     // Given
-    const { ITEM_HOLE } = require('../../../src/constants');
+    const { ITEM_HOLE } = require('../../../src_old/constants');
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When
@@ -127,7 +127,7 @@ describe('Map.processHoleInput()', () => {
   it('does not set a cell to have a hole if the input is invalid', async () => {
     // Given
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(config);
 
     // When

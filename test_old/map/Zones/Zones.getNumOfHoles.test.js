@@ -4,7 +4,7 @@ describe('Zones.getHoleAmount()', () => {
   it('returns number of holes in a zone', async () => {
     // Given
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
-    const Zones = require('../../../src/map/Zones');
+    const Zones = require('../../../src_old/map/Zones');
     const instance = new Zones(config);
     instance.data[0][1][Zones.DATA.HOLE_AMOUNT] = 3
 

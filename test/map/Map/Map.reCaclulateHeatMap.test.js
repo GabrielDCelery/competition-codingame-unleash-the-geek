@@ -3,9 +3,9 @@ const { expect } = require('chai');
 describe('Map.getDataHeatMap().reCalculateHeatMap()', () => {
   it('generates a new heatmap', async () => {
     // Given
-    // const { ITEM_HOLE } = require('../../../src/constants')
-    const configs = require('../../../src/configs');
-    const Map = require('../../../src/map/Map');
+    // const { ITEM_HOLE } = require('../../../src_old/constants')
+    const configs = require('../../../src_old/configs');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(configs.map);
 
     // When
@@ -97,9 +97,9 @@ describe('Map.getDataHeatMap().reCalculateHeatMap()', () => {
       ENTITY_ENEMY_ROBOT,
       ENTITY_RADAR,
       ENTITY_MINE
-    } = require('../../../src/constants');
-    const configs = require('../../../src/configs');
-    const Map = require('../../../src/map/Map');
+    } = require('../../../src_old/constants');
+    const configs = require('../../../src_old/configs');
+    const Map = require('../../../src_old/map/Map');
     const instance = new Map(configs.map);
 
     // When
@@ -123,7 +123,7 @@ describe('Map.getDataHeatMap().reCalculateHeatMap()', () => {
       }
     }
 
-    instance.resetEntities();
+    instance.reset();
 
     for (let x = 0, xMax = instance.cells.width; x < xMax; x++) {
       for (let y = 0, yMax = instance.cells.height; y < yMax; y++) {

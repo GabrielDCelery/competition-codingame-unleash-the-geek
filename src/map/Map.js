@@ -1,204 +1,114 @@
 const {
-  ITEM_HOLE,
-  ENTITY_ORE_UNKNOWN_AMOUNT,
-  ENTITY_ALLIED_ROBOT,
-  ENTITY_ENEMY_ROBOT,
-  ENTITY_RADAR,
-  ENTITY_MINE
+  READLINE_CELL_HAS_HOLE,
+  READLINE_UNKNOWN_ORE_AMOUNT,
+  READLINE_ENTITY_ALLIED_ROBOT,
+  READLINE_ENTITY_ENEMY_ROBOT,
+  READLINE_ENTITY_RADAR,
+  READLINE_ENTITY_MINE
 } = require('../constants');
 
 const Data = require('./Data');
-const Cells = require('./Cells');
-const Zones = require('./Zones');
+const DistanceMapper = require('./DistanceMapper');
+
+const DataTracker = require('./DataTracker');
+const DataMap = require('./DataMap');
 const DataHeatMap = require('./DataHeatMap');
-const EntityTracker = require('./EntityTracker');
+const { HOLE, ORE, ALLIED_ROBOT, ENEMY_ROBOT, RADAR, MINE } = Data.AMOUNTS;
 
 class Map {
-  constructor({ mapWidth, mapHeight, zoneSizeX, zoneSizeY, heatMapDropRate }) {
-    this.getAmountKeys = this.getAmountKeys.bind(this);
-    this.getCells = this.getCells.bind(this);
-    this.getZones = this.getZones.bind(this);
-    this.getDataHeatMap = this.getDataHeatMap.bind(this);
+  constructor({ mapWidth, mapHeight, heatMapDropRate }) {
+    this.getDistance = this.getDistance.bind(this);
+    this.getMaxDistance = this.getMaxDistance.bind(this);
+    this.getDistanceMapper = this.getDistanceMapper.bind(this);
+    this.getHeatMap = this.getHeatMap.bind(this);
     this.processHoleInput = this.processHoleInput.bind(this);
     this.processOreInput = this.processOreInput.bind(this);
     this.processEntityInput = this.processEntityInput.bind(this);
-    this.resetEntities = this.resetEntities.bind(this);
+    this.reset = this.reset.bind(this);
 
-    this.totals = new Data();
-    this.cells = new Cells({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
-    this.zones = new Zones({ mapWidth, mapHeight, zoneSizeX, zoneSizeY });
+    this.width = mapWidth;
+    this.height = mapHeight;
+
+    this.dataMap = new DataMap({
+      width: this.width,
+      height: this.height
+    });
+
+    this.dataTracker = new DataTracker();
+    this.distanceMapper = new DistanceMapper({
+      width: this.width,
+      height: this.height
+    }).mapDistances();
     this.dataHeatMap = new DataHeatMap({
-      totals: this.totals,
-      zones: this.zones,
+      width: this.width,
+      height: this.height,
+      dataMap: this.dataMap,
+      dataTracker: this.dataTracker,
+      distanceMapper: this.distanceMapper,
       heatMapDropRate
     });
-    this.entityTracker = new EntityTracker();
   }
 
-  getAmountKeys() {
-    return { ...Data.AMOUNTS };
+  getDistance({ x, y, endX, endY }) {
+    return Math.abs(x - endX) + Math.abs(y - endY);
   }
 
-  getCells() {
-    return this.cells;
+  getMaxDistance() {
+    return this.width + this.height - 2;
   }
 
-  getZones() {
-    return this.zones;
+  getDistanceMapper() {
+    return this.distanceMapper;
   }
 
-  getDataHeatMap() {
+  getHeatMap() {
     return this.dataHeatMap;
   }
 
-  getTotals() {
-    return this.totals;
-  }
-
   processHoleInput({ x, y, hole }) {
-    if (
-      hole !== ITEM_HOLE ||
-      this.cells.has({ x, y, what: Data.AMOUNTS.HOLE })
-    ) {
+    if (hole !== READLINE_CELL_HAS_HOLE) {
       return this;
     }
 
-    this.cells.set({ x, y, what: Data.AMOUNTS.HOLE, amount: 1 });
-    this.zones.add({
-      ...this.cells.getZoneCoordinates({ x, y }),
-      what: Data.AMOUNTS.HOLE,
-      amount: 1
-    });
-    this.totals.add({ what: Data.AMOUNTS.HOLE, amount: 1 });
+    this.dataTracker.add({ x, y, what: HOLE, amount: 1 });
+    this.dataMap.add({ x, y, what: HOLE, amount: 1 });
 
     return this;
   }
 
   processOreInput({ x, y, amount }) {
-    if (amount === ENTITY_ORE_UNKNOWN_AMOUNT) {
+    if (amount === READLINE_UNKNOWN_ORE_AMOUNT) {
       return this;
     }
 
     const amountInt = parseInt(amount);
 
-    const currentZoneAmount = this.zones.get({
-      ...this.cells.getZoneCoordinates({ x, y }),
-      what: Data.AMOUNTS.ORE
-    });
-    const currentCellAmount = this.cells.get({ x, y, what: Data.AMOUNTS.ORE });
-    const currentTotalAmount = this.totals.get({ what: Data.AMOUNTS.ORE });
-
-    this.zones.set({
-      ...this.cells.getZoneCoordinates({ x, y }),
-      what: Data.AMOUNTS.ORE,
-      amount: currentZoneAmount - currentCellAmount + amountInt
-    });
-    this.totals.set({
-      what: Data.AMOUNTS.ORE,
-      amount: currentTotalAmount - currentCellAmount + amountInt
-    });
-
-    this.cells.set({ x, y, what: Data.AMOUNTS.ORE, amount: amountInt });
+    this.dataTracker.add({ x, y, what: ORE, amount: amountInt });
+    this.dataMap.add({ x, y, what: ORE, amount: amountInt });
 
     return this;
   }
 
   processEntityInput({ x, y, type }) {
     switch (type) {
-      case ENTITY_ALLIED_ROBOT: {
-        this.cells.add({
-          x,
-          y,
-          what: Data.AMOUNTS.ALLIED_ROBOT,
-          amount: 1
-        });
-        this.zones.add({
-          ...this.cells.getZoneCoordinates({ x, y }),
-          what: Data.AMOUNTS.ALLIED_ROBOT,
-          amount: 1
-        });
-        this.totals.add({
-          what: Data.AMOUNTS.ALLIED_ROBOT,
-          amount: 1
-        });
-        this.entityTracker.add({
-          x,
-          y,
-          what: Data.AMOUNTS.ALLIED_ROBOT,
-          amount: 1
-        });
+      case READLINE_ENTITY_ALLIED_ROBOT: {
+        this.dataTracker.add({ x, y, what: ALLIED_ROBOT, amount: 1 });
+        this.dataMap.add({ x, y, what: ALLIED_ROBOT, amount: 1 });
         return this;
       }
-      case ENTITY_ENEMY_ROBOT: {
-        this.cells.add({
-          x,
-          y,
-          what: Data.AMOUNTS.ENEMY_ROBOT,
-          amount: 1
-        });
-        this.zones.add({
-          ...this.cells.getZoneCoordinates({ x, y }),
-          what: Data.AMOUNTS.ENEMY_ROBOT,
-          amount: 1
-        });
-        this.totals.add({
-          what: Data.AMOUNTS.ENEMY_ROBOT,
-          amount: 1
-        });
-        this.entityTracker.add({
-          x,
-          y,
-          what: Data.AMOUNTS.ENEMY_ROBOT,
-          amount: 1
-        });
+      case READLINE_ENTITY_ENEMY_ROBOT: {
+        this.dataTracker.add({ x, y, what: ENEMY_ROBOT, amount: 1 });
+        this.dataMap.add({ x, y, what: ENEMY_ROBOT, amount: 1 });
         return this;
       }
-      case ENTITY_RADAR: {
-        this.cells.set({
-          x,
-          y,
-          what: Data.AMOUNTS.RADAR,
-          amount: 1
-        });
-        this.zones.add({
-          ...this.cells.getZoneCoordinates({ x, y }),
-          what: Data.AMOUNTS.RADAR,
-          amount: 1
-        });
-        this.totals.add({
-          what: Data.AMOUNTS.RADAR,
-          amount: 1
-        });
-        this.entityTracker.add({
-          x,
-          y,
-          what: Data.AMOUNTS.RADAR,
-          amount: 1
-        });
+      case READLINE_ENTITY_RADAR: {
+        this.dataTracker.add({ x, y, what: RADAR, amount: 1 });
+        this.dataMap.set({ x, y, what: RADAR, amount: 1 });
         return this;
       }
-      case ENTITY_MINE: {
-        this.cells.set({
-          x,
-          y,
-          what: Data.AMOUNTS.MINE,
-          amount: 1
-        });
-        this.zones.add({
-          ...this.cells.getZoneCoordinates({ x, y }),
-          what: Data.AMOUNTS.MINE,
-          amount: 1
-        });
-        this.totals.add({
-          what: Data.AMOUNTS.MINE,
-          amount: 1
-        });
-        this.entityTracker.add({
-          x,
-          y,
-          what: Data.AMOUNTS.MINE,
-          amount: 1
-        });
+      case READLINE_ENTITY_MINE: {
+        this.dataTracker.add({ x, y, what: MINE, amount: 1 });
+        this.dataMap.set({ x, y, what: MINE, amount: 1 });
         return this;
       }
       default:
@@ -206,10 +116,9 @@ class Map {
     }
   }
 
-  resetEntities() {
-    this.totals.resetEntities();
-    this.cells.resetEntities();
-    this.zones.resetEntities();
+  reset() {
+    this.dataTracker.reset();
+    this.dataMap.reset();
   }
 }
 

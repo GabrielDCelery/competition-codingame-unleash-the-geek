@@ -4,10 +4,10 @@ describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
   it('gets a recommended cell for a single robot', async () => {
     // Given
     const config = { mapWidth: 9, mapHeight: 9, zoneSizeX: 3, zoneSizeY: 3 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const map = new Map(config);
     map.getDataHeatMap().reCalculateHeatMap();
-    const DataHeatMapEvaluator = require('../../../src/ai/DataHeatMapEvaluator');
+    const DataHeatMapEvaluator = require('../../../src_old/ai/DataHeatMapEvaluator');
     const evaluator = new DataHeatMapEvaluator({ map });
 
     // When
@@ -25,11 +25,11 @@ describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
   it('gets a recommended cell for a single robot', async () => {
     // Given
     const config = { mapWidth: 9, mapHeight: 9, zoneSizeX: 3, zoneSizeY: 3 };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const map = new Map(config);
     map.processOreInput({ x: 8, y: 0, amount: 100 });
     map.getDataHeatMap().reCalculateHeatMap();
-    const DataHeatMapEvaluator = require('../../../src/ai/DataHeatMapEvaluator');
+    const DataHeatMapEvaluator = require('../../../src_old/ai/DataHeatMapEvaluator');
     const evaluator = new DataHeatMapEvaluator({ map });
 
     // When
@@ -66,11 +66,11 @@ describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
       zoneSizeY: 3,
       heatMapDropRate
     };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const map = new Map(config);
     map.processOreInput({ x: 1, y: 7, amount: 100 });
     map.getDataHeatMap().reCalculateHeatMap();
-    const DataHeatMapEvaluator = require('../../../src/ai/DataHeatMapEvaluator');
+    const DataHeatMapEvaluator = require('../../../src_old/ai/DataHeatMapEvaluator');
     const evaluator = new DataHeatMapEvaluator({ map });
 
     // When
@@ -107,11 +107,11 @@ describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
       zoneSizeY: 3,
       heatMapDropRate
     };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const map = new Map(config);
     map.processOreInput({ x: 8, y: 8, amount: 100 });
     map.getDataHeatMap().reCalculateHeatMap();
-    const DataHeatMapEvaluator = require('../../../src/ai/DataHeatMapEvaluator');
+    const DataHeatMapEvaluator = require('../../../src_old/ai/DataHeatMapEvaluator');
     const evaluator = new DataHeatMapEvaluator({ map });
 
     // When
@@ -148,11 +148,11 @@ describe('DataHeatMapEvaluator.getRecommendedCoordinate()', () => {
       zoneSizeY: 3,
       heatMapDropRate
     };
-    const Map = require('../../../src/map/Map');
+    const Map = require('../../../src_old/map/Map');
     const map = new Map(config);
     map.processOreInput({ x: 7, y: 4, amount: 100 });
     map.getDataHeatMap().reCalculateHeatMap();
-    const DataHeatMapEvaluator = require('../../../src/ai/DataHeatMapEvaluator');
+    const DataHeatMapEvaluator = require('../../../src_old/ai/DataHeatMapEvaluator');
     const evaluator = new DataHeatMapEvaluator({ map });
 
     // When

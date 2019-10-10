@@ -4,7 +4,7 @@ describe('Cells.constructor()', () => {
   it('initialises an instance', async () => {
     // Given
     const config = { mapWidth: 4, mapHeight: 4, zoneSizeX: 2, zoneSizeY: 2 };
-    const Cells = require('../../../src/map/Cells');
+    const Cells = require('../../../src_old/map/Cells');
 
     // When
     const result = new Cells(config);

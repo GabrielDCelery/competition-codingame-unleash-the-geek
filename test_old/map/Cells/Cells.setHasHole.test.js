@@ -4,7 +4,7 @@ describe('Cells.setHasHole()', () => {
   it('sets a cell to have a hole', async () => {
     // Given
     const config = { mapWidth: 2, mapHeight: 2, zoneSizeX: 2, zoneSizeY: 2 };
-    const Cells = require('../../../src/map/Cells');
+    const Cells = require('../../../src_old/map/Cells');
     const instance = new Cells(config);
 
     // When

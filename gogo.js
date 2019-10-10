@@ -1,4 +1,6 @@
-module.exports = {
+const { Map } = require('./src/map');
+
+const map = new Map({
   mapWidth: 30,
   mapHeight: 15,
   heatMapDropRate: [
@@ -14,4 +16,6 @@ module.exports = {
     0.01455191522,
     0.00909494701
   ]
-};
+});
+
+map.getHeatMap().reCalculateHeatMap();

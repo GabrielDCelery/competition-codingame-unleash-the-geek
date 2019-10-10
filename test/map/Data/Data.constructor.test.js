@@ -3,7 +3,7 @@ const { expect } = require('chai');
 describe('Data.constructor()', () => {
   it('creates a new Data object', async () => {
     // Given
-    const Data = require('../../../src/map/Data');
+    const Data = require('../../../src_old/map/Data');
 
     // When
     const result = new Data();
