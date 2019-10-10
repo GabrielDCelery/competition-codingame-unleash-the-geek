@@ -11,10 +11,16 @@ class Player {
     this.generateCommandsForAlliedRobots = this.generateCommandsForAlliedRobots.bind(
       this
     );
+    this.requestRadarDropCoordinate = this.requestRadarDropCoordinate.bind(
+      this
+    );
 
     this.robots = {};
     this.map = map;
     this.radarDistributorAI = new RadarDistributorAI({ map: this.map });
+    this.playerMethods = {
+      requestRadarDropCoordinate: this.requestRadarDropCoordinate
+    };
     this.updateGamaeStateAtTurnStart({
       radarCooldown: Infinity,
       trapCooldown: Infinity
@@ -39,12 +45,21 @@ class Player {
         this.robots[id] = new Robot({
           map: this.map,
           gameState: this.gameState,
+          playerMethods: this.playerMethods,
           radarDistributorAI: this.radarDistributorAI
         });
       }
 
-      this.robots[id].setPersonalState({ x, y, item }).resetShortTermMemory();
+      this.robots[id]
+        .setPersonalState({ id, x, y, item })
+        .resetShortTermMemory();
     }
+  }
+
+  requestRadarDropCoordinate({ robotId }) {
+    const { x, y } = this.radarDistributorAI.getNextRadarDeployCoordinates();
+
+    return { x, y };
   }
 
   generateCommandsForAlliedRobots() {

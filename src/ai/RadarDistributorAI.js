@@ -122,8 +122,6 @@ class RadarDistributorAI {
       */
     }
 
-    console.warn(nextRadarDeployCoordinate);
-
     return nextRadarDeployCoordinate;
   }
 }
