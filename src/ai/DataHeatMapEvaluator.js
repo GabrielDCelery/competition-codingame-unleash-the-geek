@@ -34,7 +34,7 @@ class DataHeatMapEvaluator {
 
     return (
       -0.5 * data[HOLE] +
-      2 * data[ORE] +
+      10 * data[ORE] +
       -0.5 * data[ALLIED_ROBOT] +
       -0.5 * data[ENEMY_ROBOT] +
       0.5 * data[RADAR] +

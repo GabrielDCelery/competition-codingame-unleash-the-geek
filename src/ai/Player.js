@@ -11,16 +11,9 @@ class Player {
     this.generateCommandsForAlliedRobots = this.generateCommandsForAlliedRobots.bind(
       this
     );
-    this.requestRadarDropCoordinate = this.requestRadarDropCoordinate.bind(
-      this
-    );
-
     this.robots = {};
     this.map = map;
     this.radarDistributorAI = new RadarDistributorAI({ map: this.map });
-    this.playerMethods = {
-      requestRadarDropCoordinate: this.requestRadarDropCoordinate
-    };
     this.updateGamaeStateAtTurnStart({
       radarCooldown: Infinity,
       trapCooldown: Infinity
@@ -56,29 +49,12 @@ class Player {
     }
   }
 
-  requestRadarDropCoordinate({ robotId }) {
-    const { x, y } = this.radarDistributorAI.getNextRadarDeployCoordinates();
-
-    return { x, y };
-  }
-
   generateCommandsForAlliedRobots() {
     const robotIds = Object.keys(this.robots).sort();
-
-    const sortedRobotIds = [];
-    for (let robotId in robotIds) {
-      sortedRobotIds.push([robotId, this.robots[robotId]['y']]);
-    }
-
-    sortedRobotIds.sort((a, b) => a[1] - b[1]);
-
-    const actionsToExecute = new Array(5).fill(0);
-    const robotOrders = [2, 1, 3, 0, 4];
+    const actionsToExecute = [];
 
     for (let i = 0, iMax = robotIds.length; i < iMax; i++) {
-      const robotOrder = robotOrders[i];
-      const robotId = sortedRobotIds[robotOrder][0];
-      actionsToExecute[robotOrder] = this.robots[robotId].generateCommand();
+      actionsToExecute.push(this.robots[robotIds[i]].generateCommand());
     }
 
     return actionsToExecute;

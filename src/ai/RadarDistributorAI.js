@@ -88,8 +88,8 @@ class RadarDistributorAI {
     );
   }
 
-  getNextRadarDeployCoordinates() {
-    let nextRadarDeployCoordinate = null;
+  getNextRadarDeployCoordinates({ robotX, robotY }) {
+    let nextRadarDeployCoordinate = { x: 0, y: 0 };
     let nextRadarDeployCoordinateScore = -Infinity;
 
     for (
@@ -104,7 +104,10 @@ class RadarDistributorAI {
         y: recommendedCoordinate['y']
       });
 
-      if (nextRadarDeployCoordinateScore < score) {
+      if (
+        nextRadarDeployCoordinateScore < score &&
+        robotX <= recommendedCoordinate['x']
+      ) {
         nextRadarDeployCoordinate = recommendedCoordinate;
         nextRadarDeployCoordinateScore = score;
       }

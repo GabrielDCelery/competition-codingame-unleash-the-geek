@@ -11,7 +11,7 @@ const RobotAI = require('./RobotAI');
 const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
 
 class Robot {
-  constructor({ map, gameState, playerMethods }) {
+  constructor({ map, gameState, radarDistributorAI }) {
     this.setPersonalState = this.setPersonalState.bind(this);
     this.resetShortTermMemory = this.resetShortTermMemory.bind(this);
 
@@ -38,7 +38,7 @@ class Robot {
     this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
       map: this.map
     });
-    this.playerMethods = playerMethods;
+    this.radarDistributorAI = radarDistributorAI;
 
     this.robotAI = new RobotAI({
       stateGetters: {
@@ -221,8 +221,7 @@ class Robot {
   }
 
   deployRadar() {
-    const { x, y } = this.playerMethods.requestRadarDropCoordinate({
-      robotId: this.id,
+    const { x, y } = this.radarDistributorAI.getNextRadarDeployCoordinates({
       robotX: this.x,
       robotY: this.y
     });
