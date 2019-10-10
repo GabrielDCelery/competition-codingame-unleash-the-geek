@@ -28,9 +28,13 @@ class DataHeatMap {
       .map(() => new Array(this.height).fill(null));
     for (let x = 0, xMax = this.width; x < xMax; x++) {
       for (let y = 0, yMax = this.height; y < yMax; y++) {
-        this.heatMap[x][y] = new Array(
-          [HOLE, ORE, ALLIED_ROBOT, ENEMY_ROBOT, RADAR, MINE].length
-        ).fill(0);
+        this.heatMap[x][y] = JSON.parse(
+          JSON.stringify(
+            new Array(
+              [HOLE, ORE, ALLIED_ROBOT, ENEMY_ROBOT, RADAR, MINE].length
+            ).fill(0)
+          )
+        );
       }
     }
   }
@@ -38,7 +42,6 @@ class DataHeatMap {
   _distributeDecayingGridData({ x, y, what, distanceMax }) {
     const value = this.dataMap.get({ x, y, what });
     const total = this.dataTracker.getTotals().get({ what });
-
     for (let distance = 0; distance < distanceMax; distance++) {
       const coordinatesAtDistance = this.distanceMapper.getCoordinatesAtDistance(
         { x, y, distance }

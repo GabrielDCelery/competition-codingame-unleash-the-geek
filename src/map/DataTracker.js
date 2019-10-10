@@ -22,7 +22,7 @@ class DataTracker {
       : 0;
 
     this.data[what][key] = value + amount;
-    this.totals[what] += amount;
+    this.totals.add({ x, y, what, amount });
   }
 
   getTotals() {

@@ -33,12 +33,11 @@ class Map {
       width: this.width,
       height: this.height
     });
-
     this.dataTracker = new DataTracker();
     this.distanceMapper = new DistanceMapper({
       width: this.width,
       height: this.height
-    }).mapDistances();
+    }).mapDistances({ maxDistance: heatMapDropRate.length });
     this.dataHeatMap = new DataHeatMap({
       width: this.width,
       height: this.height,

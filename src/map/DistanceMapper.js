@@ -55,7 +55,7 @@ class DistanceMapper {
     return cellsAtDistance;
   }
 
-  mapDistances({ maxDistance } = { maxDistance: Infinity }) {
+  mapDistances({ maxDistance = Infinity }) {
     this.maxDistance = Math.min(maxDistance, this.width + this.height - 2);
     this.data = new Array(this.width).fill(null).map(() => {
       return new Array(this.height).fill(null).map(() => {
