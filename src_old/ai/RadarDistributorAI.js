@@ -81,10 +81,8 @@ class RadarDistributorAI {
     });
 
     return (
-      -1 * data[HOLE] +
-      -1 * data[RADAR] +
-      -1 * data[MINE] +
-      -1 * normalizedDistanceFromHQ
+      -1 * data[HOLE] + -1 * data[RADAR] + -1 * data[MINE]
+      //-1 * normalizedDistanceFromHQ
     );
   }
 

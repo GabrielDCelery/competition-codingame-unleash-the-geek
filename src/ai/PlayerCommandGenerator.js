@@ -11,7 +11,7 @@ class PlayerCommandGenerator {
     this.makeRobotDeployRadar = this.makeRobotDeployRadar.bind(this);
     this.makeRobotDigHole = this.makeRobotDigHole.bind(this);
     this.makeRobotPickupRadar = this.makeRobotPickupRadar.bind(this);
-    this.makeRobotScout = this.makeRobotScout.bind(this);
+    this.makeRobotWander = this.makeRobotWander.bind(this);
   }
 
   makeRobotDeliverOreToHQ({ robot }) {
@@ -25,7 +25,25 @@ class PlayerCommandGenerator {
     return `${COMMAND_DIG} ${x} ${y}`;
   }
 
-  makeRobotDeployRadar() {}
+  makeRobotDeployRadar({ robot, gameState, coordinatorCalculator, configs }) {
+    const moveTo = coordinatorCalculator.getRecommendedCoordinate(
+      'radarDeployer',
+      {
+        robotX: robot.x,
+        robotY: robot.y
+      }
+    );
+
+    if (moveTo === null) {
+      gameState.markCoordinateAsTaken({ x: robot.x, y: robot.y });
+      return COMMAND_WAIT;
+    }
+
+    const { x, y } = moveTo;
+    gameState.markCoordinateAsTaken({ x, y });
+
+    return `${COMMAND_DIG} ${x} ${y}`;
+  }
 
   makeRobotPickupRadar({ robot, gameState }) {
     gameState.markCoordinateAsTaken({ x: robot.x, y: robot.y });
@@ -34,7 +52,7 @@ class PlayerCommandGenerator {
     return `${COMMAND_REQUEST} RADAR`;
   }
 
-  makeRobotScout({ robot, gameState, coordinatorCalculator, configs }) {
+  makeRobotWander({ robot, gameState, coordinatorCalculator, configs }) {
     const moveTo = coordinatorCalculator.getRecommendedCoordinate('wanderer', {
       robotX: robot.x,
       robotY: robot.y,

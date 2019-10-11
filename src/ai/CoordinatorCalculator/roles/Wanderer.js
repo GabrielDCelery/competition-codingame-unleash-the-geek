@@ -30,7 +30,7 @@ class Scout {
       10 * data[ORE] +
       -1 * data[ALLIED_ROBOT] +
       -0.25 * data[ENEMY_ROBOT] +
-      0.5 * data[RADAR] +
+      -0.5 * data[RADAR] +
       -1 * data[MINE] +
       -0.25 * normalizedDistanceStartTarget
       //1 * normalizedDistanceTargetHQ

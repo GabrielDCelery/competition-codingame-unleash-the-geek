@@ -15,7 +15,6 @@ class PlayerAI {
           }
         ]
       },
-      /*
       {
         action: 'makeRobotDeployRadar',
         scorers: [
@@ -45,15 +44,16 @@ class PlayerAI {
             stateToUrgeConverter: result => (1 - result) * 100
           }
         ]
-      },*/
+      },
       {
         action: 'makeRobotDigHole',
         scorers: [
+          /*
           {
             who: 'gameState',
             stateGetter: 'hasOreOnMap',
             stateToUrgeConverter: result => (result ? -Infinity : 0)
-          },
+          },*/
           {
             who: 'robot',
             stateGetter: 'safeToDigHoleNextToMe',
@@ -62,7 +62,7 @@ class PlayerAI {
         ]
       },
       {
-        action: 'makeRobotScout',
+        action: 'makeRobotWander',
         scorers: [
           {
             who: 'robot',
