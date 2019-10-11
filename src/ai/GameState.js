@@ -7,6 +7,8 @@ class GameState {
     this.setRadarCooldown = this.setRadarCooldown.bind(this);
     this.setTrapCoolDown = this.setTrapCoolDown.bind(this);
     this.isCoordinateTaken = this.isCoordinateTaken.bind(this);
+    this.isActionTaken = this.isActionTaken.bind(this);
+    this.markActionAsTaken = this.markActionAsTaken.bind(this);
     this.isRadarAvailable = this.isRadarAvailable.bind(this);
     this.markCoordinateAsTaken = this.markCoordinateAsTaken.bind(this);
     this.resetTakenCoordinates = this.resetTakenCoordinates.bind(this);
@@ -18,6 +20,7 @@ class GameState {
     this.radarCooldown = Infinity;
     this.trapCooldown = Infinity;
     this.coordinatesTaken = {};
+    this.actionsTaken = {};
   }
 
   getRadarCooldown() {
@@ -40,6 +43,14 @@ class GameState {
     return this;
   }
 
+  isActionTaken(actionName) {
+    return this.actionsTaken[actionName] === true;
+  }
+
+  markActionAsTaken(actionName) {
+    return (this.actionsTaken[actionName] = true);
+  }
+
   isCoordinateTaken({ x, y }) {
     return (
       this.coordinatesTaken[helpers.convertCoordinatesToKey({ x, y })] === true
@@ -54,6 +65,10 @@ class GameState {
     this.coordinatesTaken = {};
   }
 
+  resetTakenActions() {
+    this.actionsTaken = {};
+  }
+
   // ****************************** STATE GETTERS ****************************** //
 
   hasOreOnMap() {
@@ -66,7 +81,7 @@ class GameState {
   }
 
   isRadarAvailable() {
-    return this.radarCooldown === 0;
+    return this.radarCooldown === 0 && !this.isActionTaken('radarPickup');
   }
 }
 

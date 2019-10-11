@@ -8,6 +8,7 @@ class Robot {
 
     this.doIExist = this.doIExist.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
+    this.doesCargoHaveRadar = this.doesCargoHaveRadar.bind(this);
     this.isCargoEmpty = this.isCargoEmpty.bind(this);
     this.normalizedDistanceFromHQ = this.normalizedDistanceFromHQ.bind(this);
     this.safeToDigHoleNextToMe = this.safeToDigHoleNextToMe.bind(this);
@@ -45,6 +46,10 @@ class Robot {
 
   doesCargoHaveOre() {
     return this.item === ITEM_ORE;
+  }
+
+  doesCargoHaveRadar() {
+    return this.item === ITEM_RADAR;
   }
 
   isCargoEmpty() {

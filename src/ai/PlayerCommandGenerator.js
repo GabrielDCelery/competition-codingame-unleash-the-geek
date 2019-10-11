@@ -1,17 +1,17 @@
 const {
-  //COMMAND_REQUEST,
+  COMMAND_REQUEST,
   COMMAND_MOVE,
   COMMAND_DIG,
   COMMAND_WAIT
 } = require('../constants');
 
 class PlayerCommandGenerator {
-  constructor({ map }) {
+  constructor() {
     this.makeRobotDeliverOreToHQ = this.makeRobotDeliverOreToHQ.bind(this);
+    this.makeRobotDeployRadar = this.makeRobotDeployRadar.bind(this);
     this.makeRobotDigHole = this.makeRobotDigHole.bind(this);
+    this.makeRobotPickupRadar = this.makeRobotPickupRadar.bind(this);
     this.makeRobotScout = this.makeRobotScout.bind(this);
-
-    this.map = map;
   }
 
   makeRobotDeliverOreToHQ({ robot }) {
@@ -25,15 +25,24 @@ class PlayerCommandGenerator {
     return `${COMMAND_DIG} ${x} ${y}`;
   }
 
-  makeRobotScout({ robot, gameState, dataHeatMapEvaluator, configs }) {
-    const moveTo = dataHeatMapEvaluator.getRecommendedCoordinate({
-      startX: robot.x,
-      startY: robot.y,
-      maxDistance: configs.robotScanRange,
-      scorerMethod: dataHeatMapEvaluator.getScorerMehods().SCOUTING
+  makeRobotDeployRadar() {}
+
+  makeRobotPickupRadar({ robot, gameState }) {
+    gameState.markCoordinateAsTaken({ x: robot.x, y: robot.y });
+    gameState.markActionAsTaken('radarPickup');
+
+    return `${COMMAND_REQUEST} RADAR`;
+  }
+
+  makeRobotScout({ robot, gameState, coordinatorCalculator, configs }) {
+    const moveTo = coordinatorCalculator.getRecommendedCoordinate('wanderer', {
+      robotX: robot.x,
+      robotY: robot.y,
+      maxDistance: configs.robotScanRange
     });
 
     if (moveTo === null) {
+      gameState.markCoordinateAsTaken({ x: robot.x, y: robot.y });
       return COMMAND_WAIT;
     }
 

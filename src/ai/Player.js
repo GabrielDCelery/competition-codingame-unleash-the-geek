@@ -3,7 +3,7 @@ const Robot = require('./Robot');
 const GameState = require('./GameState');
 const PlayerAI = require('./PlayerAI');
 const PlayerCommandGenerator = require('./PlayerCommandGenerator');
-const DataHeatMapEvaluator = require('./DataHeatMapEvaluator');
+const CoordinatorCalculator = require('./CoordinatorCalculator');
 
 class Player {
   constructor({ map, configs }) {
@@ -18,8 +18,8 @@ class Player {
     this.map = map;
     this.gameState = new GameState({ map });
     this.playerAI = new PlayerAI();
-    this.playerCommandGenerator = new PlayerCommandGenerator({ map });
-    this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
+    this.playerCommandGenerator = new PlayerCommandGenerator();
+    this.coordinatorCalculator = new CoordinatorCalculator({
       map: this.map,
       gameState: this.gameState
     });
@@ -29,6 +29,7 @@ class Player {
     this.gameState.setRadarCooldown(radarCooldown);
     this.gameState.setTrapCoolDown(trapCooldown);
     this.gameState.resetTakenCoordinates();
+    this.gameState.resetTakenActions();
 
     return this;
   }
@@ -58,7 +59,7 @@ class Player {
         const command = this.playerCommandGenerator[action]({
           robot,
           gameState: this.gameState,
-          dataHeatMapEvaluator: this.dataHeatMapEvaluator,
+          coordinatorCalculator: this.coordinatorCalculator,
           configs: this.configs
         });
 

@@ -1,37 +1,15 @@
-class DataHeatMapEvaluator {
+class Scout {
   constructor({ map, gameState }) {
     this.map = map;
     this.gameState = gameState;
     this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
   }
 
-  static get SCORER_METHODS() {
-    return {
-      SCOUTING: '_scoutingScorer',
-      DEPLOY_RADAR: '_deployRadarScorer'
-    };
-  }
-
-  getScorerMehods() {
-    return DataHeatMapEvaluator.SCORER_METHODS;
-  }
-  /*
-  _deployRadarScorer({ data, normalizedDistances }) {
-    const { HOLE, ORE, RADAR } = this.map.getAmountKeys();
-    return (
-      -1 * data[HOLE] +
-      -1 * data[ORE] +
-      -1 * data[RADAR] +
-      -1 * normalizedDistances['robotTarget'] +
-      0.5 * normalizedDistances['targetHQ']
-    );
-  }
-  */
-  _scoutingScorer({
+  _scoreData({
     data,
     normalizedDistanceStartTarget,
     //normalizedDistanceStartHQ,
-    normalizedDistanceTargetHQ,
+    //normalizedDistanceTargetHQ,
     coordinateToCheckX
   }) {
     if (coordinateToCheckX === 0) {
@@ -59,7 +37,7 @@ class DataHeatMapEvaluator {
     );
   }
 
-  getRecommendedCoordinate({ startX, startY, maxDistance, scorerMethod }) {
+  getRecommendedCoordinate({ robotX, robotY, maxDistance }) {
     let suggestionCoordinates = null;
     let suggestionScore = -Infinity;
 
@@ -69,24 +47,24 @@ class DataHeatMapEvaluator {
 
     for (let distance = 0; distance <= maxDistance; distance++) {
       const coordinatesToCheck = getCoordinatesAtDistance({
-        x: startX,
-        y: startY,
+        x: robotX,
+        y: robotY,
         distance
       });
 
       for (let i = 0, iMax = coordinatesToCheck.length; i < iMax; i++) {
         const [coordinateToCheckX, coordinateToCheckY] = coordinatesToCheck[i];
         const normalizedDistanceStartTarget = getNormalizedDistance({
-          startX: startX,
-          startY: startY,
+          startX: robotX,
+          startY: robotY,
           endX: coordinateToCheckX,
           endY: coordinateToCheckY
         });
         const normalizedDistanceStartHQ = getNormalizedDistance({
-          startX: startX,
-          startY: startY,
+          startX: robotX,
+          startY: robotY,
           endX: 0,
-          endY: startY
+          endY: robotY
         });
         const normalizedDistanceTargetHQ = getNormalizedDistance({
           startX: coordinateToCheckX,
@@ -96,7 +74,7 @@ class DataHeatMapEvaluator {
         });
 
         const data = getData({ x: coordinateToCheckX, y: coordinateToCheckY });
-        const score = this[scorerMethod]({
+        const score = this._scoreData({
           data,
           normalizedDistanceStartTarget,
           normalizedDistanceStartHQ,
@@ -125,4 +103,4 @@ class DataHeatMapEvaluator {
   }
 }
 
-module.exports = DataHeatMapEvaluator;
+module.exports = Scout;

@@ -17,27 +17,35 @@ class PlayerAI {
       },
       /*
       {
+        action: 'makeRobotDeployRadar',
+        scorers: [
+          {
+            who: 'robot',
+            stateGetter: 'doesCargoHaveRadar',
+            stateToUrgeConverter: result => (result ? Infinity : -Infinity)
+          }
+        ]
+      },
+      {
         action: 'makeRobotPickupRadar',
         scorers: [
           {
             who: 'robot',
             stateGetter: 'isCargoEmpty',
-            stateToPriorityConverter: result => (result ? 100 : -100)
+            stateToUrgeConverter: result => (result ? 100 : -100)
           },
           {
             who: 'gameState',
             stateGetter: 'isRadarAvailable',
-            stateToPriorityConverter: result =>
-              result === true ? 100 : -Infinity
+            stateToUrgeConverter: result => (result === true ? 100 : -Infinity)
           },
           {
             who: 'robot',
             stateGetter: 'normalizedDistanceFromHQ',
-            stateToPriorityConverter: result => (1 - result) * 100
+            stateToUrgeConverter: result => (1 - result) * 100
           }
         ]
-      },
-      */
+      },*/
       {
         action: 'makeRobotDigHole',
         scorers: [
