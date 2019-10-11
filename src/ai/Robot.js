@@ -8,6 +8,8 @@ class Robot {
 
     this.doIExist = this.doIExist.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
+    this.isCargoEmpty = this.isCargoEmpty.bind(this);
+    this.normalizedDistanceFromHQ = this.normalizedDistanceFromHQ.bind(this);
     this.safeToDigHoleNextToMe = this.safeToDigHoleNextToMe.bind(this);
 
     this.map = map;
@@ -43,6 +45,19 @@ class Robot {
 
   doesCargoHaveOre() {
     return this.item === ITEM_ORE;
+  }
+
+  isCargoEmpty() {
+    return this.item === ITEM_NONE;
+  }
+
+  normalizedDistanceFromHQ() {
+    return this.map.getNormalizedDistance({
+      startX: this.x,
+      startY: this.y,
+      endX: 0,
+      endY: this.y
+    });
   }
 
   safeToDigHoleNextToMe() {

@@ -55,11 +55,11 @@ describe('firstTurn', () => {
 
     // Then
     expect(commands).to.deep.equal([
-      'DIG 1 0',
-      'DIG 1 3',
-      'DIG 1 7',
-      'DIG 1 10',
-      'DIG 1 14'
+      'MOVE 3 3',
+      'MOVE 3 3',
+      'MOVE 3 3',
+      'MOVE 3 3',
+      'MOVE 3 3'
     ]);
   });
 });

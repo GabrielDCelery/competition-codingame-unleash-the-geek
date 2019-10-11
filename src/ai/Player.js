@@ -19,7 +19,10 @@ class Player {
     this.gameState = new GameState({ map });
     this.playerAI = new PlayerAI();
     this.playerCommandGenerator = new PlayerCommandGenerator({ map });
-    this.dataHeatMapEvaluator = new DataHeatMapEvaluator({ map });
+    this.dataHeatMapEvaluator = new DataHeatMapEvaluator({
+      map: this.map,
+      gameState: this.gameState
+    });
   }
 
   updateGameState({ radarCooldown, trapCooldown }) {

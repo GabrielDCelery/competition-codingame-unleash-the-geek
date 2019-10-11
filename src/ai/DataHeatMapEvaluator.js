@@ -1,6 +1,7 @@
 class DataHeatMapEvaluator {
-  constructor({ map }) {
+  constructor({ map, gameState }) {
     this.map = map;
+    this.gameState = gameState;
     this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
   }
 
@@ -104,7 +105,13 @@ class DataHeatMapEvaluator {
           coordinateToCheckY
         });
 
-        if (suggestionScore < score) {
+        if (
+          suggestionScore < score &&
+          !this.gameState.isCoordinateTaken({
+            x: coordinateToCheckX,
+            y: coordinateToCheckY
+          })
+        ) {
           suggestionScore = score;
           suggestionCoordinates = {
             x: coordinateToCheckX,
