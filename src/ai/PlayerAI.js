@@ -31,16 +31,37 @@ class PlayerAI {
           {
             who: 'robot',
             stateGetter: 'isCargoEmpty',
-            stateToUrgeConverter: result => (result ? 100 : -100)
+            stateToUrgeConverter: result => (result ? 0 : -Infinity)
           },
           {
             who: 'gameState',
             stateGetter: 'isRadarAvailable',
-            stateToUrgeConverter: result => (result === true ? 100 : -Infinity)
+            stateToUrgeConverter: result => (result ? 0 : -Infinity)
           },
           {
             who: 'robot',
             stateGetter: 'normalizedDistanceFromHQ',
+            stateToUrgeConverter: result => (1 - result) * 100
+          }
+          //TODO - check how many radars have been deployed
+        ]
+      },
+      {
+        action: 'makeRobotHarvestOre',
+        scorers: [
+          {
+            who: 'gameState',
+            stateGetter: 'hasOreOnMap',
+            stateToUrgeConverter: result => (result ? 0 : -Infinity)
+          },
+          {
+            who: 'robot',
+            stateGetter: 'isCargoEmpty',
+            stateToUrgeConverter: result => (result ? 0 : -Infinity)
+          },
+          {
+            who: 'robot',
+            stateGetter: 'normalizedDistanceFromNearestOre',
             stateToUrgeConverter: result => (1 - result) * 100
           }
         ]
@@ -48,16 +69,10 @@ class PlayerAI {
       {
         action: 'makeRobotDigHole',
         scorers: [
-          /*
-          {
-            who: 'gameState',
-            stateGetter: 'hasOreOnMap',
-            stateToUrgeConverter: result => (result ? -Infinity : 0)
-          },*/
           {
             who: 'robot',
             stateGetter: 'safeToDigHoleNextToMe',
-            stateToUrgeConverter: result => (result ? 70 : -Infinity)
+            stateToUrgeConverter: result => (result ? 50 : -Infinity)
           }
         ]
       },
@@ -67,7 +82,7 @@ class PlayerAI {
           {
             who: 'robot',
             stateGetter: 'doIExist',
-            stateToUrgeConverter: result => (result ? 50 : 50)
+            stateToUrgeConverter: result => (result ? 25 : 25)
           }
         ]
       }

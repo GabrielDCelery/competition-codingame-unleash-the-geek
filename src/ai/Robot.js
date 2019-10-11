@@ -11,6 +11,9 @@ class Robot {
     this.doesCargoHaveRadar = this.doesCargoHaveRadar.bind(this);
     this.isCargoEmpty = this.isCargoEmpty.bind(this);
     this.normalizedDistanceFromHQ = this.normalizedDistanceFromHQ.bind(this);
+    this.normalizedDistanceFromNearestOre = this.normalizedDistanceFromNearestOre.bind(
+      this
+    );
     this.safeToDigHoleNextToMe = this.safeToDigHoleNextToMe.bind(this);
 
     this.map = map;
@@ -32,7 +35,8 @@ class Robot {
 
   resetShortTermMemory() {
     this.shortTermMemory = {
-      safeToDigHole: null
+      safeToDigHole: null,
+      safeToHarvest: null
     };
 
     return this;
@@ -65,6 +69,48 @@ class Robot {
     });
   }
 
+  normalizedDistanceFromNearestOre() {
+    const { getNormalizedDistance } = this.map;
+    const { getCoordinatesAtDistance } = this.map.getDistanceMapper();
+    const { has, get } = this.map.getDataTracker();
+    const { ORE } = this.map.getDataTracker().getAmounts();
+    const { isCoordinateTaken } = this.gameState;
+
+    for (
+      let distance = 0, distanceMax = 8;
+      distance <= distanceMax;
+      distance++
+    ) {
+      const coordinates = getCoordinatesAtDistance({
+        x: this.x,
+        y: this.y,
+        distance
+      });
+
+      for (let i = 0, iMax = coordinates.length; i < iMax; i++) {
+        const [cellX, cellY] = coordinates[i];
+        if (
+          cellX !== 0 &&
+          has({ x: cellX, y: cellY, what: ORE }) &&
+          !isCoordinateTaken({ x: cellX, y: cellY })
+        ) {
+          this.shortTermMemory.safeToHarvest = {
+            x: cellX,
+            y: cellY
+          };
+          return getNormalizedDistance({
+            startX: this.x,
+            startY: this.y,
+            endX: cellX,
+            endY: cellY
+          });
+        }
+      }
+    }
+
+    return Infinity;
+  }
+
   safeToDigHoleNextToMe() {
     const { HOLE, RADAR, MINE } = this.map.getDataTracker().getAmounts();
     const { has } = this.map.getDataTracker();
@@ -86,6 +132,7 @@ class Robot {
         const [cellX, cellY] = coordinates[i];
         if (
           cellX !== 0 &&
+          //TODO - check if there is a radar in range
           !isCoordinateTaken({ x: cellX, y: cellY }) &&
           !has({ x: cellX, y: cellY, what: HOLE }) &&
           !has({ x: cellX, y: cellY, what: RADAR }) &&

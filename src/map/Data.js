@@ -35,10 +35,7 @@ class Data {
   }
 
   reset() {
-    this.values[Data.AMOUNTS.ALLIED_ROBOT] = 0;
-    this.values[Data.AMOUNTS.ENEMY_ROBOT] = 0;
-    this.values[Data.AMOUNTS.RADAR] = 0;
-    this.values[Data.AMOUNTS.MINE] = 0;
+    this.values = new Array(Object.keys(Data.AMOUNTS).length).fill(0);
   }
 }
 
