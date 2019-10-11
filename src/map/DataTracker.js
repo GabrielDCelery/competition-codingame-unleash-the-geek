@@ -16,12 +16,9 @@ class DataTracker {
 
   add({ x, y, what, amount }) {
     const key = Helpers.convertCoordinatesToKey({ x, y });
+    const value = this.data[what][key];
 
-    const value = Number.isInteger(this.data[what][key])
-      ? this.data[what][key]
-      : 0;
-
-    this.data[what][key] = value + amount;
+    this.data[what][key] = (Number.isInteger(value) ? value : 0) + amount;
     this.totals.add({ x, y, what, amount });
   }
 
