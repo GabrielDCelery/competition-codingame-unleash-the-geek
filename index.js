@@ -3,10 +3,10 @@
  **/
 
 const configs = require('./src/configs');
-//const { Player } = require('./src_old/ai');
+const { Player } = require('./src/ai');
 const { Map } = require('./src/map');
-const map = new Map(configs['map']);
-//const player = new Player({ map });
+const map = new Map(configs);
+const player = new Player({ map, configs });
 
 var inputs = readline().split(' ');
 const width = parseInt(inputs[0]);
@@ -17,6 +17,9 @@ while (true) {
   var inputs = readline().split(' ');
   const myScore = parseInt(inputs[0]); // Amount of ore delivered
   const opponentScore = parseInt(inputs[1]);
+
+  map.reset();
+
   for (let i = 0; i < height; i++) {
     var inputs = readline().split(' ');
     for (let j = 0; j < width; j++) {
@@ -41,13 +44,7 @@ while (true) {
   const radarCooldown = parseInt(inputs[1]); // turns left until a new radar can be requested
   const trapCooldown = parseInt(inputs[2]); // turns left until a new trap can be requested
 
-  map.reset();
-  /*
-  player.updateGamaeStateAtTurnStart({
-    radarCooldown,
-    trapCooldown
-  });
-  */
+  player.updateGameState({ radarCooldown, trapCooldown });
   for (let i = 0; i < entityCount; i++) {
     var inputs = readline().split(' ');
     const id = parseInt(inputs[0]); // unique id of the entity
@@ -57,21 +54,14 @@ while (true) {
     const item = parseInt(inputs[4]); // if this entity is a robot, the item it is carrying (-1 for NONE, 2 for RADAR, 3 for TRAP, 4 for ORE)
 
     map.processEntityInput({ x, y, type });
-    //player.processEntityInput({ x, y, type, id, item });
+    player.processEntityInput({ x, y, type, id, item });
   }
 
   map.getHeatMap().reCalculateHeatMap();
-  for (let i = 0; i < 5; i++) {
-    // Write an action using console.log()
-    // To debug: console.error('Debug messages...');
 
-    console.log('WAIT'); // WAIT|MOVE x y|DIG x y|REQUEST item
-  }
-  /*
   const commands = player.generateCommandsForAlliedRobots();
 
   for (let i = 0, iMax = commands.length; i < iMax; i++) {
     console.log(commands[i]);
   }
-  */
 }

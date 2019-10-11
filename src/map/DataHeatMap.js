@@ -2,20 +2,12 @@ const Data = require('./Data');
 const { HOLE, ORE, ALLIED_ROBOT, ENEMY_ROBOT, RADAR, MINE } = Data.AMOUNTS;
 
 class DataHeatMap {
-  constructor({
-    width,
-    height,
-    dataMap,
-    dataTracker,
-    distanceMapper,
-    heatMapDropRate
-  }) {
+  constructor({ width, height, dataTracker, distanceMapper, heatMapDropRate }) {
     this.getData = this.getData.bind(this);
     this.reCalculateHeatMap = this.reCalculateHeatMap.bind(this);
 
     this.width = width;
     this.height = height;
-    this.dataMap = dataMap;
     this.dataTracker = dataTracker;
     this.distanceMapper = distanceMapper;
     this.heatMapDropRate = heatMapDropRate || [1];
@@ -40,8 +32,9 @@ class DataHeatMap {
   }
 
   _distributeDecayingGridData({ x, y, what, distanceMax }) {
-    const value = this.dataMap.get({ x, y, what });
+    const value = this.dataTracker.getDataMap().get({ x, y, what });
     const total = this.dataTracker.getTotals().get({ what });
+
     for (let distance = 0; distance < distanceMax; distance++) {
       const coordinatesAtDistance = this.distanceMapper.getCoordinatesAtDistance(
         { x, y, distance }
@@ -62,7 +55,7 @@ class DataHeatMap {
 
   reCalculateHeatMap() {
     this._resetHeatMap();
-    const whats = [HOLE];
+    const whats = [HOLE, ORE, ALLIED_ROBOT, ENEMY_ROBOT, RADAR, MINE];
     const distanceMax = Math.min(
       this.width + this.height - 2,
       this.heatMapDropRate.length
@@ -72,7 +65,7 @@ class DataHeatMap {
       for (let y = 0, yMax = this.height; y < yMax; y++) {
         for (let i = 0, iMax = whats.length; i < iMax; i++) {
           const what = whats[i];
-          if (this.dataMap.has({ x, y, what })) {
+          if (this.dataTracker.getDataMap().has({ x, y, what })) {
             this._distributeDecayingGridData({ x, y, what, distanceMax });
           }
         }

@@ -11,13 +11,15 @@ const Data = require('./Data');
 const DistanceMapper = require('./DistanceMapper');
 
 const DataTracker = require('./DataTracker');
-const DataMap = require('./DataMap');
 const DataHeatMap = require('./DataHeatMap');
 const { HOLE, ORE, ALLIED_ROBOT, ENEMY_ROBOT, RADAR, MINE } = Data.AMOUNTS;
 
 class Map {
-  constructor({ mapWidth, mapHeight, heatMapDropRate }) {
+  constructor({ mapWidth, mapHeight, heatMapDropRate, robotScanRange }) {
+    this.getDataClass = this.getDataClass.bind(this);
+    this.getDataTracker = this.getDataTracker.bind(this);
     this.getDistance = this.getDistance.bind(this);
+    this.getNormalizedDistance = this.getNormalizedDistance.bind(this);
     this.getMaxDistance = this.getMaxDistance.bind(this);
     this.getDistanceMapper = this.getDistanceMapper.bind(this);
     this.getHeatMap = this.getHeatMap.bind(this);
@@ -29,31 +31,47 @@ class Map {
     this.width = mapWidth;
     this.height = mapHeight;
 
-    this.dataMap = new DataMap({
+    this.dataTracker = new DataTracker({
       width: this.width,
       height: this.height
     });
-    this.dataTracker = new DataTracker();
     this.distanceMapper = new DistanceMapper({
       width: this.width,
       height: this.height
-    }).mapDistances({ maxDistance: heatMapDropRate.length });
+    }).mapDistances({ maxDistance: robotScanRange });
     this.dataHeatMap = new DataHeatMap({
       width: this.width,
       height: this.height,
-      dataMap: this.dataMap,
       dataTracker: this.dataTracker,
       distanceMapper: this.distanceMapper,
       heatMapDropRate
     });
   }
 
-  getDistance({ x, y, endX, endY }) {
-    return Math.abs(x - endX) + Math.abs(y - endY);
+  getDataClass() {
+    return Data;
+  }
+
+  getDistance({ startX, startY, endX, endY }) {
+    return Math.abs(startX - endX) + Math.abs(startY - endY);
+  }
+
+  getNormalizedDistance({ startX, startY, endX, endY }) {
+    const diff = Math.abs(startX - endX) + Math.abs(startY - endY);
+
+    if (diff === 0) {
+      return 0;
+    }
+
+    return diff / Math.round((this.width + this.height - 2) / 4);
   }
 
   getMaxDistance() {
     return this.width + this.height - 2;
+  }
+
+  getDataTracker() {
+    return this.dataTracker;
   }
 
   getDistanceMapper() {
@@ -70,7 +88,6 @@ class Map {
     }
 
     this.dataTracker.add({ x, y, what: HOLE, amount: 1 });
-    this.dataMap.add({ x, y, what: HOLE, amount: 1 });
 
     return this;
   }
@@ -80,10 +97,7 @@ class Map {
       return this;
     }
 
-    const amountInt = parseInt(amount);
-
-    this.dataTracker.add({ x, y, what: ORE, amount: amountInt });
-    this.dataMap.add({ x, y, what: ORE, amount: amountInt });
+    this.dataTracker.add({ x, y, what: ORE, amount: parseInt(amount) });
 
     return this;
   }
@@ -92,22 +106,18 @@ class Map {
     switch (type) {
       case READLINE_ENTITY_ALLIED_ROBOT: {
         this.dataTracker.add({ x, y, what: ALLIED_ROBOT, amount: 1 });
-        this.dataMap.add({ x, y, what: ALLIED_ROBOT, amount: 1 });
         return this;
       }
       case READLINE_ENTITY_ENEMY_ROBOT: {
         this.dataTracker.add({ x, y, what: ENEMY_ROBOT, amount: 1 });
-        this.dataMap.add({ x, y, what: ENEMY_ROBOT, amount: 1 });
         return this;
       }
       case READLINE_ENTITY_RADAR: {
         this.dataTracker.add({ x, y, what: RADAR, amount: 1 });
-        this.dataMap.set({ x, y, what: RADAR, amount: 1 });
         return this;
       }
       case READLINE_ENTITY_MINE: {
         this.dataTracker.add({ x, y, what: MINE, amount: 1 });
-        this.dataMap.set({ x, y, what: MINE, amount: 1 });
         return this;
       }
       default:
@@ -117,7 +127,6 @@ class Map {
 
   reset() {
     this.dataTracker.reset();
-    this.dataMap.reset();
   }
 }
 

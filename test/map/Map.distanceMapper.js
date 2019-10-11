@@ -3,11 +3,11 @@ const { expect } = require('chai');
 describe('Cells.constructor()', () => {
   it('initialises an instance', async () => {
     // Given
-    const config = require('../../src/configs');
+    const configs = require('../../src/configs');
     const { Map } = require('../../src/map');
 
     // When
-    const result = new Map(config['map']);
+    const result = new Map(configs);
 
     // Then
 
