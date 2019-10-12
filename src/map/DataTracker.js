@@ -13,6 +13,7 @@ class DataTracker {
     this.get = this.get.bind(this);
     this.reset = this.reset.bind(this);
     this.hasInRange = this.hasInRange.bind(this);
+    this.howManyCellsOf = this.howManyCellsOf.bind(this);
 
     this.data = {};
     this.totals = new Data();
@@ -63,6 +64,21 @@ class DataTracker {
     }
 
     return false;
+  }
+
+  howManyCellsOf({ what }) {
+    let numOfCellsOf = 0;
+    const keys = Object.keys(this.data[what]);
+
+    for (let i = 0, iMax = keys.length; i < iMax; i++) {
+      const amount = this.data[what][keys[i]];
+
+      if (0 < amount) {
+        numOfCellsOf += 1;
+      }
+    }
+
+    return numOfCellsOf;
   }
 
   reset() {
