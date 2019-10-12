@@ -1,6 +1,0 @@
-module.exports = {
-  COMMAND_REQUEST: 'REQUEST',
-  COMMAND_MOVE: 'MOVE',
-  COMMAND_DIG: 'DIG',
-  COMMAND_WAIT: 'WAIT'
-};
