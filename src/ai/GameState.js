@@ -80,7 +80,16 @@ class GameState {
   // ****************************** STATE GETTERS ****************************** //
 
   hasEnoughRadars() {
-    const { RADAR } = this.map.getDataTracker().getAmounts();
+    const { ORE, RADAR } = this.map.getDataTracker().getAmounts();
+
+    const numOfOreVeins = this.map
+      .getDataTracker()
+      .howManyCellsOf({ what: ORE });
+
+    if (9 < numOfOreVeins) {
+      return true;
+    }
+
     const numOfRadarsDeployed = this.map
       .getDataTracker()
       .getTotals()

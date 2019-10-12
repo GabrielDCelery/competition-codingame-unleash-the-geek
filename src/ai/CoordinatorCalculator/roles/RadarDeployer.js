@@ -22,7 +22,7 @@ class RadarDeployer {
         const bottom = (y + 1) * zoneSize;
 
         this.recommendedRadarCoordinates.push({
-          x: Math.floor((left + right) / 2) + 1,
+          x: Math.floor((left + right) / 2) + 2,
           y: Math.floor((top + bottom) / 2)
         });
       }
