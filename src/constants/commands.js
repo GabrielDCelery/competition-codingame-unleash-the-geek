@@ -1,0 +1,6 @@
+module.exports = {
+  COMMAND_DIG: 'DIG',
+  COMMAND_MOVE: 'MOVE',
+  COMMAND_REQUEST: 'REQUEST',
+  COMMAND_WAIT: 'WAIT'
+};

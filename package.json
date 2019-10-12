@@ -1,0 +1,41 @@
+{
+  "name": "competition-codingame-unleash-the-geek",
+  "version": "1.0.0",
+  "description": "Codingame 10 days Unleash yje Geek competition",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build ./index.js",
+    "test": "node ./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielDCelery/competition-codingame-unleash-the-geek.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabrielDCelery/competition-codingame-unleash-the-geek/issues"
+  },
+  "homepage": "https://github.com/GabrielDCelery/competition-codingame-unleash-the-geek#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-node": "^4.0.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "sinon": "^7.3.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "auto-bind": "^2.1.1"
+  }
+}
