@@ -97,7 +97,7 @@ class GameState {
       .getDataTracker()
       .howManyCellsOf({ what: ORE });
 
-    if (9 < numOfOreVeins) {
+    if (20 < numOfOreVeins) {
       return true;
     }
 
@@ -119,7 +119,8 @@ class GameState {
     const totalNumOfRadars = numOfRadarsDeployed + numOfRadarsInCargoes;
     const numOfRecommendedRadars =
       (this.map.width / (GAME_RADAR_RANGE + 1)) *
-      (this.map.height / (GAME_RADAR_RANGE + 1));
+        (this.map.height / (GAME_RADAR_RANGE + 1)) -
+      3;
 
     return numOfRecommendedRadars <= totalNumOfRadars;
   }

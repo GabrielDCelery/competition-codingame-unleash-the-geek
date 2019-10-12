@@ -15,7 +15,7 @@ class RadarDeployer {
     const numOfZonesY = this.map.height / zoneSize;
     this.recommendedRadarCoordinates = [];
 
-    for (let x = 0, xMax = numOfZonesX; x < xMax; x++) {
+    for (let x = 0, xMax = numOfZonesX - 1; x < xMax; x++) {
       for (let y = 0, yMax = numOfZonesY; y < yMax; y++) {
         const left = x * zoneSize;
         const right = (x + 1) * zoneSize;
@@ -37,9 +37,11 @@ class RadarDeployer {
   }) {
     const { HOLE, MINE } = this.map.getDataTracker().getAmounts();
 
+    return 1 - data[HOLE] + (1 - normalizedDistanceTargetHQ);
+
     return (
       1 -
-      data[HOLE] +
+      10 * data[HOLE] +
       1 -
       data[MINE] +
       (1 - normalizedDistanceStartTarget) +

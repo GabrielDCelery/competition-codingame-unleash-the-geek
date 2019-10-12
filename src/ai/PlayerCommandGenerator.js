@@ -49,7 +49,7 @@ class PlayerCommandGenerator {
 
     if (moveTo === null) {
       gameState.markCoordinateAsTaken({ x: robot.x, y: robot.y });
-      return `${COMMAND_WAIT} deploy radar`;
+      return `${COMMAND_DIG} ${robot.x} ${robot.y} deploy radar`;
     }
 
     const { x, y } = moveTo;
