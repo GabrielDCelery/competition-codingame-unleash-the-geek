@@ -1,7 +1,7 @@
 const { ITEM_NONE, ITEM_ORE, ITEM_RADAR } = require('../constants');
 
 class Robot {
-  constructor({ map, gameState }) {
+  constructor({ map, gameState, playerMemory }) {
     this.getItem = this.getItem.bind(this);
     this.getShortTermMemory = this.getShortTermMemory.bind(this);
     this.resetShortTermMemory = this.resetShortTermMemory.bind(this);
@@ -20,6 +20,7 @@ class Robot {
 
     this.map = map;
     this.gameState = gameState;
+    this.playerMemory = playerMemory;
   }
 
   getItem() {
@@ -84,7 +85,8 @@ class Robot {
     const { getCoordinatesAtDistance } = this.map.getDistanceMapper();
     const { has } = this.map.getDataTracker();
     const { ORE } = this.map.getDataTracker().getAmounts();
-    const { isCoordinateTaken } = this.gameState;
+    const { /*getTurnCount,*/ isCoordinateTaken } = this.gameState;
+    const { isRiskyCoordinate } = this.playerMemory;
 
     for (
       let distance = 0, distanceMax = 8;
@@ -101,6 +103,7 @@ class Robot {
         const [cellX, cellY] = coordinates[i];
         if (
           cellX !== 0 &&
+          !isRiskyCoordinate({ x: cellX, y: cellY }) &&
           has({ x: cellX, y: cellY, what: ORE }) &&
           !isCoordinateTaken({ x: cellX, y: cellY })
         ) {
@@ -125,7 +128,8 @@ class Robot {
     const { HOLE, RADAR, MINE } = this.map.getDataTracker().getAmounts();
     const { has, hasInRange } = this.map.getDataTracker();
     const { getCoordinatesAtDistance } = this.map.getDistanceMapper();
-    const { isCoordinateTaken } = this.gameState;
+    const { getTurnCount, isCoordinateTaken } = this.gameState;
+    const { isRiskyCoordinate } = this.playerMemory;
 
     for (
       let distance = 0, distanceMax = 1;
@@ -142,6 +146,7 @@ class Robot {
         const [cellX, cellY] = coordinates[i];
         if (
           cellX !== 0 &&
+          !isRiskyCoordinate({ x: cellX, y: cellY }) &&
           !hasInRange({ x: cellX, y: cellY, distance: 4, what: RADAR }) &&
           !isCoordinateTaken({ x: cellX, y: cellY }) &&
           !has({ x: cellX, y: cellY, what: HOLE }) &&

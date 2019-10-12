@@ -96,7 +96,7 @@ class PlayerAI {
           {
             who: 'robot',
             stateGetter: 'doIExist',
-            stateToUrgeConverter: result => (result ? 25 : 25)
+            stateToUrgeConverter: result => (result ? 10 : 10)
           }
         ]
       }

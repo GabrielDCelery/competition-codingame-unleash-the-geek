@@ -1,8 +1,9 @@
 class Scout {
-  constructor({ map, gameState }) {
+  constructor({ map, gameState, playerMemory }) {
+    this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
     this.map = map;
     this.gameState = gameState;
-    this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
+    this.playerMemory = playerMemory;
   }
 
   _scoreData({
@@ -10,12 +11,13 @@ class Scout {
     normalizedDistanceStartTarget,
     normalizedDistanceStartHQ,
     normalizedDistanceTargetHQ,
-    coordinateToCheckX
+    coordinateToCheckX,
+    coordinateToCheckY
   }) {
     if (coordinateToCheckX === 0) {
       return -Infinity;
     }
-
+    const { isRiskyCoordinate } = this.playerMemory;
     const {
       HOLE,
       ORE,
@@ -27,13 +29,15 @@ class Scout {
 
     return (
       -1 * data[HOLE] +
-      100 * data[ORE] +
+      (isRiskyCoordinate({ x: coordinateToCheckX, y: coordinateToCheckY })
+        ? 0
+        : 100 * data[ORE]) +
       -1 * data[ALLIED_ROBOT] +
       -0.25 * data[ENEMY_ROBOT] +
       -0.25 * data[RADAR] +
       -1 * data[MINE] +
       // -0.25 * normalizedDistanceStartTarget +
-      0.25 * normalizedDistanceTargetHQ
+      1 * normalizedDistanceTargetHQ
     );
   }
 

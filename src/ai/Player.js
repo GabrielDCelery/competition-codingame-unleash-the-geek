@@ -3,6 +3,7 @@ const Robot = require('./Robot');
 const GameState = require('./GameState');
 const PlayerAI = require('./PlayerAI');
 const PlayerCommandGenerator = require('./PlayerCommandGenerator');
+const PlayerMemory = require('./PlayerMemory');
 const CoordinatorCalculator = require('./CoordinatorCalculator');
 
 class Player {
@@ -16,13 +17,19 @@ class Player {
     this.robots = {};
     this.configs = configs;
     this.map = map;
-    this.gameState = new GameState({ map, robots: this.robots });
+    this.gameState = new GameState({ map: this.map, robots: this.robots });
+    this.playerMemory = new PlayerMemory({ map: this.map });
     this.playerAI = new PlayerAI();
     this.playerCommandGenerator = new PlayerCommandGenerator();
     this.coordinatorCalculator = new CoordinatorCalculator({
       map: this.map,
-      gameState: this.gameState
+      gameState: this.gameState,
+      playerMemory: this.playerMemory
     });
+  }
+
+  getPlayerMemory() {
+    return this.playerMemory;
   }
 
   updateGameState({ radarCooldown, trapCooldown }) {
@@ -30,6 +37,7 @@ class Player {
     this.gameState.setTrapCoolDown(trapCooldown);
     this.gameState.resetTakenCoordinates();
     this.gameState.resetTakenActions();
+    this.gameState.incrementTurnCount();
 
     return this;
   }
@@ -39,7 +47,8 @@ class Player {
       if (!this.robots[id]) {
         this.robots[id] = new Robot({
           map: this.map,
-          gameState: this.gameState
+          gameState: this.gameState,
+          playerMemory: this.playerMemory
         });
       }
 

@@ -1,13 +1,13 @@
 const { Harvester, RadarDeployer, Wanderer } = require('./roles');
 
 class CoordinatorCalculator {
-  constructor({ map, gameState }) {
+  constructor({ map, gameState, playerMemory }) {
     this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
 
     this.roles = {
-      harvester: new Harvester({ map, gameState }),
-      radarDeployer: new RadarDeployer({ map, gameState }),
-      wanderer: new Wanderer({ map, gameState })
+      harvester: new Harvester({ map, gameState, playerMemory }),
+      radarDeployer: new RadarDeployer({ map, gameState, playerMemory }),
+      wanderer: new Wanderer({ map, gameState, playerMemory })
     };
   }
 
