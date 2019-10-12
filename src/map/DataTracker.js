@@ -51,14 +51,14 @@ class DataTracker {
   }
 
   hasInRange({ x, y, distance, what }) {
-    const coordinates = Object.keys(this.data[what]);
+    const keys = Object.keys(this.data[what]);
 
-    for (let i = 0, iMax = coordinates.length; i < iMax; i++) {
-      const coordinate = helpers.destructureKeyToCoordinates(coordinates[i]);
-
+    for (let i = 0, iMax = keys.length; i < iMax; i++) {
+      const coordinate = helpers.destructureKeyToCoordinates(keys[i]);
+      const amount = this.data[what][keys[i]];
       const diff = Math.abs(x - coordinate.x) + Math.abs(y - coordinate.y);
 
-      if (diff <= distance) {
+      if (0 < amount && diff <= distance) {
         return true;
       }
     }
