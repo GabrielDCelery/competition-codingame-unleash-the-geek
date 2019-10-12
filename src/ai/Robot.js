@@ -113,7 +113,7 @@ class Robot {
 
   safeToDigHoleNextToMe() {
     const { HOLE, RADAR, MINE } = this.map.getDataTracker().getAmounts();
-    const { has } = this.map.getDataTracker();
+    const { has, hasInRange } = this.map.getDataTracker();
     const { getCoordinatesAtDistance } = this.map.getDistanceMapper();
     const { isCoordinateTaken } = this.gameState;
 
@@ -132,10 +132,10 @@ class Robot {
         const [cellX, cellY] = coordinates[i];
         if (
           cellX !== 0 &&
-          //TODO - check if there is a radar in range
+          !hasInRange({ x: cellX, y: cellY, distance: 4, what: RADAR }) &&
           !isCoordinateTaken({ x: cellX, y: cellY }) &&
           !has({ x: cellX, y: cellY, what: HOLE }) &&
-          !has({ x: cellX, y: cellY, what: RADAR }) &&
+          //!has({ x: cellX, y: cellY, what: RADAR }) &&
           !has({ x: cellX, y: cellY, what: MINE })
         ) {
           this.shortTermMemory.safeToDigHole = {

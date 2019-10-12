@@ -12,6 +12,7 @@ class DataTracker {
     this.has = this.has.bind(this);
     this.get = this.get.bind(this);
     this.reset = this.reset.bind(this);
+    this.hasInRange = this.hasInRange.bind(this);
 
     this.data = {};
     this.totals = new Data();
@@ -46,6 +47,22 @@ class DataTracker {
 
   get({ x, y, what }) {
     return this.dataMap.get({ x, y, what });
+  }
+
+  hasInRange({ x, y, distance, what }) {
+    const coordinates = Object.keys(this.data[what]);
+
+    for (let i = 0, iMax = coordinates.length; i < iMax; i++) {
+      const coordinate = helpers.destructureKeyToCoordinates(coordinates[i]);
+
+      const diff = Math.abs(x - coordinate.x) + Math.abs(y - coordinate.y);
+
+      if (diff <= distance) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   reset() {

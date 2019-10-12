@@ -27,10 +27,10 @@ class Scout {
 
     return (
       -1 * data[HOLE] +
-      10 * data[ORE] +
+      100 * data[ORE] +
       -1 * data[ALLIED_ROBOT] +
       -0.25 * data[ENEMY_ROBOT] +
-      //-0.5 * data[RADAR] +
+      -0.25 * data[RADAR] +
       -1 * data[MINE] +
       // -0.25 * normalizedDistanceStartTarget +
       0.25 * normalizedDistanceTargetHQ
