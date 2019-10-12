@@ -8,6 +8,8 @@ const helpers = require('../helpers');
 
 class GameState {
   constructor({ map, robots }) {
+    this.getTurnCount = this.getTurnCount.bind(this);
+    this.incrementTurnCount = this.incrementTurnCount.bind(this);
     this.getRadarCooldown = this.getRadarCooldown.bind(this);
     this.getTrapCooldown = this.getTrapCooldown.bind(this);
     this.setRadarCooldown = this.setRadarCooldown.bind(this);
@@ -25,10 +27,19 @@ class GameState {
     this.map = map;
     this.robots = robots;
 
+    this.currentTurn = 0;
     this.radarCooldown = Infinity;
     this.trapCooldown = Infinity;
     this.coordinatesTaken = {};
     this.actionsTaken = {};
+  }
+
+  getTurnCount() {
+    return this.currentTurn;
+  }
+
+  incrementTurnCount() {
+    this.currentTurn += 1;
   }
 
   getRadarCooldown() {

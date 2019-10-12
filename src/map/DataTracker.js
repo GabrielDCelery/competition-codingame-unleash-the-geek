@@ -6,6 +6,7 @@ const { HOLE, ORE, ALLIED_ROBOT, ENEMY_ROBOT, RADAR, MINE } = Data.AMOUNTS;
 
 class DataTracker {
   constructor({ width, height }) {
+    this.getData = this.getData.bind(this);
     this.getDataMap = this.getDataMap.bind(this);
     this.getTotals = this.getTotals.bind(this);
     this.add = this.add.bind(this);
@@ -14,6 +15,7 @@ class DataTracker {
     this.reset = this.reset.bind(this);
     this.hasInRange = this.hasInRange.bind(this);
     this.howManyCellsOf = this.howManyCellsOf.bind(this);
+    this.getListOfCoordinatesOf = this.getListOfCoordinatesOf.bind(this);
 
     this.data = {};
     this.totals = new Data();
@@ -79,6 +81,26 @@ class DataTracker {
     }
 
     return numOfCellsOf;
+  }
+
+  getData({ what }) {
+    return this.data[what];
+  }
+
+  getListOfCoordinatesOf({ what }) {
+    const keys = Object.keys(this.data[what]);
+    const coordinates = [];
+
+    for (let i = 0, iMax = keys.length; i < iMax; i++) {
+      const key = keys[i];
+      const amount = this.data[what][key];
+
+      if (0 < amount) {
+        coordinates.push(helpers.destructureKeyToCoordinates(key));
+      }
+    }
+
+    return coordinates;
   }
 
   reset() {

@@ -57,9 +57,13 @@ while (true) {
     player.processEntityInput({ x, y, type, id, item });
   }
 
+  player.getPlayerMemory().analyzeTurn();
+
   map.getHeatMap().reCalculateHeatMap();
 
   const commands = player.generateCommandsForAlliedRobots();
+
+  player.getPlayerMemory().memorizeTurn();
 
   for (let i = 0, iMax = commands.length; i < iMax; i++) {
     console.log(commands[i]);

@@ -1,10 +1,11 @@
 const { GAME_RADAR_RANGE } = require('../../../constants');
 
 class RadarDeployer {
-  constructor({ map, gameState }) {
+  constructor({ map, gameState, playerMemory }) {
+    this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
     this.map = map;
     this.gameState = gameState;
-    this.getRecommendedCoordinate = this.getRecommendedCoordinate.bind(this);
+    this.playerMemory = playerMemory;
     this._init();
   }
 
@@ -98,6 +99,7 @@ class RadarDeployer {
 
     const { getData } = this.map.getHeatMap();
     const { getNormalizedDistance } = this.map;
+    const { isRiskyCoordinate } = this.playerMemory;
 
     for (
       let i = 0, iMax = this.recommendedRadarCoordinates.length;
@@ -106,7 +108,10 @@ class RadarDeployer {
     ) {
       const recommendedRadarCoordinate = this.recommendedRadarCoordinates[i];
 
-      if (!this._hasRadarAtLocation(recommendedRadarCoordinate)) {
+      if (
+        !isRiskyCoordinate(recommendedRadarCoordinate) &&
+        !this._hasRadarAtLocation(recommendedRadarCoordinate)
+      ) {
         const coordinateToCheckX = recommendedRadarCoordinate.x;
         const coordinateToCheckY = recommendedRadarCoordinate.y;
         const normalizedDistanceStartTarget = getNormalizedDistance({
