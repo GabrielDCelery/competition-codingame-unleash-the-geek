@@ -2,9 +2,10 @@ const { ITEM_NONE, ITEM_ORE, ITEM_RADAR } = require('../constants');
 
 class Robot {
   constructor({ map, gameState }) {
-    this.setState = this.setState.bind(this);
+    this.getItem = this.getItem.bind(this);
     this.getShortTermMemory = this.getShortTermMemory.bind(this);
     this.resetShortTermMemory = this.resetShortTermMemory.bind(this);
+    this.setState = this.setState.bind(this);
 
     this.doIExist = this.doIExist.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
@@ -18,6 +19,10 @@ class Robot {
 
     this.map = map;
     this.gameState = gameState;
+  }
+
+  getItem() {
+    return this.item;
   }
 
   setState({ id, x, y, item }) {
@@ -72,7 +77,7 @@ class Robot {
   normalizedDistanceFromNearestOre() {
     const { getNormalizedDistance } = this.map;
     const { getCoordinatesAtDistance } = this.map.getDistanceMapper();
-    const { has, get } = this.map.getDataTracker();
+    const { has } = this.map.getDataTracker();
     const { ORE } = this.map.getDataTracker().getAmounts();
     const { isCoordinateTaken } = this.gameState;
 

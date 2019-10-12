@@ -39,11 +39,15 @@ class PlayerAI {
             stateToUrgeConverter: result => (result ? 0 : -Infinity)
           },
           {
+            who: 'gameState',
+            stateGetter: 'hasEnoughRadars',
+            stateToUrgeConverter: result => (result ? -Infinity : 0)
+          },
+          {
             who: 'robot',
             stateGetter: 'normalizedDistanceFromHQ',
             stateToUrgeConverter: result => (1 - result) * 100
           }
-          //TODO - check how many radars have been deployed
         ]
       },
       {

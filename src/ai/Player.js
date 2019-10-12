@@ -16,7 +16,7 @@ class Player {
     this.robots = {};
     this.configs = configs;
     this.map = map;
-    this.gameState = new GameState({ map });
+    this.gameState = new GameState({ map, robots: this.robots });
     this.playerAI = new PlayerAI();
     this.playerCommandGenerator = new PlayerCommandGenerator();
     this.coordinatorCalculator = new CoordinatorCalculator({

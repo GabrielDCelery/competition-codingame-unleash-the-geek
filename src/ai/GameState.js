@@ -1,7 +1,13 @@
+const {
+  GAME_RADAR_RANGE,
+  ITEM_NONE,
+  ITEM_ORE,
+  ITEM_RADAR
+} = require('../constants');
 const helpers = require('../helpers');
 
 class GameState {
-  constructor({ map }) {
+  constructor({ map, robots }) {
     this.getRadarCooldown = this.getRadarCooldown.bind(this);
     this.getTrapCooldown = this.getTrapCooldown.bind(this);
     this.setRadarCooldown = this.setRadarCooldown.bind(this);
@@ -9,13 +15,15 @@ class GameState {
     this.isCoordinateTaken = this.isCoordinateTaken.bind(this);
     this.isActionTaken = this.isActionTaken.bind(this);
     this.markActionAsTaken = this.markActionAsTaken.bind(this);
-    this.isRadarAvailable = this.isRadarAvailable.bind(this);
     this.markCoordinateAsTaken = this.markCoordinateAsTaken.bind(this);
     this.resetTakenCoordinates = this.resetTakenCoordinates.bind(this);
 
     this.hasOreOnMap = this.hasOreOnMap.bind(this);
+    this.hasEnoughRadars = this.hasEnoughRadars.bind(this);
+    this.isRadarAvailable = this.isRadarAvailable.bind(this);
 
     this.map = map;
+    this.robots = robots;
 
     this.radarCooldown = Infinity;
     this.trapCooldown = Infinity;
@@ -70,6 +78,31 @@ class GameState {
   }
 
   // ****************************** STATE GETTERS ****************************** //
+
+  hasEnoughRadars() {
+    const { RADAR } = this.map.getDataTracker().getAmounts();
+    const numOfRadarsDeployed = this.map
+      .getDataTracker()
+      .getTotals()
+      .get({ what: RADAR });
+
+    let numOfRadarsInCargoes = 0;
+    const robotIds = Object.keys(this.robots);
+
+    for (let i = 0, iMax = robotIds.length; i < iMax; i++) {
+      const robot = this.robots[robotIds[i]];
+      if (robot.getItem() === ITEM_RADAR) {
+        numOfRadarsInCargoes++;
+      }
+    }
+
+    const totalNumOfRadars = numOfRadarsDeployed + numOfRadarsInCargoes;
+    const numOfRecommendedRadars =
+      (this.map.width / (GAME_RADAR_RANGE + 1)) *
+      (this.map.height / (GAME_RADAR_RANGE + 1));
+
+    return numOfRecommendedRadars <= totalNumOfRadars;
+  }
 
   hasOreOnMap() {
     const { ORE } = this.map.getDataTracker().getAmounts();
