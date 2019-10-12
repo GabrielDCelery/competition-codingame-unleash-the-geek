@@ -7,6 +7,7 @@ class Robot {
     this.resetShortTermMemory = this.resetShortTermMemory.bind(this);
     this.setState = this.setState.bind(this);
 
+    this.amIDead = this.amIDead.bind(this);
     this.doIExist = this.doIExist.bind(this);
     this.doesCargoHaveOre = this.doesCargoHaveOre.bind(this);
     this.doesCargoHaveRadar = this.doesCargoHaveRadar.bind(this);
@@ -48,6 +49,10 @@ class Robot {
   }
 
   // ****************************** STATE GETTERS ****************************** //
+
+  amIDead() {
+    return this.x < 0 || this.y < 0;
+  }
 
   doIExist() {
     return true;

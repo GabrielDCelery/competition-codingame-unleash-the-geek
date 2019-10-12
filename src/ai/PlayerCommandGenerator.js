@@ -7,12 +7,17 @@ const {
 
 class PlayerCommandGenerator {
   constructor() {
+    this.makeRobotWait = this.makeRobotWait.bind(this);
     this.makeRobotDeliverOreToHQ = this.makeRobotDeliverOreToHQ.bind(this);
     this.makeRobotDeployRadar = this.makeRobotDeployRadar.bind(this);
     this.makeRobotDigHole = this.makeRobotDigHole.bind(this);
     this.makeRobotHarvestOre = this.makeRobotHarvestOre.bind(this);
     this.makeRobotPickupRadar = this.makeRobotPickupRadar.bind(this);
     this.makeRobotWander = this.makeRobotWander.bind(this);
+  }
+
+  makeRobotWait({}) {
+    return `${COMMAND_WAIT} dead`;
   }
 
   makeRobotDeliverOreToHQ({ robot }) {

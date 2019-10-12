@@ -103,6 +103,9 @@ class Map {
   }
 
   processEntityInput({ x, y, type }) {
+    if (x < 0 || y < 0 || this.width - 1 < x || this.height - 1 < y) {
+      return;
+    }
     switch (type) {
       case READLINE_ENTITY_ALLIED_ROBOT: {
         this.dataTracker.add({ x, y, what: ALLIED_ROBOT, amount: 1 });

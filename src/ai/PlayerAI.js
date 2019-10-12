@@ -6,6 +6,16 @@ class PlayerAI {
 
     this.actionConfigs = [
       {
+        action: 'makeRobotWait',
+        scorers: [
+          {
+            who: 'robot',
+            stateGetter: 'amIDead',
+            stateToUrgeConverter: result => (result ? Infinity : -Infinity)
+          }
+        ]
+      },
+      {
         action: 'makeRobotDeliverOreToHQ',
         scorers: [
           {
@@ -99,21 +109,30 @@ class PlayerAI {
       gameState: gameState
     };
 
-    const weighedActionConfigs = this.actionConfigs.map(actionConfig => {
+    const weighedActionConfigs = [];
+
+    for (let i = 0, iMax = this.actionConfigs.length; i < iMax; i++) {
+      const actionConfig = this.actionConfigs[i];
       const { action, scorers } = actionConfig;
-      const priorities = scorers.map(scorer => {
-        const { who, stateGetter, stateToUrgeConverter } = scorer;
 
-        return stateToUrgeConverter(whos[who][stateGetter]());
-      });
+      let totalPriority = 0;
 
-      const totalPriority = helpers.sumArrayValues(priorities);
+      for (let j = 0, jMax = scorers.length; j < jMax; j++) {
+        const { who, stateGetter, stateToUrgeConverter } = scorers[j];
+        const priority = stateToUrgeConverter(whos[who][stateGetter]());
 
-      return {
+        if (priority === Infinity) {
+          return action;
+        }
+
+        totalPriority += priority;
+      }
+
+      weighedActionConfigs.push({
         action,
         priority: totalPriority
-      };
-    });
+      });
+    }
 
     const highestWeighedActionConfig = PlayerAI.selectHighestWeighedActionConfig(
       weighedActionConfigs
