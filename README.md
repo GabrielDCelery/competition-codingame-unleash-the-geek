@@ -43,7 +43,7 @@ In order to avoid that I added a PlayerMemory class that checks whether an enemy
 
 Unfortunately this bot only allowed me to get to the Silver League (out of Bronze, Silver, Gold, Legend). it was a useful learning experience and there are definitely
 
-## Parts of the code I am proud of
+## Parts of the code that I am proud of
 
 - The code that updates the map with the current state, particularly the `heatmap`
 - The algorithm that makes the robots dig holes if they got nothing better to do, so the areas of interest become more clear
