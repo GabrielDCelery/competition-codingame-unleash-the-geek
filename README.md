@@ -8,6 +8,10 @@ This is my bot for the 10 days Unleash the Geek competition. It is a 1v1 game 1v
 
 Visit: `https://www.codingame.com/ide/challenge/unleash-the-geek-amadeus`
 
+## Final place
+
+`1151` out of `2162 competitors`.
+
 # Highlights of the game strategy
 
 ## Heat map
