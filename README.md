@@ -2,7 +2,7 @@
 
 ## What is this project for?
 
-This is my bot for Codingame's 10 days Unleash the Geek competition. It is a 1v1 game where you have to collect more ore than your opponent given a set amount of turns.
+This is my bot for CodinGame's 10 days Unleash the Geek competition. It is a 1v1 game where you have to collect more ore than your opponent given a set amount of turns.
 
 ## Rules
 
