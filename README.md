@@ -6,7 +6,7 @@ This is my bot for the 10 days Unleash the Geek competition. It is a 1v1 game 1v
 
 ## Rules
 
-Visit: `https://www.codingame.com/ide/challenge/unleash-the-geek-amadeus`
+Visit: `https://www.codingame.com/contests/unleash-the-geek-amadeus`
 
 ## Final place
 
